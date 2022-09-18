@@ -60,6 +60,7 @@ public class SecurityDataLoader implements
         User user = new User();
         user.setPassword(passwordEncoder.encode("admin"));
         user.setEmail("admin@patientportal.isf.org");
+        user.setUsername("admin@patientportal.isf.org");
         Set<Role> roles = new HashSet<Role>();
         roles.add(adminRole);
         user.setRoles(roles);
