@@ -23,4 +23,7 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
+
+COPY mvnw .
+
 CMD ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar"]
