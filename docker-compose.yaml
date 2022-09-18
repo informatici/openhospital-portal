@@ -41,7 +41,7 @@ services:
       - backend-net
     volumes:
       - sql_files:/app/sql
-      - ./resources:/app/resources
+      # - ./resources/application.properties:/app/application.properties
 
   api:
     extends:
