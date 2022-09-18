@@ -1,4 +1,4 @@
-package org.isf.patientportal.exception;
+package org.isf.patientportal.model.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
