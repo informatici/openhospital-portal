@@ -12,6 +12,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -71,7 +72,8 @@ public class User {
             CascadeType.REFRESH,
             CascadeType.PERSIST
         },
-        targetEntity = Role.class
+        targetEntity = Role.class,
+        fetch = FetchType.EAGER
     )
     @JoinTable( 
         name = "users_roles", 
@@ -81,6 +83,14 @@ public class User {
           name = "role_id", referencedColumnName = "id")) 
     private Set<Role> roles;
 
+    private String token;
+    private boolean accountVerified;
+    private int failedLoginAttempts;
+    private boolean loginDisabled;
+
+    @OneToMany(mappedBy = "user")
+    private Set<SecureToken> tokens;
+    
     public User() {
         super();
         // this.secret = Base32.random();
