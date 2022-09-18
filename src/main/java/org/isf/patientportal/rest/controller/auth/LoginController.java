@@ -19,8 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.security;
+package org.isf.patientportal.rest.controller.auth;
 
+import org.isf.patientportal.rest.dto.auth.LoginResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @Api("Login")
 @RestController
-public class LoginApi {
+public class LoginController {
     /**
      * Implemented by Spring Security
      */
