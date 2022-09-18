@@ -1,12 +1,11 @@
 version: "3.8"
 services:
   mysql:
-    image: mariadb:10.9.2
+    image: mariadb:10.6.9
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: "unless-stopped"
     cap_add:
       - SYS_NICE
-    profiles:
-      - main
     labels:
       - app.name=patientportal
       - app.namespace=${ENVIRONMENT_NAME}
@@ -30,18 +29,23 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     networks:
       - backend-net
-  
-  api:
+  api-base:
     image: ghcr.io/averni/oh-patient-portal/ohpp-api:${PATIENTPORTAL_VERSION}
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile
     restart: "no"
     labels:
       - app.name=patientportal
       - app.namespace=${ENVIRONMENT_NAME}
       - app.stack=core
       - io.portainer.accesscontrol.teams=developers
+    networks:
+      - backend-net
+    volumes:
+      - sql_files:/app/sql
+      - ./resources:/app/resources
+
+  api:
+    extends:
+      service: api-base
     ports:
       - 8080:8080
     # healthcheck:
@@ -52,9 +56,7 @@ services:
     #   retries: 3
     # environment:
     #   - WORDPRESS_DB_HOST=mysql
-    networks:
-      - backend-net
- 
+
   # http:
   #   image: ghcr.io/averni/oh-patient-portal/ohpp-api-http:${PATIENTPORTAL_VERSION}
   #   restart: "no"
@@ -109,6 +111,13 @@ volumes:
       o: bind
       type: none
       device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/database
+
+  sql_files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/sql
 
   http_logs:
     driver: local

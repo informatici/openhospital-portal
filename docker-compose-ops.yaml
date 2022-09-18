@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+
+  build-api:
+    extends:
+      file: docker-compose.yaml
+      service: api-base
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    restart: "no"
+ 
+  flyway-migrate:
+    image: flyway/flyway:8.5.13
+    extends:
+      file: docker-compose.yaml
+      service: api-base
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    volumes:
+      - sql_files:/flyway/sql
+    command:
+      - -url=jdbc:mariadb://mysql:3306/${MARIADB_DATABASE}?createDatabaseIfNotExist=true
+      - -connectRetries=60 
+      - -user=${MARIADB_USER}
+      - -password=${MARIADB_PASSWORD}
+      - migrate
