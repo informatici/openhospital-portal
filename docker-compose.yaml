@@ -1,0 +1,142 @@
+version: "3.8"
+services:
+  mysql:
+    image: mariadb:10.9.2
+    restart: "unless-stopped"
+    cap_add:
+      - SYS_NICE
+    profiles:
+      - main
+    labels:
+      - app.name=patientportal
+      - app.namespace=${ENVIRONMENT_NAME}
+      - app.stack=core
+      - io.portainer.accesscontrol.teams=developers
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 5s
+      start_period: 2s
+      timeout: 2s
+      retries: 10
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_logs:/var/log/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    networks:
+      - backend-net
+  
+  api:
+    image: ghcr.io/averni/oh-patient-portal/ohpp-api:${PATIENTPORTAL_VERSION}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    restart: "no"
+    labels:
+      - app.name=patientportal
+      - app.namespace=${ENVIRONMENT_NAME}
+      - app.stack=core
+      - io.portainer.accesscontrol.teams=developers
+    ports:
+      - 8080:8080
+    # healthcheck:
+    #   test: ["CMD", "docker-healthcheck"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   start_period: 5s
+    #   retries: 3
+    # environment:
+    #   - WORDPRESS_DB_HOST=mysql
+    networks:
+      - backend-net
+ 
+  # http:
+  #   image: ghcr.io/averni/oh-patient-portal/ohpp-api-http:${PATIENTPORTAL_VERSION}
+  #   restart: "no"
+  #   volumes:
+  #     - html_data:/var/www/html
+  #     - http_logs:/var/log/nginx/host
+  #     - pids:/var/run
+  #   environment:
+  #     WORKER_PROCESSES: ${NGINX_WORKER_PROCESSES}
+  #     WORKER_CONNECTIONS: ${NGINX_WORKER_CONNECTIONS}
+  #   labels:
+  #     - app.name=patientportal
+  #     - app.namespace=${ENVIRONMENT_NAME}
+  #     - app.stack=core
+  #     - app.wordpress.siteurl=${ENVIRONMENT_NAME}.${BASE_DOMAIN}
+  #     - app.wordpress.admin_siteurl=${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}
+  #     - io.portainer.accesscontrol.teams=developers
+  #     - traefik.enable=true
+  #     - traefik.docker.network=patientportal-net
+  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}`, `${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}`)
+  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
+  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
+  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
+  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.passhostheader=true
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.path=/x-lb-healthcheck.txt
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.interval=1200ms
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.timeout=700ms
+  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.scheme=http
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-H", "Host: ${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}", "--fail", "http://127.0.0.1/heathz"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     start_period: 5s
+  #     retries: 3
+  #   ulimits:
+  #     nproc: 655353
+  #     nofile:
+  #       soft: 1048576
+  #       hard: 1048576
+  #   networks:
+  #     - frontend-net
+  #     - backend-net
+    # depends_on:
+    #   - wordpress-fpm
+
+volumes:
+  mysql_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/database
+
+  http_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/logs/nginx
+
+  mysql_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/logs/mysql
+
+  pids:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/run
+
+networks:
+  frontend-net:
+    driver: bridge 
+    #external: true
+
+  backend-net:
+    driver: bridge 
+    # driver_opts:
+    #   com.docker.network.driver.mtu: 1460

@@ -1,16 +1,35 @@
 
 package org.isf.patientportal.config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.isf.patientportal.security.OHSimpleUrlAuthenticationSuccessHandler;
 import org.isf.patientportal.security.RestAuthenticationEntryPoint;
 import org.isf.patientportal.security.jwt.JWTConfigurer;
 import org.isf.patientportal.security.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
+import org.springframework.boot.actuate.endpoint.ExposableEndpoint;
+import org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver;
+import org.springframework.boot.actuate.endpoint.web.EndpointMapping;
+import org.springframework.boot.actuate.endpoint.web.EndpointMediaTypes;
+import org.springframework.boot.actuate.endpoint.web.ExposableWebEndpoint;
+import org.springframework.boot.actuate.endpoint.web.WebEndpointsSupplier;
+import org.springframework.boot.actuate.endpoint.web.annotation.ControllerEndpointsSupplier;
+import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpointsSupplier;
+import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,9 +38,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -29,7 +51,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
 	@Autowired
     private UserDetailsService userDetailsService;
@@ -83,11 +105,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.sessionManagement()
 		    .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.cors()
-			.and()
-			.csrf()
-				.disable()
-					.authorizeRequests()
+			.cors().and().csrf().disable()
+			.authorizeRequests()
+            .expressionHandler(webExpressionHandler())
             .and()
             .exceptionHandling()
             	//.accessDeniedHandler(accessDeniedHandler)
@@ -95,11 +115,11 @@ public class SecurityConfig {
             .and()
             .authorizeRequests()
             	.antMatchers("/auth/**").permitAll()
-            	.antMatchers(HttpMethod.POST, "/personas/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.PUT, "/personas/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.DELETE, "/personas/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.PATCH, "/personas/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.GET, "/personas/**").hasAnyAuthority("admin", "owner")
+            	.antMatchers(HttpMethod.POST, "/patients/**").hasAnyAuthority("admin", "owner")
+            	.antMatchers(HttpMethod.PUT, "/patients/**").hasAnyAuthority("admin", "owner")
+            	.antMatchers(HttpMethod.DELETE, "/patients/**").hasAnyAuthority("admin", "owner")
+            	.antMatchers(HttpMethod.PATCH, "/patients/**").hasAnyAuthority("admin", "owner")
+            	.antMatchers(HttpMethod.GET, "/patients/**").hasAnyAuthority("admin", "owner")
                 // downloads
             	.antMatchers(HttpMethod.POST, "/downloads/**").hasAnyAuthority("admin", "owner")
             	.antMatchers(HttpMethod.PUT, "/downloads/**").hasAnyAuthority("admin", "owner")
@@ -142,4 +162,36 @@ public class SecurityConfig {
 	public SimpleUrlAuthenticationSuccessHandler successHandler() {
     	return new OHSimpleUrlAuthenticationSuccessHandler(tokenProvider);
     }
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy = "ROLE_ADMIN > ROLE_FAMILYMANAGER \n ROLE_FAMILYMANAGER > ROLE_USER";
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
+    }
+
+    private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
+        DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+        defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+        return defaultWebSecurityExpressionHandler;
+    }
+
+    @Bean
+    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
+            List<ExposableEndpoint<?>> allEndpoints = new ArrayList();
+            Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
+            allEndpoints.addAll(webEndpoints);
+            allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
+            allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
+            String basePath = webEndpointProperties.getBasePath();
+            EndpointMapping endpointMapping = new EndpointMapping(basePath);
+            boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
+            return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath), shouldRegisterLinksMapping, null);
+        }
+
+
+    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
+            return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+        }
 }
