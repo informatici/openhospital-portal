@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.persistence.JoinColumn;
 
 import java.util.Collection;
@@ -18,15 +20,15 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Role {
- 
-    public Role(String name2) {
-	}
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank(message = "EMPTY_VALIDATION_ERROR")
     private String name;
+
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
@@ -38,5 +40,9 @@ public class Role {
         inverseJoinColumns = @JoinColumn(
           name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
+ 
+    public Role(String name) {
+        this.name = name;
+	}
 
 }
