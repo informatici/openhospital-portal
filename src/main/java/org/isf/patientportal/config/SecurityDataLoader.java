@@ -50,28 +50,43 @@ public class SecurityDataLoader implements
         Privilege writePrivilege
           = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
  
+        Privilege ownReadPrivilege
+          = createPrivilegeIfNotFound("OWN_READ_PRIVILEGE");
+ 
+        Privilege familyReadPrivilege
+          = createPrivilegeIfNotFound("FAMILY_READ_PRIVILEGE");
+ 
         List<Privilege> adminPrivileges = Arrays.asList(
           readPrivilege, writePrivilege);
+        List<Privilege> familyManagerPrivileges = Arrays.asList(
+            ownReadPrivilege, familyReadPrivilege);
+        List<Privilege> userManagerPrivileges = Arrays.asList(
+            ownReadPrivilege);
+                
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
+        createRoleIfNotFound("ROLE_FAMILYMANAGER", familyManagerPrivileges);
+        createRoleIfNotFound("ROLE_USER", userManagerPrivileges);
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        if (userRepository.findByEmail("admin@patientportal.isf.org") == null) {
+            
+            Role adminRole = roleRepository.findByName("ROLE_ADMIN");
 
-        User user = new User();
-        user.setPassword(passwordEncoder.encode("admin"));
-        user.setEmail("admin@patientportal.isf.org");
-        user.setUsername("admin@patientportal.isf.org");
-        Set<Role> roles = new HashSet<Role>();
-        roles.add(adminRole);
-        user.setRoles(roles);
-        user.setActive(true);
-        userRepository.save(user);
+            User user = new User();
+            user.setPassword(passwordEncoder.encode("admin"));
+            user.setEmail("admin@patientportal.isf.org");
+            user.setUsername("admin@patientportal.isf.org");
+            Set<Role> roles = new HashSet<Role>();
+            roles.add(adminRole);
+            user.setRoles(roles);
+            user.setActive(true);
+            userRepository.save(user);
+            Patient patient = new Patient();
+            patient.setFirstName("Admin");
+            patient.setSecondName("Admin");
+            patient.setUser(user);
+        }
 
-        Patient patient = new Patient();
-        patient.setFirstName("Admin");
-        patient.setSecondName("Admin");
-        patient.setUser(user);
-
+        
         alreadySetup = true;
     }
 
