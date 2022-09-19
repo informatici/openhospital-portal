@@ -1,4 +1,4 @@
-name: Build Poliform docker image
+name: Build PatientPortal docker image
 on:
   push:
     tags:
