@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.isf.patientportal.model.patient.Patient;
 import org.isf.patientportal.model.user.Privilege;
 import org.isf.patientportal.model.user.PrivilegeRepository;
 import org.isf.patientportal.model.user.Role;
@@ -80,10 +79,6 @@ public class SecurityDataLoader implements
             user.setRoles(roles);
             user.setActive(true);
             userRepository.save(user);
-            Patient patient = new Patient();
-            patient.setFirstName("Admin");
-            patient.setSecondName("Admin");
-            patient.setUser(user);
         }
 
         

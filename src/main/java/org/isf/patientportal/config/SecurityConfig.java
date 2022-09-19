@@ -114,24 +114,6 @@ public class SecurityConfig {
             .and()
             .authorizeRequests()
             	.antMatchers("/auth/**").permitAll()
-            	.antMatchers(HttpMethod.POST, "/patients/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.PUT, "/patients/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.DELETE, "/patients/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.PATCH, "/patients/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.GET, "/patients/**").hasAnyAuthority("admin", "owner")
-                // downloads
-            	.antMatchers(HttpMethod.POST, "/downloads/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.PUT, "/downloads/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.DELETE, "/downloads/**").hasAnyAuthority("admin", "owner")
-            	.antMatchers(HttpMethod.GET, "/downloads/**").hasAnyAuthority("admin", "owner")
-                
-				// //opd
-				// .antMatchers(HttpMethod.POST, "/opds/**").permitAll()
-				// .antMatchers(HttpMethod.PUT, "/opds/**").permitAll()
-				// .antMatchers(HttpMethod.DELETE, "/opds/**").permitAll()
-				// .antMatchers(HttpMethod.PATCH, "/opds/**").permitAll()
-				// .antMatchers(HttpMethod.GET, "/opds/**").hasAnyAuthority("admin", "owner")
-            	
             .and()
           	.formLogin()
           		.loginPage("/auth/login")

@@ -1,6 +1,7 @@
 package org.isf.patientportal.model.user;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "roles_privileges", 
         joinColumns = @JoinColumn(
@@ -41,6 +42,9 @@ public class Role {
           name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
  
+    public Role() {
+    }
+
     public Role(String name) {
         this.name = name;
 	}

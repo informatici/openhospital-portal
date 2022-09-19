@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.isf.patientportal.model.patient.Patient;
+import org.isf.patientportal.model.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +17,8 @@ import lombok.Setter;
 @Setter
 public class Download {
     @ManyToOne
-    @JoinColumn(name="patient_id", nullable=false)
-    private Patient patient;
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     @Id
     @GeneratedValue
@@ -33,8 +33,8 @@ public class Download {
     public Download() {
     }
     
-    public Download(String name, String type, String size, String url, Patient patient) {
-        this.patient = patient;
+    public Download(String name, String type, String size, String url, User user) {
+        this.user = user;
         this.name = name;
         this.type = type;
         this.size = size;

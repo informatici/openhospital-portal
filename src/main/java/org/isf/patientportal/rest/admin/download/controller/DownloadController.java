@@ -1,4 +1,4 @@
-package org.isf.patientportal.rest.controller.crud.download;
+package org.isf.patientportal.rest.admin.download.controller;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
