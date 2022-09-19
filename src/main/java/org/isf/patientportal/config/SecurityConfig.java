@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.isf.patientportal.security.OHSimpleUrlAuthenticationSuccessHandler;
+import org.isf.patientportal.rest.auth.util.OHSimpleUrlAuthenticationSuccessHandler;
 import org.isf.patientportal.security.RestAuthenticationEntryPoint;
 import org.isf.patientportal.security.jwt.JWTConfigurer;
 import org.isf.patientportal.security.jwt.TokenProvider;

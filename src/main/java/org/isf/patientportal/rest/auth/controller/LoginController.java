@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.controller.auth;
+package org.isf.patientportal.rest.auth.controller;
 
-import org.isf.patientportal.rest.dto.auth.LoginResponse;
+import org.isf.patientportal.rest.auth.dto.LoginResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
