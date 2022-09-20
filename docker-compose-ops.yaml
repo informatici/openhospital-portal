@@ -9,6 +9,13 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
     restart: "no"
+
+  init-api:
+    extends:
+      file: docker-compose.yaml
+      service: api-base
+    restart: "no"
+    command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=init"]
  
   flyway-migrate:
     image: flyway/flyway:8.5.13
