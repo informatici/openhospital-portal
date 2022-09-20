@@ -31,6 +31,7 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     networks:
       - backend-net
+
   api-base:
     image: ghcr.io/averni/oh-patient-portal/ohpp-api:${PATIENTPORTAL_VERSION}
     restart: "no"
@@ -50,8 +51,8 @@ services:
     ports:
       - 8080:8080
     # command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=init"]
-    volumes:
-      - ./resources/application.properties:/app/resources/application.properties
+    # volumes:
+    #   - ./resources/application.properties:/app/resources/application.properties
     # healthcheck:
     #   test: ["CMD", "docker-healthcheck"]
     #   interval: 5s
