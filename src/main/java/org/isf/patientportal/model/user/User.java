@@ -20,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,39 +46,6 @@ public class User {
     @Email(message = "EMAIL_FORMAT_VALIDATION_ERROR")
     @NotEmpty(message = "EMPTY_VALIDATION_ERROR")
     private String email;
-    
-
-    @NotNull
-    private String firstName;
-    
-    @NotNull
-    private String secondName;
-
-    @NotNull
-    private String name;
-    
-    @NotNull
-    private LocalDate birthDate;
-
-	@NotNull
-	private int age;
-
-	@NotNull
-	private String agetype;
-
-	@NotNull
-	private char sex;
-	
-	private String address;
-
-	@NotNull
-	private String city;
-	
-	private String nextKin;
-	
-	private String telephone;
-	
-	private String note;
     
     @NotNull
     @NotEmpty(message = "EMPTY_VALIDATION_ERROR")

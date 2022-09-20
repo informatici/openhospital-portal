@@ -5,6 +5,14 @@
 		}
     ],
     "settings": {
-        "java.configuration.updateBuildConfiguration": "interactive"
+        "java.configuration.updateBuildConfiguration": "interactive",
+        "files.exclude": {
+            "**/data/*/database": true
+        },
+        "java.project.resourceFilters": [
+            "data",
+            "node_modules",
+            ".git"
+        ]
     }
 }

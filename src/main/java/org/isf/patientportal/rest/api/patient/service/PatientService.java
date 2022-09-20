@@ -1,15 +1,12 @@
 package org.isf.patientportal.rest.api.patient.service;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.isf.patientportal.model.user.User;
 import org.isf.patientportal.model.user.UserRepository;
 import org.isf.patientportal.rest.api.patient.dto.PatientDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 @Service("patientService")

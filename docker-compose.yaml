@@ -4,6 +4,7 @@ services:
     image: mariadb:10.6.9
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: "unless-stopped"
+    # user: ${UID}:${GID}
     cap_add:
       - SYS_NICE
     labels:
@@ -42,13 +43,15 @@ services:
       - backend-net
     volumes:
       - sql_files:/app/sql
-      # - ./resources/application.properties:/app/application.properties
 
   api:
     extends:
       service: api-base
     ports:
       - 8080:8080
+    # command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=init"]
+    volumes:
+      - ./resources/application.properties:/app/resources/application.properties
     # healthcheck:
     #   test: ["CMD", "docker-healthcheck"]
     #   interval: 5s
@@ -72,8 +75,6 @@ services:
   #     - app.name=patientportal
   #     - app.namespace=${ENVIRONMENT_NAME}
   #     - app.stack=core
-  #     - app.wordpress.siteurl=${ENVIRONMENT_NAME}.${BASE_DOMAIN}
-  #     - app.wordpress.admin_siteurl=${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}
   #     - io.portainer.accesscontrol.teams=developers
   #     - traefik.enable=true
   #     - traefik.docker.network=patientportal-net
@@ -102,8 +103,6 @@ services:
   #   networks:
   #     - frontend-net
   #     - backend-net
-    # depends_on:
-    #   - wordpress-fpm
 
 volumes:
   mysql_data:
