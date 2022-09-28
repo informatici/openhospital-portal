@@ -1,5 +1,8 @@
 # Open Hospital Patient Portal
 
+First rename (mv) `dotenv` to `.env` and set up your variables and locations.
+
+
 ## 1. build image from sources
 
 ```
