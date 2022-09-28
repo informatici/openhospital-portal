@@ -28,7 +28,7 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
     volumes:
-      - sql_files:/flyway/sql
+      - sql_files:/flyway/sql/migrations
     command:
       - -url=jdbc:mariadb://mysql:3306/${MARIADB_DATABASE}?createDatabaseIfNotExist=true
       - -connectRetries=60 
