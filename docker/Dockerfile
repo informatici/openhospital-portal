@@ -8,6 +8,7 @@ COPY pom.xml .
 COPY src src
 
 #RUN --mount=type=cache,target=/root/.m2 ./mvnw install -DskipTests
+RUN sed -i 's/\r$//' mvnw
 RUN --mount=type=cache,target=/root/.m2 ./mvnw clean package spring-boot:repackage -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
