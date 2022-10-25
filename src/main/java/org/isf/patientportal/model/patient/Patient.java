@@ -39,9 +39,6 @@ public class Patient {
     private String secondName;
 
     @NotNull
-    private String name;
-
-    @NotNull
     private LocalDate birthDate;
 
     @NotNull
@@ -60,6 +57,7 @@ public class Patient {
 
     private String nextKin;
 
+    @NotNull
     private String telephone;
 
     private String note;
