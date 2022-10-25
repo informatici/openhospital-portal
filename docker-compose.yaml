@@ -13,7 +13,7 @@ services:
       - app.stack=core
       - io.portainer.accesscontrol.teams=developers
     ports:
-      - "3306:3306"
+      - "13306:3306"
     healthcheck:
       test: ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized", "--innodb_buffer_pool_loaded"]
       interval: 5s
@@ -49,7 +49,7 @@ services:
     extends:
       service: api-base
     ports:
-      - 8080:8080
+      - 18080:8080
     # command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=init"]
     # volumes:
     #   - ./resources/application.properties:/app/resources/application.properties
