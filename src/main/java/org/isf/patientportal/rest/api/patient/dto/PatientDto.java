@@ -16,8 +16,6 @@ public class PatientDto {
     
     private String secondName;
 
-    private String name;
-    
     private LocalDate birthDate;
 
 	private int age;
