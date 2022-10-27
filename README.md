@@ -3,7 +3,7 @@
 First rename (mv) `dotenv` to `.env` and set up your variables and locations.
 
 
-## 1. build image from sources
+## 1. build images from sources
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build build-api
@@ -44,5 +44,5 @@ rm -rf data/develop/sql/migrations/*
 
 ## 3. start app in dev mode with output in the terminal
 ```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up api
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up api ui
 ```

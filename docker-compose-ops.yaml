@@ -9,6 +9,25 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
     restart: "no"
+    
+  ui-dev:
+    image: patient-portal-ui-dev-image:latest
+    build:
+      context: ./patient-portal-ui
+      dockerfile: Dockerfile-dev
+    ports:
+      - 3001:80
+    volumes:
+      - ui_files:/app
+    environment:
+      - WATCHPACK_POLLING=true
+      #- CHOKIDAR_USEPOLLING=true to understand if it is really needed
+    working_dir: /app
+    
+  build-ui-dev:
+   extends:
+      service: ui-dev
+   command: ["npm", "run", "build"]
 
   init-api:
     extends:
@@ -35,3 +54,12 @@ services:
       - -user=${MARIADB_USER}
       - -password=${MARIADB_PASSWORD}
       - migrate
+
+volumes:
+
+  ui_files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${ROOT}/patient-portal-ui

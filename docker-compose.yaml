@@ -61,7 +61,15 @@ services:
     #   retries: 3
     # environment:
     #   - WORDPRESS_DB_HOST=mysql
-
+    
+  ui:
+    image: patient-portal-ui-image:latest
+    build:
+      context: ./patient-portal-ui
+      dockerfile: Dockerfile-release
+    ports:
+      - 3001:80
+      
   # http:
   #   image: ghcr.io/averni/oh-patient-portal/ohpp-api-http:${PATIENTPORTAL_VERSION}
   #   restart: "no"
