@@ -1,0 +1,18 @@
+
+http:
+  routers:
+    traefik-502:
+      rule: "PathPrefix(`/`)"
+      priority: 1
+      service: unavailable
+      # service: "noop@internal"
+      entrypoints:
+        - "websecure"
+      tls: true
+  
+  services:
+    # Service that will always answer a 503 Service Unavailable response
+    unavailable:
+      loadbalancer:
+        servers: {}
+      
