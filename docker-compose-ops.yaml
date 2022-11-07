@@ -6,8 +6,8 @@ services:
       file: docker-compose.yaml
       service: api-base
     build:
-      context: .
-      dockerfile: ./docker/Dockerfile
+      context: ./patient-portal/
+      dockerfile: ./Dockerfile
     restart: "no"
     
   ui-dev:
@@ -25,9 +25,9 @@ services:
     working_dir: /app
     
   build-ui-dev:
-   extends:
+    extends:
       service: ui-dev
-   command: ["npm", "run", "build"]
+    command: ["npm", "run", "build"]
 
   init-api:
     extends:

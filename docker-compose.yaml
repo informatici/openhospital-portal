@@ -1,5 +1,27 @@
 version: "3.8"
 services:
+  loadbalancer:
+    image: ghcr.io/averni/oh-patient-portal/traefik:develop
+    build:
+      context: ./loadbalancer
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: loadbalancer
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    # ports:
+    #   - ${HTTPS_PORT}:${HTTPS_PORT}
+    #   - ${LB_ADMIN_PORT}:8080
+    #   - ${HTTP_PORT}:80
+    #   - ${ADMIN_PORT}:9443
+    networks:
+      - frontend-net
+
   mysql:
     image: mariadb:10.6.9
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -70,48 +92,48 @@ services:
     ports:
       - 3001:80
       
-  # http:
-  #   image: ghcr.io/averni/oh-patient-portal/ohpp-api-http:${PATIENTPORTAL_VERSION}
-  #   restart: "no"
-  #   volumes:
-  #     - html_data:/var/www/html
-  #     - http_logs:/var/log/nginx/host
-  #     - pids:/var/run
-  #   environment:
-  #     WORKER_PROCESSES: ${NGINX_WORKER_PROCESSES}
-  #     WORKER_CONNECTIONS: ${NGINX_WORKER_CONNECTIONS}
-  #   labels:
-  #     - app.name=patientportal
-  #     - app.namespace=${ENVIRONMENT_NAME}
-  #     - app.stack=core
-  #     - io.portainer.accesscontrol.teams=developers
-  #     - traefik.enable=true
-  #     - traefik.docker.network=patientportal-net
-  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}`, `${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}`)
-  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
-  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
-  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
-  #     - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.passhostheader=true
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.path=/x-lb-healthcheck.txt
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.interval=1200ms
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.timeout=700ms
-  #     - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.scheme=http
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-H", "Host: ${ENVIRONMENT_NAME}-${ADMIN_DOMAIN}.${BASE_DOMAIN}", "--fail", "http://127.0.0.1/heathz"]
-  #     interval: 5s
-  #     timeout: 5s
-  #     start_period: 5s
-  #     retries: 3
-  #   ulimits:
-  #     nproc: 655353
-  #     nofile:
-  #       soft: 1048576
-  #       hard: 1048576
-  #   networks:
-  #     - frontend-net
-  #     - backend-net
+  http:
+    image: ghcr.io/averni/oh-patient-portal/ohpp-http:${PATIENTPORTAL_VERSION}
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-release
+    restart: "unless-stopped"
+    volumes:
+      # - html_data:/var/www/html
+      - http_logs:/var/log/nginx/host
+      - pids:/var/run
+    environment:
+      WORKER_PROCESSES: ${NGINX_WORKER_PROCESSES}
+      WORKER_CONNECTIONS: ${NGINX_WORKER_CONNECTIONS}
+    labels:
+      - app.name=patientportal
+      - traefik.enable=true
+      - traefik.docker.network=patientportal-net
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}`)
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.passhostheader=true
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.path=/x-lb-healthcheck.txt
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.interval=1200ms
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.timeout=700ms
+      - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.healthcheck.scheme=http
+    healthcheck:
+      test: ["CMD", "curl", "-H", "Host: ${ENVIRONMENT_NAME}.${BASE_DOMAIN}", "--fail", "http://127.0.0.1/heathz"]
+      interval: 5s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+    ulimits:
+      nproc: 655353
+      nofile:
+        soft: 1048576
+        hard: 1048576
+    networks:
+      - frontend-net
+      - backend-net
 
 volumes:
   mysql_data:
