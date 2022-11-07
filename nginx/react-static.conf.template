@@ -1,0 +1,14 @@
+
+
+
+server {
+    listen ${MONITOR_PORT} reuseport;
+    server_name _;
+    root /var/www/html;
+
+    location /stub_status {
+        stub_status on;
+        access_log  on;           
+        allow all;
+    }
+}
