@@ -1,4 +1,4 @@
-user www-data;
+user nginx;
 worker_processes $WORKER_PROCESSES;
 pid /run/nginx-$WORKER_NAME.pid;
 include /etc/nginx/modules-enabled/*.conf;
