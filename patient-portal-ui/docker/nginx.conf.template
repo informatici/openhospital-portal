@@ -1,0 +1,125 @@
+user nginx;
+worker_processes $WORKER_PROCESSES;
+pid /run/nginx-$WORKER_NAME.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+    worker_connections $WORKER_CONNECTIONS;
+    # multi_accept on;
+}
+
+http {
+
+    ##
+    # Basic Settings
+    ##
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    types_hash_max_size 2048;
+    # server_tokens off;
+
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    client_body_buffer_size 128K;
+    client_header_buffer_size 1k;
+    client_max_body_size 8m;
+    large_client_header_buffers 4 16k;
+
+    ##
+    # SSL Settings
+    ##
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+    ssl_prefer_server_ciphers on;
+
+    ##
+    # Gzip Settings
+    ##
+
+    gzip on;
+
+    # gzip_vary on;
+    # gzip_proxied any;
+    # gzip_comp_level 6;
+    gzip_proxied any;
+    gzip_min_length 256;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types
+        application/atom+xml
+        application/geo+json
+        application/javascript
+        application/x-javascript
+        application/json
+        application/ld+json
+        application/manifest+json
+        application/rdf+xml
+        application/rss+xml
+        application/vnd.ms-fontobject
+        application/wasm
+        application/x-web-app-manifest+json
+        application/xhtml+xml
+        application/xml
+        font/eot
+        font/otf
+        font/ttf
+        image/bmp
+        image/svg+xml
+        text/cache-manifest
+        text/calendar
+        text/css
+        text/javascript
+        text/markdown
+        text/plain
+        text/xml
+        text/vcard
+        text/vnd.rim.location.xloc
+        text/vtt
+        text/x-component
+        text/x-cross-domain-policy;
+
+
+
+    open_file_cache          max=10000 inactive=1h;
+    open_file_cache_valid    15m;
+    open_file_cache_min_uses 1;
+    open_file_cache_errors   on;
+
+    ##
+    # Logging Settings
+    ##
+    # per stdout:
+    # set_real_ip_from  0.0.0.0/0;
+    # real_ip_header    CF-Connecting-IP;
+    # real_ip_recursive on;
+    
+    log_format proxy '$http_cf_connecting_ip - $http_x_forwarded_for - $remote_user [$time_local] '
+                    '"$request" $status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent"' ' upstream_addr=$upstream_addr '
+                    'upstream_status=$upstream_status '
+                    'request_time=$request_time '
+                    'upstream_response_time=$upstream_response_time '
+                    'upstream_connect_time=$upstream_connect_time '
+                    'upstream_header_time=$upstream_header_time';
+
+    access_log /var/log/nginx/access.log proxy;
+    error_log /var/log/nginx/error.log;
+    
+    ##
+    # Virtual Host Configs
+    ##
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+
+
+
+}
+
