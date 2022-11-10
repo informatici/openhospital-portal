@@ -44,5 +44,5 @@ rm -rf data/develop/sql/migrations/*
 
 ## 3. start app in dev mode with output in the terminal
 ```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up api ui
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
 ```
