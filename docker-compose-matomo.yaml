@@ -1,0 +1,127 @@
+version: "3"
+
+services:
+  matomo-mysql:
+    image: mariadb:10.6.9
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci  --max-allowed-packet=64MB
+    restart: unless-stopped
+    volumes:
+      - matomo_mysql_data:/var/lib/mysql
+      - matomo_mysql_logs:/var/log/mysql
+    environment:
+      MARIADB_MYSQL_LOCALHOST_USER: "true"
+      MARIADB_ROOT_PASSWORD: ${MATOMO_MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MATOMO_MARIADB_DATABASE}
+      MARIADB_USER: ${MATOMO_MARIADB_USER}
+      MARIADB_PASSWORD: ${MATOMO_MARIADB_PASSWORD}
+    networks:
+      - matomo-backend-net
+    
+  matomo-fpm:
+    image: matomo:4.12.3-fpm-alpine
+    restart: unless-stopped
+    volumes:
+      # - ./config:/var/www/html/config:rw
+      # - ./logs:/var/www/html/logs
+      - matomo-data:/var/www/html
+    environment:
+      - MATOMO_DATABASE_HOST=matomo-mysql
+      - PHP_MEMORY_LIMIT=2048M
+      - MATOMO_DATABASE_ADAPTER=mysql
+      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
+      - MATOMO_DATABASE_USERNAME=${MATOMO_MARIADB_USER}
+      - MATOMO_DATABASE_PASSWORD=${MATOMO_MARIADB_PASSWORD}
+      - MATOMO_DATABASE_DBNAME=${MATOMO_MARIADB_DATABASE}
+    networks:
+      - matomo-backend-net
+    
+  matomo-http:
+    image: nginx:1.23.2-alpine
+    restart: always
+    volumes:
+      - matomo-data:/var/www/html:ro
+      - matomo_http_logs:/var/log/nginx/host
+      - ./anlytics/matomo.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - app.name=patientportal
+      - traefik.enable=true
+      - traefik.docker.network=patientportal-matomo-net-${ENVIRONMENT_NAME}
+      - traefik.http.routers.matomo.rule=Host(`${ENVIRONMENT_NAME}-matomo.${BASE_DOMAIN}`)
+      - traefik.http.routers.matomo.entrypoints=websecure
+      - traefik.http.routers.matomo.tls=true
+      - traefik.http.routers.matomo.priority=10
+      - traefik.http.routers.matomo.service=matomo
+      - traefik.http.services.matomo.loadbalancer.server.port=80
+      - traefik.http.services.matomo.loadbalancer.passhostheader=true
+      - traefik.http.services.matomo.loadbalancer.healthcheck.path=/
+      - traefik.http.services.matomo.loadbalancer.healthcheck.interval=5000ms
+      - traefik.http.services.matomo.loadbalancer.healthcheck.timeout=2000ms
+      - traefik.http.services.matomo.loadbalancer.healthcheck.scheme=http
+    networks:
+      - matomo-backend-net
+      - matomo-frontend-net
+    ports:
+      - 28080:80
+      
+  # archive
+  matomo-fpm-archive:
+    image: matomo:4.12.3-fpm-alpine
+    restart: unless-stopped
+    command: /bin/sh -c "while true; do sleep 3600; /usr/local/bin/php /var/www/html/console core:archive --url=https://stats.mysite.ext www-data; done"
+    volumes:
+      # - ./config:/var/www/html/config:rw
+      # - ./logs:/var/www/html/logs
+      - matomo:/var/www/html
+    environment:
+      - MATOMO_DATABASE_HOST=matomo-mysql
+      - PHP_MEMORY_LIMIT=2048M
+      - MATOMO_DATABASE_ADAPTER=mysql
+      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
+      - MATOMO_DATABASE_USERNAME=${MATOMO_MARIADB_USER}
+      - MATOMO_DATABASE_PASSWORD=${MATOMO_MARIADB_PASSWORD}
+      - MATOMO_DATABASE_DBNAME=${MATOMO_MARIADB_DATABASE}
+    networks:
+      - matomo-backend-net
+
+volumes:
+  matomo_mysql_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/database-matomo
+
+  matomo-data:
+    driver: local
+    
+  matomo:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/data-matomo
+
+  matomo_http_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/logs/nginx-matomo
+
+  matomo_mysql_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/logs/mysql-matomo
+
+networks:
+  matomo-frontend-net:
+    name: patientportal-matomo-net-${ENVIRONMENT_NAME}
+    driver: bridge 
+    #external: true
+
+  matomo-backend-net:
+    driver: bridge 
+    # driver_opts:
+    #   com.docker.network.driver.mtu: 1460

@@ -21,6 +21,7 @@ services:
       - ${ADMIN_PORT}:9443
     networks:
       - frontend-net
+      - matomo-frontend-net
 
   mysql:
     image: mariadb:10.6.9
@@ -188,3 +189,9 @@ networks:
     driver: bridge 
     # driver_opts:
     #   com.docker.network.driver.mtu: 1460
+
+  matomo-frontend-net:
+    name: patientportal-matomo-net-${ENVIRONMENT_NAME}
+    driver: bridge 
+    #external: true
+
