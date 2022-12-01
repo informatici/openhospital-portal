@@ -49,7 +49,7 @@ rm -rf data/develop/sql/migrations/*
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql (skip if done in step 2. init DB)
-docker compose -f docker-compose-matomo.yaml -d up
+docker compose -f docker-compose-matomo.yaml up -d 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
 ```
 
