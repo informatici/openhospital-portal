@@ -41,7 +41,7 @@ services:
     volumes:
       - matomo-data:/var/www/html:ro
       - matomo_http_logs:/var/log/nginx/host
-      - ./anlytics/matomo.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./analytics/nginx/matomo.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
       - app.name=patientportal
       - traefik.enable=true
