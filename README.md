@@ -39,7 +39,7 @@ start mysql database/service (in background)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
 
-create file schema + db. Interrupt with CTRL-C after fully started (repeat the command until it run clean)
+create file schema + db. Interrupt with CTRL-C after fully started (WARNING: repeat the command until it runs clean)
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
