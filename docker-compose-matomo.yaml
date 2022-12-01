@@ -71,7 +71,7 @@ services:
     volumes:
       # - ./config:/var/www/html/config:rw
       # - ./logs:/var/www/html/logs
-      - matomo:/var/www/html
+      - matomo-archive:/var/www/html
     environment:
       - MATOMO_DATABASE_HOST=matomo-mysql
       - PHP_MEMORY_LIMIT=2048M
@@ -94,12 +94,8 @@ volumes:
   matomo-data:
     driver: local
     
-  matomo:
+  matomo-archive:
     driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/data-matomo
 
   matomo_http_logs:
     driver: local
