@@ -70,7 +70,8 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer
 
 - Matomo will be available at `http://develop-matomo.ohpp.local/` and `http://localhost:28080/`
 
-    - connect and configure the first time
+    - connect and configure the first time (installation)
+    - In Administration > Privacy > Users opt-out, under “Support Do Not Track preference” you can enable/disable Do Not Track support
     
 # Stopping
 
