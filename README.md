@@ -86,7 +86,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop
 
 # Cleaning
 
-remove all containers and volumes
+Remove all containers and volumes
 
 ```
 docker compose rm --stop --volumes --force
@@ -104,7 +104,7 @@ docker volume rm oh-patient-portal_sql_files
 docker volume rm oh-patient-portal_ui_files
 ```
 
-clean previous data
+Clean previous data
 
 ```
 rm -rf data
@@ -112,7 +112,14 @@ rm -rf data
 
 # Developing
 
-## develop the ui (React)
+## API
+
+Api available at `https://develop-api.ohpp.local/` and `http://localhost:18080/`
+
+- See ppoh.postman_collection.json
+- PP-12 OpenAPI Docs (TODO)
+
+## Develop the ui (React)
 
 Just cd into patient-portal-ui and run (ui available at http://localhost:3000/)
 
@@ -121,4 +128,6 @@ npm install
 npm start
 ```
 
-codebase in patient-portal-ui/src
+Codebase in patient-portal-ui/src
+
+
