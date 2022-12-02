@@ -8,14 +8,7 @@ Create the folder structure
 
 ```
 export $(grep ENVIRONMENT_NAME .env | xargs)
-mkdir -p data/$ENVIRONMENT_NAME/database
-mkdir -p data/$ENVIRONMENT_NAME/database-matomo
-mkdir -p data/$ENVIRONMENT_NAME/logs/mysql
-mkdir -p data/$ENVIRONMENT_NAME/logs/mysql-matomo
-mkdir -p data/$ENVIRONMENT_NAME/logs/nginx
-mkdir -p data/$ENVIRONMENT_NAME/logs/nginx-matomo
-mkdir -p data/$ENVIRONMENT_NAME/run
-mkdir -p data/$ENVIRONMENT_NAME/sql
+mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql
 
 ```
 
