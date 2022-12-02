@@ -1,6 +1,6 @@
 # Open Hospital Patient Portal
 
-First rename (mv) `dotenv` to `.env` and set up your variables and locations.
+First copy `dotenv` to `.env` and set up your variables and locations.
 
 Add in the `hosts` file the following entry `127.0.0.1 develop.ohpp.local develop-api.ohpp.local develop-matomo.local`
 
@@ -39,7 +39,7 @@ start mysql database/service (in background)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
 
-create file schema + db. Interrupt with CTRL-C after fully started (WARNING: repeat the command until it runs clean)
+create file schema + db. Interrupt with CTRL-C after fully started (WARNING: if exits with errors, repeat the command until it is fully started)
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
@@ -91,17 +91,7 @@ Remove all containers and volumes
 ```
 docker compose rm --stop --volumes --force
 docker compose -f docker-compose-matomo.yaml rm --stop --volumes --force
-docker volume rm oh-patient-portal_http_logs
-docker volume rm oh-patient-portal_matomo-archive
-docker volume rm oh-patient-portal_matomo-data
-docker volume rm oh-patient-portal_matomo_http_logs
-docker volume rm oh-patient-portal_matomo_mysql_data
-docker volume rm oh-patient-portal_matomo_mysql_logs
-docker volume rm oh-patient-portal_mysql_data
-docker volume rm oh-patient-portal_mysql_logs
-docker volume rm oh-patient-portal_pids
-docker volume rm oh-patient-portal_sql_files
-docker volume rm oh-patient-portal_ui_files
+docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
 ```
 
 Clean previous data
