@@ -7,14 +7,16 @@ Add in the `hosts` file the following entry `127.0.0.1 develop.ohpp.local develo
 Create the folder structure
 
 ```
-mkdir -p data/develop/database
-mkdir -p data/develop/database-matomo
-mkdir -p data/develop/logs/mysql
-mkdir -p data/develop/logs/mysql-matomo
-mkdir -p data/develop/logs/nginx
-mkdir -p data/develop/logs/nginx-matomo
-mkdir -p data/develop/run
-mkdir -p data/develop/sql
+export $(grep ENVIRONMENT_NAME .env | xargs)
+mkdir -p data/$ENVIRONMENT_NAME/database
+mkdir -p data/$ENVIRONMENT_NAME/database-matomo
+mkdir -p data/$ENVIRONMENT_NAME/logs/mysql
+mkdir -p data/$ENVIRONMENT_NAME/logs/mysql-matomo
+mkdir -p data/$ENVIRONMENT_NAME/logs/nginx
+mkdir -p data/$ENVIRONMENT_NAME/logs/nginx-matomo
+mkdir -p data/$ENVIRONMENT_NAME/run
+mkdir -p data/$ENVIRONMENT_NAME/sql
+
 ```
 
 # Building
@@ -48,7 +50,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-a
 remove migration file
 
 ```
-rm -rf data/develop/sql/migrations/*
+rm -rf data/$ENVIRONMENT_NAME/sql/migrations/*
 ```
 
 # Starting
@@ -56,7 +58,7 @@ rm -rf data/develop/sql/migrations/*
 ## 3. start the app mode with output in the terminal
 
 ```
-docker compose -f docker-compose-matomo.yaml up -d 
+docker compose -f docker-compose-matomo.yaml up -d
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
 ```
 
@@ -97,7 +99,7 @@ docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
 Clean previous data
 
 ```
-rm -rf data
+rm -rf data/$ENVIRONMENT_NAME
 ```
 
 # Developing
