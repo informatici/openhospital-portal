@@ -66,7 +66,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer
 - Matomo will be available at `http://develop-matomo.ohpp.local/` and `http://localhost:28080/`
 
     - connect and configure the first time (installation)
-    - In Administration > Privacy > Users opt-out, under “Support Do Not Track preference” you can enable/disable Do Not Track support
+    - In Administration > Privacy > Users opt-out, under “Support Do Not Track preference” disable Do Not Track support
     
 # Stopping
 
@@ -101,8 +101,9 @@ rm -rf data/$ENVIRONMENT_NAME
 
 Api available at `https://develop-api.ohpp.local/` and `http://localhost:18080/`
 
+Swagger UI available at `https://develop-api.ohpp.local/swagger-ui/` and `https://develop-api.ohpp.local/v3/api-docs`
+
 - See ppoh.postman_collection.json
-- PP-12 OpenAPI Docs (TODO)
 
 ## Develop the ui (React)
 
