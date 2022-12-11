@@ -1,6 +1,6 @@
 
 # images registry
-IMAGES_REPO=ghcr.io/averni/oh-patient-portal
+IMAGES_REPO=ghcr.io/informatici/openhospital-portal
 
 MARIADB_ROOT_PASSWORD=ohpppassword
 PATIENTPORTAL_VERSION=develop
