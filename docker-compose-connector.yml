@@ -1,0 +1,60 @@
+version: '3'
+services:
+  database:
+    # build:
+    #   context: ./oh-core
+    #   dockerfile: Dockerfile-ohdb
+    image: oh-core_database:latest
+    # ports:
+    # - "3306:3306"
+    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --lower_case_table_names=1
+    # command: 
+    environment:
+      MARIADB_MYSQL_LOCALHOST_USER: "true"
+      MARIADB_DATABASE: oh
+      MARIADB_ROOT_PASSWORD: ${OH_MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${OH_MARIADB_USER}
+      MARIADB_PASSWORD: ${OH_MARIADB_PASSWORD}
+    volumes:
+      - database_data:/var/lib/mysql
+    networks:
+      - hospital-net
+
+  database-init:
+    image: oh-core_database:latest
+    command: cd /database-sources/ && mysqld -u $MARIADB_USER -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /database-sources/create_all_${DEMO_LANG} && mysqld -u $MARIADB_USER -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /database-sources/load_demo_data.sql
+    # command: 
+    environment:
+      MARIADB_MYSQL_LOCALHOST_USER: "true"
+      MARIADB_DATABASE: oh
+      MARIADB_ROOT_PASSWORD: ${OH_MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${OH_MARIADB_USER}
+      MARIADB_PASSWORD: ${OH_MARIADB_PASSWORD}
+      DEMO_LANG: en
+    volumes:
+      - ./deps/openhospital-core/sql:/database-sources # /docker-entrypoint-initdb.d
+      - database_data:/var/lib/mysql
+    networks:
+      - hospital-net
+
+  connector:
+    image: ${IMAGES_REPO}/ohpp-connector:${PATIENTPORTAL_VERSION}
+    build:
+      context: ./connector
+      dockerfile: Dockerfile
+    environment:
+      - API_URL=develop-api.ohpp.local
+    networks:
+    - hospital-net
+
+volumes:
+  database_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/oh-database
+    
+networks:
+  hospital-net:
+    driver: bridge 
