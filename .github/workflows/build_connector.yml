@@ -1,14 +1,13 @@
 name: Build PatientPortal OH Connector docker image
 on:
+  workflow_dispatch:
   push:
     tags:
       - v*
     branches:    
       - '**'        # qualsiasi branch
-      # - '!master'   # escluso master
     paths:
       - 'connector/**' 
-  workflow_dispatch:
 
 concurrency: 
   group: ci-${{ github.ref }}
