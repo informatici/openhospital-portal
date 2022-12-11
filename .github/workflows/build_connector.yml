@@ -10,7 +10,7 @@ on:
       - 'connector/**' 
 
 concurrency: 
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
