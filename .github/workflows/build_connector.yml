@@ -1,0 +1,64 @@
+name: Build PatientPortal OH Connector docker image
+on:
+  push:
+    tags:
+      - v*
+    branches:    
+      - '**'        # qualsiasi branch
+      # - '!master'   # escluso master
+    paths:
+      - 'connector/**' 
+  workflow_dispatch:
+
+concurrency: 
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and push docker image
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup image repo
+        shell: bash
+        run: |
+          build_id=$(echo "${GITHUB_REF}" | sed "s#^\([^/]*[/]\)\{2\}##g" | tr "/" "-")
+          echo BUILD_ID=${build_id} >> $GITHUB_ENV
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/informatici/openhospital-portal/ohpp-connector
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./connector
+          file: ./connector/Dockerfile
+          build-args: |
+            "BUILD_ID=${{ env.BUILD_ID }}"
+          push: true
+          pull: true
+          cache-from: type=registry,ref=ghcr.io/informatici/openhospital-portal/ohpp-connector:buildcache
+          cache-to: type=registry,ref=ghcr.io/informatici/openhospital-portal/ohpp-connector:buildcache,mode=max
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
