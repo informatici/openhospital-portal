@@ -1,0 +1,47 @@
+# The name of the file to be modified
+CONNECTOR_APPLICATION_PROPERTIES = ./connector/src/main/resources/application.properties
+CONNECTOR_DATABASE_PROPERTIES = ./connector/src/main/resources/database.properties
+CONNECTOR_LOG4J_PROPERTIES = ./connector/src/main/resources/log4j.properties
+CONNECTOR_SETTINGS = ./connector/src/main/resources/settings.properties
+
+# The variable that will be used to replace the old value in the file
+MARIADB_SERVER = $(OH_MARIADB_SERVER)
+MARIADB_PORT = $(OH_MARIADB_PORT)
+MARIADB_DATABASE = $(OH_MARIADB_DATABASE)
+MARIADB_USER = $(OH_MARIADB_USER)
+MARIADB_PASSWORD = $(OH_MARIADB_PASSWORD)
+DEMO_LANG = $(OH_DEMO_LANG)
+
+# Get env variables
+export $(grep OH_MARIADB_SERVER .env | xargs) \
+export $(grep OH_MARIADB_PORT .env | xargs) \
+export $(grep OH_MARIADB_DATABASE .env | xargs) \
+export $(grep OH_MARIADB_USER .env | xargs) \
+export $(grep OH_MARIADB_PASSWORD .env | xargs) \
+export $(grep OH_DEMO_LANG .env | xargs) \
+
+.DEFAULT_GOAL = modify
+
+.PHONY: clean copy modify
+
+# Clean configuration
+clean:
+	rm -rf $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES) $(CONNECTOR_SETTINGS)
+
+# Copy .dist
+copy: clean
+	cp $(CONNECTOR_APPLICATION_PROPERTIES).dist $(CONNECTOR_APPLICATION_PROPERTIES)
+	cp $(CONNECTOR_DATABASE_PROPERTIES).dist $(CONNECTOR_DATABASE_PROPERTIES)
+	cp $(CONNECTOR_LOG4J_PROPERTIES).dist $(CONNECTOR_LOG4J_PROPERTIES)
+	cp $(CONNECTOR_SETTINGS).dist $(CONNECTOR_SETTINGS)
+
+# Modify copies
+modify: clean copy
+	sed -i "s/ohdbserver/$(MARIADB_SERVER)/g" $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES)
+	sed -i "s/ohdbport/$(MARIADB_PORT)/g" $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES)
+	sed -i "s/ohdbname/$(MARIADB_DATABASE)/g" $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES)
+	sed -i "s/ohdbuser/$(MARIADB_USER)/g" $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES)
+	sed -i "s/ohdbpassword/$(MARIADB_PASSWORD)/g" $(CONNECTOR_APPLICATION_PROPERTIES) $(CONNECTOR_DATABASE_PROPERTIES) $(CONNECTOR_LOG4J_PROPERTIES)
+	sed -i "s/ohlanguage/$(DEMO_LANG)/g" $(CONNECTOR_SETTINGS)
+
+	

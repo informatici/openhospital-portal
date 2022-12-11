@@ -1,0 +1,3 @@
+jdbc.url=jdbc:mysql://ohdbserver:ohdbport/ohdbname
+jdbc.username=ohdbuser
+jdbc.password=ohdbpassword
