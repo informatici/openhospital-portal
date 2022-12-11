@@ -33,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/informatici/openhospital-portal/ohpp-connector
+            ghcr.io/averni/oh-patient-portal/ohpp-connector
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -57,8 +57,8 @@ jobs:
             "BUILD_ID=${{ env.BUILD_ID }}"
           push: true
           pull: true
-          cache-from: type=registry,ref=ghcr.io/informatici/openhospital-portal/ohpp-connector:buildcache
-          cache-to: type=registry,ref=ghcr.io/informatici/openhospital-portal/ohpp-connector:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/averni/oh-patient-portal/ohpp-connector:buildcache
+          cache-to: type=registry,ref=ghcr.io/averni/oh-patient-portal/ohpp-connector:buildcache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
