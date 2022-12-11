@@ -18,8 +18,8 @@ FROM openjdk:11-jdk as build
 
 WORKDIR /app
 
-COPY mvnw .
-COPY .mvn .mvn
+COPY --from=deps /deps/mvnw .
+COPY --from=deps /deps/.mvn .mvn
 COPY pom.xml .
 COPY src src
 
