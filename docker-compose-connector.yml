@@ -20,7 +20,7 @@ services:
     networks:
       - hospital-net
 
-  database-init:
+  oh-database-init:
     image: oh-core_database:latest
     command: cd /database-sources/ && mysqld -u $MARIADB_USER -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /database-sources/create_all_${DEMO_LANG} && mysqld -u $MARIADB_USER -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /database-sources/load_demo_data.sql
     # command: 
