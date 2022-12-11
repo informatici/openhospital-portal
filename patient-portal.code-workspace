@@ -13,6 +13,8 @@
             "data",
             "node_modules",
             ".git"
-        ]
+        ],
+        "maven.view": "hierarchical",
+        "java.dependency.packagePresentation": "flat"
     }
 }
