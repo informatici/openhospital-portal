@@ -12,7 +12,7 @@ RUN sed -i 's/\r$//' mvnw
 RUN --mount=type=cache,target=/root/.m2 git clone https://github.com/informatici/openhospital-core.git \
     && cd openhospital-core \
     && git checkout v${OPENHOSPITAL_CORE_VERSION} \
-    && ./mvnw clean install -DskipTests 
+    && ./mvnw -B clean install -DskipTests 
 
 FROM openjdk:11-jdk as build
 
@@ -25,7 +25,7 @@ COPY src src
 
 RUN sed -i 's/\r$//' mvnw
 
-RUN --mount=type=cache,target=/root/.m2 ./mvnw clean package spring-boot:repackage -DskipTests \
+RUN --mount=type=cache,target=/root/.m2 ./mvnw -B clean package spring-boot:repackage -DskipTests \
     && mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 
