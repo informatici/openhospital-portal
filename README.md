@@ -51,8 +51,11 @@ rm -rf data/$ENVIRONMENT_NAME/sql/migrations/*
 ## 3. start the app mode with output in the terminal
 
 ```
-docker compose -f docker-compose-matomo.yaml up -d
+# the portal
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
+
+# matomo instance (optional)
+docker compose -f docker-compose-matomo.yaml up -d
 ```
 
 ## 4. available services
@@ -115,5 +118,3 @@ npm start
 ```
 
 Codebase in patient-portal-ui/src
-
-
