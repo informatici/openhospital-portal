@@ -118,3 +118,71 @@ npm start
 ```
 
 Codebase in patient-portal-ui/src
+
+# Connector (WIP)
+
+A scaffolding for the connector that will retrieve data from an Open Hospital instance (DB) and feed the Patient Portal DB
+
+It uses [openhospital-core](https://github.com/informatici/openhospital-core.git) and it expects the OPENHOSPITAL_CORE_VERSION to point a tagged version
+
+## 1. Setup using a test db
+
+First create connector settings based on .env
+
+```
+make
+```
+
+Get db scripts from https://github.com/informatici/openhospital-core.git $OPENHOSPITAL_CORE_VERSION
+
+```
+rm -rf deps
+export $(grep OPENHOSPITAL_CORE_VERSION .env | xargs)
+mkdir deps && pushd deps && git clone --depth=1 -b v$OPENHOSPITAL_CORE_VERSION https://github.com/informatici/openhospital-core.git && popd
+```
+
+Start the database container with:
+
+```
+docker compose -f docker-compose-connector.yml up -d database
+```
+
+Install demo data with:
+
+```
+docker compose -f docker-compose-connector.yml run oh-database-init
+```
+
+## 2. Build from sources
+
+```
+docker compose -f docker-compose-connector.yml build connector
+```
+
+## 3. Start the connector with the output in the terminal
+
+```
+docker compose -f docker-compose-connector.yml up connector
+```
+
+## 4. Using a production db
+
+You can setup the connector to use an existing Open Hospital DB with real data
+
+In docker-compose-connector.yml, comment:
+
+```
+#    networks:
+#      - hospital-net
+```
+
+and uncomment:
+
+```
+    network_mode: host
+```
+
+In `.env` set up variables in `[oh connector]` section then run `make`
+
+
+Rebuild and start with `docker compose -f docker-compose-connector.yml up --build connector`

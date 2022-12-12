@@ -45,9 +45,9 @@ services:
         - OPENHOSPITAL_CORE_VERSION=${OPENHOSPITAL_CORE_VERSION}
     environment:
       - API_URL=develop-api.ohpp.local
-#    networks:
-#      - hospital-net
-    network_mode: host
+    networks:
+      - hospital-net
+#    network_mode: host
 
 volumes:
   database_data:
