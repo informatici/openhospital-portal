@@ -5,7 +5,7 @@ on:
     tags:
       - v*
     branches:    
-      - '**'        # qualsiasi branch
+      - '**'        # any branch
     paths:
       - 'connector/**' 
 

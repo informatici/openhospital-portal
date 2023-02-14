@@ -4,8 +4,8 @@ on:
     tags:
       - v*
     branches:    
-      - '**'        # qualsiasi branch
-      # - '!master'   # escluso master
+      - '**'        # any branch
+      # - '!master'   # not master
     paths:
       - 'patient-portal/**' 
   workflow_dispatch:
