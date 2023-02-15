@@ -41,7 +41,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml pull api
 
 ### 2. init DB (only once)
 
-start mysql database/service (in background)
+start mysql database/service (in background) and wait some seconds to finish the startup
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
@@ -82,6 +82,8 @@ docker compose -f docker-compose-matomo.yaml up -d
 - Matomo will be available at `http://develop-matomo.ohpp.local/` and `http://localhost:28080/`
 
     - connect and configure the first time (installation)
+    - Website name: "Open Hospital Patient Portal"
+    - Website URL: https://develop.ohpp.local/
     - In Administration > Privacy > Users opt-out, under “Support Do Not Track preference” disable Do Not Track support
     
 ## Stopping
