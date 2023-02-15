@@ -27,7 +27,7 @@ COPY src src
 
 RUN sed -i 's/\r$//' mvnw
 
-RUN --mount=type=cache,target=/root/.m2 ./mvnw -Doh.version=${OPENHOSPITAL_CORE_VERSION}-SNAPSHOT clean package -B spring-boot:repackage -DskipTests \
+RUN --mount=type=cache,target=/root/.m2 ./mvnw -Doh.version=${OPENHOSPITAL_CORE_VERSION} clean package -B spring-boot:repackage -DskipTests \
     && mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 
