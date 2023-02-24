@@ -4,6 +4,30 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 
 :warning: The current project is a work in progress (WIP) and it **is not ready for production**.
 
+## Summary
+  * [Components](#components)
+  * [Instructions](#instructions)
+  * [Building](#building)
+    + [1. build images from sources](#1-build-images-from-sources)
+    + [2. init DB (only once)](#2-init-db-only-once)
+  * [Starting](#starting)
+    + [3. start the app mode with output in the terminal](#3-start-the-app-mode-with-output-in-the-terminal)
+    + [4. available services](#4-available-services)
+      - [Screenshots](#screenshots)
+  * [Stopping](#stopping)
+    + [5. stop all containers](#5-stop-all-containers)
+    + [Cleaning](#cleaning)
+  * [Developing](#developing)
+    + [API](#api)
+    + [Develop the ui (React)](#develop-the-ui-react)
+  * [Connector (WIP)](#connector-wip)
+    + [1. Setup using a test db](#1-setup-using-a-test-db)
+    + [2. Build from sources](#2-build-from-sources)
+    + [3. Start the connector with the output in the terminal](#3-start-the-connector-with-the-output-in-the-terminal)
+    + [4. Using a production db](#4-using-a-production-db)
+
+<small><i>Table of contents generated with <a href='http://ecotrust-canada.github.io/markdown-toc/'>markdown-toc</a></i></small>
+
 ## Components
 
 <div align="center">
