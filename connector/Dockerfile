@@ -9,9 +9,8 @@ COPY .mvn .mvn
 
 RUN sed -i 's/\r$//' mvnw
 
-RUN --mount=type=cache,target=/root/.m2 git clone https://github.com/informatici/openhospital-core.git \
+RUN --mount=type=cache,target=/root/.m2 git clone --depth=1 -b v$OPENHOSPITAL_CORE_VERSION https://github.com/informatici/openhospital-core.git \
     && cd openhospital-core \
-    && git checkout v${OPENHOSPITAL_CORE_VERSION} \
     && ./mvnw -B clean install -DskipTests 
 
 FROM openjdk:11-jdk as build
