@@ -25,7 +25,9 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,24 +50,27 @@ import org.isf.patientportal.constant.JWTConstants;
 @Component
 public class TokenProvider implements Serializable, InitializingBean {
 
-    @Value("${jwt.header.string}")
-    public static String HEADER_STRING;
+    @Autowired
+    private Environment env;
 
-    @Value("${jwt.token.prefix}")
-    public static String TOKEN_PREFIX;
+    private static final String AUTHORITIES_KEY = "auth";
 
-    @Value("${jwt.token.secret}")
-    public String SECRET;
-
-    
     private Key key;
+
+    private long tokenValidityInMilliseconds;
+
+    private long tokenValidityInMillisecondsForRememberMe;
     
     @Override
     public void afterPropertiesSet() {
-        log.info("Initializing JWT key with secret: {}", SECRET);
+    	String secret = env.getProperty("jwt.token.secret");
+        log.info("Initializing JWT key with secret: {}", secret);
         // byte[] keyBytes = Decoders.BASE64.decode(SECRET);
-        byte[] keyBytes = SECRET.getBytes(StandardCharsets.UTF_8);
+        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        
+        this.tokenValidityInMilliseconds = 1000L * 6000;
+        this.tokenValidityInMillisecondsForRememberMe = 1000L * 6000;
     }
 
     public String getUsernameFromToken(String token) {
@@ -94,7 +99,7 @@ public class TokenProvider implements Serializable, InitializingBean {
         return expiration.before(new Date());
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String generateJwtToken(Authentication authentication, boolean rememberMe) {
         final String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -102,16 +107,15 @@ public class TokenProvider implements Serializable, InitializingBean {
         long now = System.currentTimeMillis();
         Date validity;
         if (rememberMe) {
-            validity = new Date(now + JWTConstants.ACCESS_TOKEN_VALIDITY_SECONDS_FOR_REMEMBERME*1000);
+            validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
         } else {
-            validity = new Date(now + JWTConstants.ACCESS_TOKEN_VALIDITY_SECONDS*1000);
+            validity = new Date(now + this.tokenValidityInMilliseconds);
         }
         
         return Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim(JWTConstants.AUTHORITIES_KEY, authorities)
-                .signWith(this.key)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .claim(AUTHORITIES_KEY, authorities)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
     }

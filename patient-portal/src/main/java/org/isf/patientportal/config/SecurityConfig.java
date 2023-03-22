@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.isf.patientportal.rest.auth.util.OHSimpleUrlAuthenticationSuccessHandler;
+import org.isf.patientportal.security.OHSimpleUrlAuthenticationSuccessHandler;
 import org.isf.patientportal.security.RestAuthenticationEntryPoint;
 import org.isf.patientportal.security.jwt.JWTConfigurer;
 import org.isf.patientportal.security.jwt.TokenProvider;
@@ -114,11 +114,11 @@ public class SecurityConfig {
             .authorizeRequests()
             	.antMatchers("/auth/**").permitAll()
             .and()
-          	.formLogin()
-          		.loginPage("/auth/login")
-            		.successHandler(successHandler())
-            		.failureHandler(failureHandler())
-            .and()
+//          	.formLogin()
+//          		.loginPage("/auth/login")
+//            		.successHandler(successHandler())
+//            		.failureHandler(failureHandler())
+//            .and()
 			.apply(securityConfigurerAdapter())
 			.and()
             .httpBasic()
