@@ -21,8 +21,22 @@
  */
 package org.isf.patientportal.rest.auth.controller;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.isf.login.dto.LoginRequest;
 import org.isf.patientportal.rest.auth.dto.LoginResponse;
+import org.isf.security.CustomAuthenticationManager;
+import org.isf.security.jwt.TokenProvider;
+import org.isf.sessionaudit.manager.SessionAuditManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,29 +50,33 @@ import io.swagger.annotations.ApiResponses;
  *
  * @author antonio
  */
-@Api("Login")
+@Api(value = "Login", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 public class LoginController {
+	
+	@Autowired
+	private HttpSession httpSession;
+
+	@Autowired
+	private TokenProvider tokenProvider;
+
+	@Autowired
+	private CustomAuthenticationManager authenticationManager;
+	
     /**
      * Implemented by Spring Security
      */
     @ApiOperation(value = "Login", notes = "Login with the given credentials.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = LoginResponse.class)})
-    @PostMapping(value = "/auth/login")
-    void login(
-        @RequestParam("username") String username,
-        @RequestParam("password") String password
-    ) {
-        throw new IllegalStateException("Add Spring Security to handle authentication");
-    }
+    @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    void login(@Valid @RequestBody LoginRequest loginRequest) {
+    	Authentication authentication = authenticationManager
+						.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = tokenProvider.generateJwtToken(authentication, true);
 
-    /**
-     * Implemented by Spring Security
-     */
-    @ApiOperation(value = "Logout", notes = "Logout the current user.")
-    @ApiResponses({@ApiResponse(code = 200, message = "")})
-    @PostMapping(value = "/auth/logout")
-    void logout() {
-        throw new IllegalStateException("Add Spring Security to handle authentication");
+		String userDetails = (String) authentication.getPrincipal();
+		
+		return ResponseEntity.ok(new LoginResponse(jwt, userDetails));
     }
 }
