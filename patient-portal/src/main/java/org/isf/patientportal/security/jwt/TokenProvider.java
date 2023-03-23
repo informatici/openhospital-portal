@@ -63,7 +63,7 @@ public class TokenProvider implements Serializable, InitializingBean {
     
     @Override
     public void afterPropertiesSet() {
-    	String secret = "EGnA2fAHSptY0TAjoQHuBDftkwuAjYmx6jTsNXVHy38lfHc0tvcaS3fPO3QOXPhpI8"; // env.getProperty("JWT_TOKEN_SECRET");
+    	String secret = env.getProperty("jwt.token.secret");
         log.info("Initializing JWT key with secret: {}", secret);
         // byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
