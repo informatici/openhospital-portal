@@ -26,9 +26,9 @@ import javax.validation.Valid;
 
 import org.isf.login.dto.LoginRequest;
 import org.isf.patientportal.rest.auth.dto.LoginResponse;
-import org.isf.security.CustomAuthenticationManager;
-import org.isf.security.jwt.TokenProvider;
-import org.isf.sessionaudit.manager.SessionAuditManager;
+import org.isf.patientportal.security.CustomAuthenticationManager;
+import org.isf.patientportal.security.jwt.TokenProvider;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -63,18 +63,19 @@ public class LoginController {
 	@Autowired
 	private CustomAuthenticationManager authenticationManager;
 	
+	private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(LoginController.class);
+	
     /**
      * Implemented by Spring Security
      */
     @ApiOperation(value = "Login", notes = "Login with the given credentials.")
     @ApiResponses({@ApiResponse(code = 200, message = "", response = LoginResponse.class)})
     @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    void login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity< ? >  login(@Valid @RequestBody LoginRequest loginRequest) {
     	Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = tokenProvider.generateJwtToken(authentication, true);
-
 		String userDetails = (String) authentication.getPrincipal();
 		
 		return ResponseEntity.ok(new LoginResponse(jwt, userDetails));

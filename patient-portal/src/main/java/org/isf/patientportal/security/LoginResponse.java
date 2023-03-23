@@ -1,6 +1,6 @@
 /*
  * Open Hospital (www.open-hospital.org)
- * Copyright © 2006-2023 Informatici Senza Frontiere (info@informaticisenzafrontiere.org)
+ * Copyright © 2006-2021 Informatici Senza Frontiere (info@informaticisenzafrontiere.org)
  *
  * Open Hospital is a free and open source software for healthcare data management.
  *
@@ -19,41 +19,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.auth.dto;
+package org.isf.patientportal.security;
 
 public class LoginResponse {
 
-	private String token;
-	private String type = "Bearer";
-	private String username;
+    private String token;
+    private String displayName;
 
-	public LoginResponse(String token, String username) {
-		this.token = token;
-		this.username = username;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }
