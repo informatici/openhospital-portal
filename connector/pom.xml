@@ -19,6 +19,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.maven.plugin.version>4.1</license.maven.plugin.version>
         <!-- <spring-shell.version>3.0.0-M2</spring-shell.version> -->
+        <version.swagger.codegen>3.0.41</version.swagger.codegen>
+        <yaml.file>${project.basedir}/src/main/resources/ohpp-api.yaml</yaml.file>
+        <generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
+        <generated-sources-java-path>main/java</generated-sources-java-path>
+        <springfox-swagger.version>2.6.1</springfox-swagger.version>
+        <joda.version>2.1</joda.version>
+        <start-class>org.isf.patientportal.connector.ConnectorApplication</start-class>
 	</properties>
 	<dependencies>
 		<!-- <dependency>
@@ -42,12 +49,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <exclusions>
+            <!--exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-slf4j-impl</artifactId>
                 </exclusion>
-        </exclusions>
+            </exclusions-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,16 +85,6 @@
 		</dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j-impl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
@@ -98,7 +95,43 @@
             <version>3.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.14.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.8</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.1</version>
+        </dependency>
+            
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.isf</groupId>
             <artifactId>OH-core</artifactId>
@@ -130,6 +163,15 @@
     </dependencyManagement> -->
     
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/conf.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -143,8 +185,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                         <configuration>
-                            <mainClass>org.isf.patientportal.connector.ConnectorApplication</mainClass>
+                            <mainClass>${spring.boot.mainclass}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -155,6 +200,9 @@
     <profiles>
         <profile>
             <id>release</id>
+            <properties>
+                <spring.boot.mainclass>org.isf.patientportal.connector.ConnectorApplication</spring.boot.mainclass>
+            </properties>
             <build>
                 <plugins>
                     <plugin>

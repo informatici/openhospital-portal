@@ -1,7 +1,7 @@
 package org.isf.patientportal.connector.runner;
 
 
-import org.isf.patientportal.connector.config.Configuration;
+import org.isf.patientportal.connector.config.ConnectorConfiguration;
 
 public class ImportRunner {
     public void syncPatient(int patientId) {
@@ -9,7 +9,7 @@ public class ImportRunner {
     }
 
     public void run() {
-        int numThreads = Configuration.PARALLEL;
+        int numThreads = ConnectorConfiguration.PARALLEL;
         
         
     }

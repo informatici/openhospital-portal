@@ -36,8 +36,8 @@ WORKDIR /app
 
 ARG DEPENDENCY=/app/target/dependency
 COPY --from=build /app/target/*.jar /app/
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+# COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+# COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 
 COPY mvnw .
 
