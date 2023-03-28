@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.auth.util;
+package org.isf.patientportal.security;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.isf.patientportal.rest.auth.dto.LoginResponse;
+import org.isf.patientportal.security.LoginResponse;
 import org.isf.patientportal.security.jwt.TokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -59,7 +59,7 @@ public class OHSimpleUrlAuthenticationSuccessHandler extends SimpleUrlAuthentica
 				= requestCache.getRequest(request, response);
 
 		LoginResponse loginResponse = new LoginResponse();
-		loginResponse.setToken(this.tokenProvider.createToken(authentication, true));
+		loginResponse.setToken(this.tokenProvider.generateJwtToken(authentication, true));
 		loginResponse.setDisplayName(authentication.getName());
 		ObjectMapper mapper = new ObjectMapper();
 

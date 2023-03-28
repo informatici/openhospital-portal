@@ -19,34 +19,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.auth.dto;
+package org.isf.login.dto;
 
-public class LoginResponse {
+import javax.validation.constraints.NotNull;
 
-	private String token;
-	private String type = "Bearer";
+import io.swagger.annotations.ApiModelProperty;
+
+public class LoginRequest {
+
+	@NotNull
+	@ApiModelProperty(notes = "username", example = "admin", position = 1)
 	private String username;
 
-	public LoginResponse(String token, String username) {
-		this.token = token;
-		this.username = username;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	@NotNull
+	@ApiModelProperty(notes = "password of user", example = "admin", position = 2)
+	private String password;
 
 	public String getUsername() {
 		return username;
@@ -56,4 +43,11 @@ public class LoginResponse {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
