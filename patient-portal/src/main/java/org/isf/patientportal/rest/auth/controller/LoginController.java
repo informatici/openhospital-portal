@@ -24,7 +24,7 @@ package org.isf.patientportal.rest.auth.controller;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.isf.login.dto.LoginRequest;
+import org.isf.patientportal.rest.auth.dto.LoginRequest;
 import org.isf.patientportal.rest.auth.dto.LoginResponse;
 import org.isf.patientportal.security.CustomAuthenticationManager;
 import org.isf.patientportal.security.jwt.TokenProvider;
@@ -37,7 +37,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -53,7 +52,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Login", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 public class LoginController {
-	
+
 	@Autowired
 	private HttpSession httpSession;
 
@@ -62,22 +61,22 @@ public class LoginController {
 
 	@Autowired
 	private CustomAuthenticationManager authenticationManager;
-	
+
 	private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(LoginController.class);
-	
-    /**
-     * Implemented by Spring Security
-     */
-    @ApiOperation(value = "Login", notes = "Login with the given credentials.")
-    @ApiResponses({@ApiResponse(code = 200, message = "", response = LoginResponse.class)})
-    @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity< ? >  login(@Valid @RequestBody LoginRequest loginRequest) {
-    	Authentication authentication = authenticationManager
+
+	/**
+	 * Implemented by Spring Security
+	 */
+	@ApiOperation(value = "Login", notes = "Login with the given credentials.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "", response = LoginResponse.class) })
+	@PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity< ? > login(@Valid @RequestBody LoginRequest loginRequest) {
+		Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = tokenProvider.generateJwtToken(authentication, true);
 		String userDetails = (String) authentication.getPrincipal();
-		
+
 		return ResponseEntity.ok(new LoginResponse(jwt, userDetails));
-    }
+	}
 }
