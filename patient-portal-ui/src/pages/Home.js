@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BrowserRouter, Link } from "react-router-dom";
 import NavBar from "./../components/NavBar";
 import DefTesttable from "./../components/tables/defTesttable";
+import PatientNav from "./../components/navBars/patientNav";
 
 //////////////////////////////////////
 
@@ -58,78 +59,12 @@ const Home = ({ setAuth }) => {
       >
         La tua situazione
       </Typography>
-      {/* <div>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Annunci (3)</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography>Scadenze</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion disabled>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3a-content"
-            id="panel3a-header"
-          >
-            <Typography>Visite (1)</Typography>
-          </AccordionSummary>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel4a-content"
-            id="panel4a-header"
-          >
-            <Typography>Esami</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus edx, sitd amet blandit leo lobortis eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel5a-content"
-            id="panel5a-header"
-          >
-            <Typography>Pagamenti</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </div> */}
+      <div>
+        <PatientNav />
+      </div>
+
       <div >
+
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary sx={{ mt: 2, bgcolor: 'info.main' }}
             expandIcon={<ExpandMoreIcon />}
@@ -137,17 +72,18 @@ const Home = ({ setAuth }) => {
             id="panel1bh-header"
           >
             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              Annunci
+              Annuncia
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>3 Nuovi Annunci</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <DefTesttable />            
+
+            <DefTesttable />
           </AccordionDetails>
         </Accordion>
         <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
           <AccordionSummary
-            sx={{ bgcolor: 'warning.main' }}
+            sx={{ mt: 1, bgcolor: 'warning.main' }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel2bh-content"
             id="panel2bh-header"
@@ -167,13 +103,13 @@ const Home = ({ setAuth }) => {
         </Accordion>
         <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
           <AccordionSummary
-            sx={{ bgcolor: 'info.main' }}
+            sx={{ mt: 1, bgcolor: 'info.main' }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3bh-content"
             id="panel3bh-header"
           >
             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              Esami
+              Esamiiiiiissssssiiiiddddda
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               -
@@ -188,7 +124,7 @@ const Home = ({ setAuth }) => {
         </Accordion>
         <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
           <AccordionSummary
-            sx={{ bgcolor: 'info.main' }}
+            sx={{ mt: 1, bgcolor: 'info.main' }}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel4bh-content"
             id="panel4bh-header"
