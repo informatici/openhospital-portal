@@ -41,7 +41,7 @@ const Home = ({ setAuth }) => {
         </div>
       </BrowserRouter> */}
 
-      <Typography
+      {/* <Typography
         sx={{
           textAlign: "center",
           marginTop: "-4rem",
@@ -58,10 +58,8 @@ const Home = ({ setAuth }) => {
         gutterBottom
       >
         La tua situazione
-      </Typography>
-      <div>
-        <PatientNav />
-      </div>
+      </Typography> */}
+      <PatientNav />
 
       <div >
 

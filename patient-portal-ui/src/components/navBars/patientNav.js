@@ -5,82 +5,74 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Fab from "@mui/material/Fab";
-// import Box from '@mui/material/Box';
 // import AddIcon from "@mui/material";
 import PropTypes from 'prop-types';
+// import I_height from "../patient/biometric_data/input_data/i_height";
+// import I_arterial_pressure from "../patient/biometric_data/input_data/i_arterial_pressure";
+// import I_temperature from "../patient/biometric_data/input_data/i_temperature";
+import Oname from "../patient/registry_data/output_data/o_name";
+import Oadress from "../patient/registry_data/output_data/o_adress";
+import Otelephone from "../patient/registry_data/output_data/o_telephone";
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import I_height from "./../patient/input_data/i_height";
-import I_arterial_pressure from "./../patient/input_data/i_arterial_pressure";
-import I_temperature from "./../patient/input_data/i_temperature";
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import AddIcon from '@mui/icons-material/Add';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-function Item(props) {
-    const { sx, ...other } = props;
-    return (
-        <Box
-            sx={{
-                bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-                color: (theme) => (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800'),
-                border: '0px solid',
-                borderColor: (theme) =>
-                    theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-                p: 0,
-                m: 1,
-                borderRadius: 2,
-                fontSize: '0.875rem',
-                fontWeight: '700',
-                ...sx,
-            }}
-            {...other}
-        />
-    );
-}
 
-Item.propTypes = {
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: PropTypes.oneOfType([
-        PropTypes.arrayOf(
-            PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool]),
-        ),
-        PropTypes.func,
-        PropTypes.object,
-    ]),
-};
+
 class patientNav extends Component {
     render() {
         return (
-
-            <div style={{ width: '100%' }}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-                    <Item>
-                        <Accordion  >
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Accordion >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
+                                sx={{ mt: 1 }}
                             >
                                 <Typography>I tuoi Dati</Typography>
                             </AccordionSummary>
-                            <AccordionDetails>
-                                <I_height />
-                                <I_arterial_pressure />
-                                <I_temperature />
-                                <Typography>
+                            <AccordionDetails
+                                sx={{ mt: 3, ml: 3 }} >
+                                <Oname />
+                                <Oadress />
+                                <Otelephone />
+                                {/* <Typography>
                                     Nome
                                     Cognome
-                                </Typography>
+                                </Typography> */}
                             </AccordionDetails>
                         </Accordion>
-                    </Item>
-                    <Item>
-                        <Fab color="primary" aria-label="add">
-                            {/* <AddIcon /> */}
-                        </Fab>
-                    </Item>
-                    <Item>3</Item>
-                </Box>
-            </div>);
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ ml: 1 }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ ml: 1 }}
+                        >
+                            <CalendarMonthIcon />
+                        </IconButton>
+                        {/* <Button color="inherit">Login</Button> */}
+                    </Toolbar>
+                </AppBar>
+            </Box>
+        );
     }
 }
 export default patientNav;
