@@ -21,53 +21,41 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import InsertPatientDataModal from "../modals/InsertPatientDataModal";
+import VisualPatientDataModal from "../modals/VisualPatientDataModal";
+import { NavLink } from "react-router-dom";
+import PatientAgenda from "../../pages/PatientAgenda";
+
 
 
 
 class patientNav extends Component {
     render() {
         return (
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ mt: 1, mb: 1, width: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Accordion >
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                sx={{ mt: 1 }}
+                        <VisualPatientDataModal />
+                        <InsertPatientDataModal />
+                       
+                        <NavLink
+                            color="#fff"
+                            to="/PatientAgenda"
+                            component={PatientAgenda}
+                            exact
+                        >
+                            <IconButton
+                                variant="outlined"
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{ ml: 1 }}
                             >
-                                <Typography>I tuoi Dati</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails
-                                sx={{ mt: 3, ml: 3 }} >
-                                <Oname />
-                                <Oadress />
-                                <Otelephone />
-                                {/* <Typography>
-                                    Nome
-                                    Cognome
-                                </Typography> */}
-                            </AccordionDetails>
-                        </Accordion>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ ml: 1 }}
-                        >
-                            <AddIcon />
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ ml: 1 }}
-                        >
-                            <CalendarMonthIcon />
-                        </IconButton>
+                                <CalendarMonthIcon color="#fff" />
+                            </IconButton>
+                        </NavLink>
+
                         {/* <Button color="inherit">Login</Button> */}
                     </Toolbar>
                 </AppBar>

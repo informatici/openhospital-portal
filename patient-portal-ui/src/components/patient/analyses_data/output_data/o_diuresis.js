@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
-class i_respiration_rate extends Component {
+class o_weight extends Component {
     render() {
         return (
-            <TextField
-                label="Diuresis Vol 24H"
-                id="i_respiration_rate"
-                sx={{ m: 1, width: '25ch' }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">ml</InputAdornment>,
-                }}
-            />);
+            <div>
+                <Typography variant="subtitle2" gutterBottom>
+                   Weight
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                   57 Kg
+                </Typography>
+            </div>);
     }
 }
-export default i_respiration_rate;
+export default o_weight;

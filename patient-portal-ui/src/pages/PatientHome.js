@@ -13,7 +13,7 @@ import PatientNav from "./../components/navBars/patientNav";
 
 //////////////////////////////////////
 
-const Home = ({ setAuth }) => {
+const PatientHome = ({ setAuth }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -43,11 +43,11 @@ const Home = ({ setAuth }) => {
           id="panel_annsca-header"
 
         >
-          <Typography>Annunci/Scadenze HOME</Typography>
+          <Typography>Annunci/Scadenze PATIENTHOME</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze
+            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze 
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -180,4 +180,4 @@ const Home = ({ setAuth }) => {
 //     ))}
 //   </motion.span>
 // );
-export default Home;
+export default PatientHome;

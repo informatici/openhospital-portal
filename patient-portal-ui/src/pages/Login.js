@@ -6,6 +6,7 @@ import LoginForm from "../components/LoginForm";
 import SocialAuth from "../components/SocialAuth";
 import Logo from "../components/Logo";
 import { motion } from "framer-motion";
+import HelpDevLogin from "../components/modals/HelpDevLogin";
 
 //////////////////////////////////
 const RootStyle = styled("div")({
@@ -46,7 +47,9 @@ const fadeInUp = {
   },
 };
 
-const Login = ({ setAuth }) => {
+const Login = ({ setAuth, setProfile }) => {
+  console.log("Login");
+
   return (
     <RootStyle>
       <Container maxWidth="sm">
@@ -68,7 +71,7 @@ const Login = ({ setAuth }) => {
             </Typography>
           </Divider>
 
-          <LoginForm setAuth={setAuth} />
+          <LoginForm setAuth={setAuth} setProfile={setProfile} />
 
           <Typography
             component={motion.p}
@@ -77,11 +80,13 @@ const Login = ({ setAuth }) => {
             align="center"
             sx={{ mt: 3 }}
           >
+
             Don’t have an account?{" "}
             <Link variant="subtitle2" component={RouterLink} to="/signup">
               Sign up
             </Link>
           </Typography>
+          <HelpDevLogin />
         </ContentStyle>
       </Container>
     </RootStyle>

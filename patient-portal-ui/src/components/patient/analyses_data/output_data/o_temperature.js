@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
-class i_temperature extends Component {
+class o_temperature extends Component {
     render() {
         return (
-            <TextField
-                label="Temperature"
-                id="i_temperature"
-                sx={{ m: 1, width: '25ch' }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">C°</InputAdornment>,
-                }}
-            />);
+            <div>
+                <Typography variant="subtitle2" gutterBottom>
+                   Temperature
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                   57 Kg
+                </Typography>
+            </div>);
     }
 }
-export default i_temperature;
+export default o_temperature;

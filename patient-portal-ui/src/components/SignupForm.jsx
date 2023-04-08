@@ -14,6 +14,7 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
 /////////////////////////////////////////////////////////////
+console.log("Signup");
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
   opacity: 1,
@@ -56,7 +57,7 @@ const SignupForm = ({ setAuth }) => {
     onSubmit: () => {
       setTimeout(() => {
         setAuth(true);
-        navigate("/", { replace: true });
+        navigate("/patientList", { replace: true });
       }, 2000);
     },
   });

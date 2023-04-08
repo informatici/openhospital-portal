@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
-class i_saturation extends Component {
+class o_weight extends Component {
     render() {
         return (
-            <TextField
-                label="Saturation"
-                id="i_saturation"
-                sx={{ m: 1, width: '25ch' }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
-                }}
-            />);
+            <div>
+                <Typography variant="subtitle2" gutterBottom>
+                   Weight
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                   57 Kg
+                </Typography>
+            </div>);
     }
 }
-export default i_saturation;
+export default o_weight;

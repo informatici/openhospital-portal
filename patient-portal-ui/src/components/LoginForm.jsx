@@ -28,7 +28,7 @@ const animate = {
   },
 };
 
-const LoginForm = ({ setAuth }) => {
+const LoginForm = ({ setAuth, setProfile }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -41,7 +41,7 @@ const LoginForm = ({ setAuth }) => {
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
-
+  let amb = "";
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -51,9 +51,25 @@ const LoginForm = ({ setAuth }) => {
     validationSchema: LoginSchema,
     onSubmit: () => {
       console.log("submitting...");
+      // --- start gestione profilo TODO ---
+      console.log(values.email);      
+      if (values.email == "a@a.com") {
+        amb = "Admin";
+      } else if (values.email == "as@a.com") {
+        amb = "Administration";
+      } else if (values.email == "d@a.com") {
+        amb = "Doctor";
+      } else if (values.email == "p@a.com") {
+        amb = "Patient";
+      } else {
+        amb = "Patient";
+      }
+      // --- end gestione profilo TODO ---
       setTimeout(() => {
         console.log("submited!!");
+        console.log(from);
         setAuth(true);
+        setProfile(amb);
         navigate(from, { replace: true });
       }, 2000);
     },
