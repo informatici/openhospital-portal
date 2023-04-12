@@ -8,6 +8,7 @@ import DoctorHome from "./pages/DoctorHome";
 import PatientHome from "./pages/PatientHome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PatientAgenda from "./pages/PatientAgenda";
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
         <Route path="/signup" element={<Signup setAuth={setAuth} />} />
+        <Route path="/PatientHome" element={<PatientHome setAuth={setAuth} />} />
+        <Route path="/PatientAgenda" element={<PatientAgenda setAuth={setAuth} />} />
         <Route
           path="/"
           element={

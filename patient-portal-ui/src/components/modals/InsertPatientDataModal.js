@@ -6,6 +6,14 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 
+import Itemperature from "../patient/analyses_data/input_data/Itemperature";
+import Iheart_rate from "../patient/analyses_data/input_data/Iheart_rate";
+import Isaturation from "../patient/analyses_data/input_data/Isaturation";
+import Ihgt from "../patient/analyses_data/input_data/Ihgt";
+import Iascultation from "../patient/analyses_data/input_data/Iascultation";
+import Irespiration_rate from "../patient/analyses_data/input_data/Irespiration_rate";
+import Idiuresis_vol_24h from "../patient/analyses_data/input_data/Idiuresis_vol_24h";
+
 
 
 const style = {
@@ -16,7 +24,9 @@ const style = {
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
+  overflowY: "scroll",
   boxShadow: 24,
+  maxHeight: "90%",
   p: 4,
 };
 
@@ -34,7 +44,7 @@ export default function InsertPatientDataModal() {
         edge="start"
         color="inherit"
         aria-label="menu"
-        sx={{ ml: 1 }}
+        sx={{ ml: 10 }}
       >
         <AddIcon color="#fff" />
       </IconButton>
@@ -47,11 +57,22 @@ export default function InsertPatientDataModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Tinserttt
+            Insert Data
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Itemperature />
+          <Iheart_rate />
+          <Isaturation />
+          <Ihgt />
+          <Iascultation />
+          <Irespiration_rate />
+          <Idiuresis_vol_24h />
+          <Button
+            variant="contained"
+            
+            sx={{ width: 1, mt:1 }}
+          >
+            Salva
+          </Button>
         </Box>
       </Modal>
     </div>

@@ -28,7 +28,7 @@ const PatientHome = ({ setAuth }) => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        height: "100vh",
+       
       }}
     >
       <Box sx={{ mt: 2 }}>

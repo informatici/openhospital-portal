@@ -7,6 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import InsertPatientDataModal from "../modals/InsertPatientDataModal";
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
 import { NavLink } from "react-router-dom";
+import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
@@ -15,7 +16,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 
-class patientNav extends Component {
+class PatientNavtodel extends Component {
 
     render() {
 
@@ -33,9 +34,9 @@ class patientNav extends Component {
                             color="inherit"
                             aria-label="menu"
                             sx={{ ml: 1 }}
-                            href="/PatientAgenda"
+                            href="/PatientHome"
                         >
-                            <CalendarMonthIcon color="inherit" />
+                            <FormatListNumberedRtlIcon color="inherit" />
                         </IconButton>
                         {/* </NavLink> */}
 
@@ -47,4 +48,4 @@ class patientNav extends Component {
 
     }
 }
-export default patientNav;
+export default PatientNavtodel;
