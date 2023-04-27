@@ -16,7 +16,7 @@ import PatientNav from "./../components/navBars/patientNav";
 const PatientHome = ({ setAuth }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(false);
-
+  
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };

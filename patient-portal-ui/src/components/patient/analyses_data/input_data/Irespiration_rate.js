@@ -1,55 +1,93 @@
 import React, { Component } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
 class Irespiration_rate extends Component {
-    // render() {
-    //     return (
-    //         <Box sx={{ width: 1, mt: 1.5 }}>
-    //             <TextField
-    //                 label="Respiration rate"
-    //                 id="Irespiration_rate"
-    //                 sx={{ width: 0.8 }}
-    //                 InputProps={{
-    //                     startAdornment: <InputAdornment position="start">bpm</InputAdornment>,
-    //                 }}
-    //             />
-    //             <IconButton
+    constructor(props) {
+        super(props)
+        // Set initial state
+        this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+        this.ioDataOut = this.ioDataOut.bind(this);
+        this.ioDataIn = this.ioDataIn.bind(this);
+        this.ioDataDel = this.ioDataDel.bind(this);
+        this.handleChange = this.valueDetect.bind(this);
 
-    //                 variant="contained"
-    //                 size="large"
-    //                 edge="start"
-    //                 color="primary"
-    //                 aria-label="menu"
-    //                 sx={{ ml: 0.1, width: 0.1 }}
-    //             >
-    //                 <AddIcon color="#fff" />
-    //             </IconButton>
-    //         </Box>
-    //     );
-    // }
+    }
+    ioDataOut() {
+        this.setState({ io_vis: "input" });
+
+    }
+    ioDataIn() {
+        this.setState({ io_vis: "output" });
+    }
+    ioDataDel() {
+        this.setState({ getvalue: "" });
+        this.setState({ io_vis: "input", disAddIcon: true });
+    }
+    valueDetect(e) {
+        let { name, value } = e.target;
+        this.setState({ getvalue: value });
+        if (value == '') {
+            this.setState({ disAddIcon: true });
+        } else {
+            this.setState({ disAddIcon: false });
+        }
+    }
     render() {
-        return (
-            <Box
-                component="span"
-                m={1}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                height="40"
-            >
-                <Typography variant="body1" display="inline" sx={{ width: 0.5 }}>Respiration rate</Typography>
-                <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">50 bpm</Typography>
-                <Typography variant="body1" align="right" display="inline" sx={{ }}><EditIcon sx={{ ml: 1 }} /></Typography>
-                <Typography variant="body1" align="right" display="inline" sx={{  }}><DeleteIcon sx={{ ml: 1 }} /></Typography>
-            </Box>
-        );
+        if (this.state.io_vis == "input") {
+            return (
+                <Box sx={{ height: 60, width: 1, mt: 1.5 }}>
+                    <TextField
+                        label="Respiration Rate - /min"
+                        id="Irespiration_rate"
+                        value={this.state.getvalue}
+                        select
+                        name="Respiration Rate"
+                        onChange={this.handleChange}
+                        defaultValue=""
+                        sx={{ width: 0.8 }}
+                        helperText=""
+                    >
+                        {this.props.dataDef.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <IconButton disabled={this.state.disAddIcon} onClick={this.ioDataIn} sx={{}} color="primary" aria-label="insert" size="large">
+                        <AddIcon fontSize="inherit" />
+                    </IconButton>
+                </Box>
+            );
+        }
+        if (this.state.io_vis == "output") {
+            return (
+                <Box sx={{ height: 60, width: 1, mt: 1.5 }}
+                    component="span"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Respiration Rate: </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalue} /min</Typography>
+                    <Typography variant="body1" align="right" display="inline" sx={{}}>
+                        <IconButton onClick={this.ioDataOut} sx={{}} color="primary" aria-label="insert" size="large">
+                            <EditIcon fontSize="inherit" />
+                        </IconButton>
+                    </Typography>
+                    <Typography variant="body1" align="right" display="inline" sx={{}}>
+                        <IconButton onClick={this.ioDataDel} sx={{}} color="primary" aria-label="insert" size="large">
+                            <DeleteIcon fontSize="inherit" />
+                        </IconButton>
+                    </Typography>
+                </Box>
+            )
+        }
     }
 }
 export default Irespiration_rate;

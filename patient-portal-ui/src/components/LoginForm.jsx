@@ -37,7 +37,7 @@ const LoginForm = ({ setAuth, setProfile }) => {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Provide a valid ddemail address")
+      .email("Provide a valid email address")
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
@@ -103,7 +103,7 @@ const LoginForm = ({ setAuth, setProfile }) => {
               fullWidth
               autoComplete="username"
               type="email"
-              label="Email Addressa"
+              label="Email Address"
               {...getFieldProps("email")}
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}

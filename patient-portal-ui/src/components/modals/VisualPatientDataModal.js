@@ -37,7 +37,7 @@ export default function VisualPatientDataModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  
   return (
     <div>
       <Button onClick={handleOpen}
@@ -55,7 +55,7 @@ export default function VisualPatientDataModal() {
       >
         <Box sx={style}>
           <Oname />
-          <Oadress />
+          <Oadress  />
           <Otelephone />
           <Oheart_rate />
           <Otemperature />

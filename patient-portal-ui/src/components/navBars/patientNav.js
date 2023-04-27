@@ -4,7 +4,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import InsertPatientDataModal from "../modals/InsertPatientDataModal";
+// import InsertPatientDataModal from "../modals/InsertPatientDataModal";
+import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal";
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
 import { NavLink } from "react-router-dom";
 
@@ -25,7 +26,8 @@ class patientNav extends Component {
                 <AppBar position="static">
                     <Toolbar>
                         <VisualPatientDataModal />
-                        <InsertPatientDataModal />
+                        {/* <InsertPatientDataModal /> */}
+                        <ChooseInsertPatientDataModal />
                         <IconButton
                             variant="outlined"
                             size="large"
