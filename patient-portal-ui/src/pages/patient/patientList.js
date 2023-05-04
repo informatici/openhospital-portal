@@ -9,14 +9,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BrowserRouter, Link } from "react-router-dom";
 import NavBar from "./../components/NavBar";
 import DefTesttable from "./../components/tables/defTesttable";
-import PatientNav from "./../components/navBars/patientNav";
+import PatientNav from "./../components/navBars/PatientNav";
 
 //////////////////////////////////////
 
-const PatientHome = ({ setAuth }) => {
+const patientList = ({ setAuth }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(false);
-  
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -28,7 +28,7 @@ const PatientHome = ({ setAuth }) => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-       
+        height: "100vh",
       }}
     >
       <Box sx={{ mt: 2 }}>
@@ -43,11 +43,11 @@ const PatientHome = ({ setAuth }) => {
           id="panel_annsca-header"
 
         >
-          <Typography>Annunci/Scadenze PATIENTHOME</Typography>
+          <Typography>Annunci/Scadenze List</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze 
+            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -180,4 +180,4 @@ const PatientHome = ({ setAuth }) => {
 //     ))}
 //   </motion.span>
 // );
-export default PatientHome;
+export default patientList;

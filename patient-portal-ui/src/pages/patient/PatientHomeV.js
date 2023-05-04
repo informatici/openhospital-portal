@@ -9,14 +9,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BrowserRouter, Link } from "react-router-dom";
 import NavBar from "./../components/NavBar";
 import DefTesttable from "./../components/tables/defTesttable";
-import PatientNav from "./../components/navBars/patientNav";
+import PatientNav from "./../components/navBars/PatientNav";
 
 //////////////////////////////////////
 
-const patientList = ({ setAuth }) => {
+const PatientHome = ({ setAuth }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(false);
-
+  
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -28,12 +28,12 @@ const patientList = ({ setAuth }) => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        height: "100vh",
+       
       }}
     >
-      <Box sx={{ mt: 2 }}>
+      {/* <Box sx={{ mt: 2 }}>
         <Logo />
-      </Box>
+      </Box> */}
       <PatientNav />
 
       <Accordion sx={{ width: 1 }}>
@@ -43,11 +43,11 @@ const patientList = ({ setAuth }) => {
           id="panel_annsca-header"
 
         >
-          <Typography>Annunci/Scadenze List</Typography>
+          <Typography>Annunci/Scadenze PATIENTHOME</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze
+            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze 
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -144,9 +144,7 @@ const patientList = ({ setAuth }) => {
           <Typography>Disabled Accordion</Typography>
         </AccordionSummary>
       </Accordion> */}
-      <Button sx={{ mt: 1 }} size="large" variant="contained" onClick={() => setAuth(false)}>
-        Log out
-      </Button>
+     
     </Container>
   );
 };
@@ -180,4 +178,4 @@ const patientList = ({ setAuth }) => {
 //     ))}
 //   </motion.span>
 // );
-export default patientList;
+export default PatientHome;

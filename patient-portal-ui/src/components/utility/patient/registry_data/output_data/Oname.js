@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 class Oname extends Component {
    render() {
       return (
-         <div>
+         <div sx={{ width: 1 }}>
             <Box>
                <Typography variant="body1" display="inline">Name:</Typography>
                <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">AAAA</Typography>

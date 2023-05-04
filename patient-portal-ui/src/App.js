@@ -2,30 +2,55 @@ import { useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
-import AdminHome from "./pages/AdminHome";
-import AdministrationHome from "./pages/AdministrationHome";
-import DoctorHome from "./pages/DoctorHome";
-import PatientHome from "./pages/PatientHome";
+import AdminHome from "./pages/admin/AdminHome";
+import AdministrationHome from "./pages/administration/AdministrationHome";
+
+import PatientHome from "./pages/patient/PatientHome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import PatientAgenda from "./pages/PatientAgenda";
+import PatientAgenda from "./pages/patient/PatientAgenda";
+import PatientAdsDeadlines from "./pages/patient/PatientAdsDeadlines";
+import PatientExams from "./pages/patient/PatientExams";
+import PatientHospitalizations from "./pages/patient/PatientHospitalizations";
+import PatientPayments from "./pages/patient/PatientPayments";
+import PatientTherapies from "./pages/patient/PatientTherapies";
+import PatientVaccinations from "./pages/patient/PatientVaccinations";
+import PatientVisits from "./pages/patient/PatientVisits";
+
+import DoctorHome from "./pages/doctor/DoctorHome";
+import DoctorAgenda from "./pages/doctor/DoctorAgenda";
+
+
+
 
 function App() {
 
   const [auth, setAuth] = useState(false);
   const [profile, setProfile] = useState("aaaaa");
   const location = useLocation();
-  console.log("----");
-  console.log(auth);
-  console.log(profile);
+  // console.log("----");
+  // console.log(auth);
+  // console.log(profile);
   return (
     <>
       <CssBaseline />
       <Routes>
+        <Route path="/logout" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
         <Route path="/login" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
         <Route path="/signup" element={<Signup setAuth={setAuth} />} />
         <Route path="/PatientHome" element={<PatientHome setAuth={setAuth} />} />
         <Route path="/PatientAgenda" element={<PatientAgenda setAuth={setAuth} />} />
+        <Route path="/PatientAdsDeadlines" element={<PatientAdsDeadlines setAuth={setAuth} />} />
+        <Route path="/PatientExams" element={<PatientExams setAuth={setAuth} />} />
+        <Route path="/PatientHospitalizations" element={<PatientHospitalizations setAuth={setAuth} />} />
+        <Route path="/PatientPayments" element={<PatientPayments setAuth={setAuth} />} />
+        <Route path="/PatientTherapies" element={<PatientTherapies setAuth={setAuth} />} />
+        <Route path="/PatientVaccinations" element={<PatientVaccinations setAuth={setAuth} />} />
+        <Route path="/PatientVisits" element={<PatientVisits setAuth={setAuth} />} />
+
+        <Route path="/DoctorHome" element={<DoctorHome setAuth={setAuth} />} />
+        <Route path="/DoctorAgenda" element={<DoctorAgenda setAuth={setAuth} />} />
+
         <Route
           path="/"
           element={

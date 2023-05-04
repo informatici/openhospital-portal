@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { Button, Typography, Container, Box } from "@mui/material";
-import Logo from "../components/Logo";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PatientNavtodel from "../components/navBars/PatientNavtodel";
+import PatientNav from "../../components/navBars/PatientNav";
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
+import GoHomePatient from "../../components/common/buttons/GoHomePatient";
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -16,7 +12,7 @@ const Root = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(2),
   },
 }));
-const PatientAgenda = ({ setAuth }) => {
+const PatientTherapies = ({ setAuth }) => {
   return (
     <Container
       maxWidth="lg"
@@ -25,15 +21,17 @@ const PatientAgenda = ({ setAuth }) => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-       
+
         border: "1px solid rgba(0,0,0,.1)",
       }}
     >
-      <Box sx={{ mt: 2 }}>
+      {/* <Box sx={{ mt: 2 }}>
         <Logo />
-      </Box>
-      <PatientNavtodel />
+      </Box> */}
+      <PatientNav />
       <Root>
+      <Typography variant="h6" component="h2" display="inline" sx={{ width: 1 }}>Therapies: </Typography>
+     
         <Divider textAlign="left" sx={{
           fontWeight: 'bold',
           color: "red",
@@ -98,11 +96,9 @@ const PatientAgenda = ({ setAuth }) => {
           testo  testo  testo  testo
         </div>
       </Root>
-      <Button sx={{ mt: 1 }} size="large" variant="contained" onClick={() => setAuth(false)}>
-        Log out
-      </Button>
+      <GoHomePatient />
     </Container>
   );
 };
 
-export default PatientAgenda;
+export default PatientTherapies;

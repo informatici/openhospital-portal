@@ -7,19 +7,18 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 
-import Iarterial_pressure from "../patient/analyses_data/input_data/Iarterial_pressure";
-import Itemperature from "../patient/analyses_data/input_data/Itemperature";
-import Iheart_rate from "../patient/analyses_data/input_data/Iheart_rate";
-import Isaturation from "../patient/analyses_data/input_data/Isaturation";
-import Ihgt from "../patient/analyses_data/input_data/Ihgt";
-import Iascultation from "../patient/analyses_data/input_data/Iascultation";
-import Irespiration_rate from "../patient/analyses_data/input_data/Irespiration_rate";
-import Idiuresis_vol_24h from "../patient/analyses_data/input_data/Idiuresis_vol_24h";
+import Iarterial_pressure from "../utility/patient/analyses_data/input_data/Iarterial_pressure";
+import Itemperature from "../utility/patient/analyses_data/input_data/Itemperature";
+import Iheart_rate from "../utility/patient/analyses_data/input_data/Iheart_rate";
+import Isaturation from "../utility/patient/analyses_data/input_data/Isaturation";
+import Ihgt from "../utility/patient/analyses_data/input_data/Ihgt";
+import Iascultation from "../utility/patient/analyses_data/input_data/Iascultation";
+import Irespiration_rate from "../utility/patient/analyses_data/input_data/Irespiration_rate";
+import Idiuresis_vol_24h from "../utility/patient/analyses_data/input_data/Idiuresis_vol_24h";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import InsertPatientDataModal from "./InsertPatientDataModal";
-
 
 const style = {
   position: 'absolute',
@@ -32,7 +31,6 @@ const style = {
   overflowY: "scroll",
   boxShadow: 24,
   maxHeight: "90%",
-
   p: 4,
 };
 
@@ -47,17 +45,9 @@ export default function ChooseInsertPatientDataModal() {
     } else {
       let index = choosen.indexOf(event.target.value);// --- get index by value - return value
       choosen.splice(index, 1);// --- remove from array by index - return array
-    }
-    console.log(choosen);
+    };
   };
-  const callbackModal = () => {
-    console.log("ee");
 
-    // if (modal.target === "choose") {
-    //   setOpen(false);
-    // }
-
-  }
   const values = [
     {
       "choose": [
@@ -144,7 +134,6 @@ export default function ChooseInsertPatientDataModal() {
   console.log(values[0].choose);
   return (
     <div>
-
       <IconButton onClick={handleOpen}
         variant="outlined"
         size="large"
@@ -155,7 +144,6 @@ export default function ChooseInsertPatientDataModal() {
       >
         <AddIcon color="#fff" />
       </IconButton>
-
       <Modal
         open={modal1}
         onClose={handleClose}
@@ -176,21 +164,13 @@ export default function ChooseInsertPatientDataModal() {
                 <CloseIcon color="#fff" />
               </IconButton>
             </Typography>
-
           </Box>
           <FormGroup>
             {values[0].choose.map((data) => {
-              return <FormControlLabel control={<Checkbox defaultChecked={data.required} />} label={data.label} value={data.value} disabled={data.disabled} required={data.required} onChange={handleChange} />
+              return <FormControlLabel control={<Checkbox defaultChecked={data.required} />} key={data.label} label={data.label} value={data.value} disabled={data.disabled} required={data.required} onChange={handleChange} />
             })}
           </FormGroup>
-          <InsertPatientDataModal callbackModal={callbackModal} chooseDef={choosen} />
-          {/* <Button
-            variant="contained"
-
-            sx={{ width: 1, mt: 1 }}
-          >
-            Go
-          </Button> */}
+          <InsertPatientDataModal chooseDef={choosen} />
         </Box>
       </Modal>
     </div >

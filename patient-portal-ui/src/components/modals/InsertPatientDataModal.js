@@ -6,14 +6,14 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import Iarterial_pressure from "../patient/analyses_data/input_data/Iarterial_pressure";
-import Itemperature from "../patient/analyses_data/input_data/Itemperature";
-import Iheart_rate from "../patient/analyses_data/input_data/Iheart_rate";
-import Isaturation from "../patient/analyses_data/input_data/Isaturation";
-import Ihgt from "../patient/analyses_data/input_data/Ihgt";
-import Iascultation from "../patient/analyses_data/input_data/Iascultation";
-import Irespiration_rate from "../patient/analyses_data/input_data/Irespiration_rate";
-import Idiuresis_vol_24h from "../patient/analyses_data/input_data/Idiuresis_vol_24h";
+import Iarterial_pressure from "../utility/patient/analyses_data/input_data/Iarterial_pressure";
+import Itemperature from "../utility/patient/analyses_data/input_data/Itemperature";
+import Iheart_rate from "../utility/patient/analyses_data/input_data/Iheart_rate";
+import Isaturation from "../utility/patient/analyses_data/input_data/Isaturation";
+import Ihgt from "../utility/patient/analyses_data/input_data/Ihgt";
+import Iascultation from "../utility/patient/analyses_data/input_data/Iascultation";
+import Irespiration_rate from "../utility/patient/analyses_data/input_data/Irespiration_rate";
+import Idiuresis_vol_24h from "../utility/patient/analyses_data/input_data/Idiuresis_vol_24h";
 
 
 
@@ -33,13 +33,9 @@ const style = {
 };
 
 export default function InsertPatientDataModal(props) {
-  console.log("aaa");
-  console.log(props);
   const [modal2, setOpen] = React.useState(false);
   const handleOpen = () => {
-    console.log("tt");
     setOpen(true);
-    props.callbackModal();
   }
   const handleClose = () => setOpen(false);
 
@@ -47,8 +43,6 @@ export default function InsertPatientDataModal(props) {
     props.callbackModal();
   }
   const clickHandler = event => {
-
-    // closeButtonClickHandler();
     handleOpen();
   };
   const values = [
@@ -263,28 +257,15 @@ export default function InsertPatientDataModal(props) {
       ],
     },
   ];
-  console.log(values[0].saturation);
   return (
     <div>
       <Button
-        // onClick={handleOpen}
         onClick={clickHandler}
         variant="contained"
         sx={{ width: 1, mt: 1 }}
       >
         Go
       </Button>
-      {/* <IconButton onClick={handleOpen}
-        variant="outlined"
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ ml: 10 }}
-      >
-        <AddIcon color="#fff" />
-      </IconButton> */}
-
       <Modal
         open={modal2}
         onClose={handleClose}
@@ -318,7 +299,6 @@ export default function InsertPatientDataModal(props) {
 
           <Button
             variant="contained"
-
             sx={{ width: 1, mt: 1 }}
           >
             Salva

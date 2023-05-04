@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { BrowserRouter, Link } from "react-router-dom";
 import NavBar from "./../components/NavBar";
 import DefTesttable from "./../components/tables/defTesttable";
-import PatientNav from "./../components/navBars/patientNav";
+import PatientNav from "./../components/navBars/PatientNav";
 
 //////////////////////////////////////
 
@@ -31,9 +31,9 @@ const Home = ({ setAuth }) => {
         height: "100vh",
       }}
     >
-      <Box sx={{ mt: 2 }}>
+      {/* <Box sx={{ mt: 2 }}>
         <Logo />
-      </Box>
+      </Box> */}
       <PatientNav />
 
       <Accordion sx={{ width: 1 }}>

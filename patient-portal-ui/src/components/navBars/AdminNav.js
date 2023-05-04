@@ -4,29 +4,22 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import InsertPatientDataModal from "../modals/InsertPatientDataModal";
+import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal";
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
-import { NavLink } from "react-router-dom";
-import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
-
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-
-
-
-
-
-class PatientNavtodel extends Component {
-
+class AdminNav extends Component {
+   
     render() {
-
+        console.log("uuu");
+        console.log(this.state);
         return (
-
             <Box sx={{ mt: 1, mb: 1, width: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <VisualPatientDataModal />
-                        <InsertPatientDataModal />
+                        <ChooseInsertPatientDataModal />
                         <IconButton
                             variant="outlined"
                             size="large"
@@ -34,13 +27,11 @@ class PatientNavtodel extends Component {
                             color="inherit"
                             aria-label="menu"
                             sx={{ ml: 1 }}
-                            href="/PatientHome"
+                            onClick={this.handleClick}
+                            href="/PatientAgenda"
                         >
-                            <FormatListNumberedRtlIcon color="inherit" />
+                            <CalendarMonthIcon color="inherit" />
                         </IconButton>
-                        {/* </NavLink> */}
-
-                        {/* <Button color="inherit">Login</Button> */}
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -48,4 +39,4 @@ class PatientNavtodel extends Component {
 
     }
 }
-export default PatientNavtodel;
+export default AdminNav;

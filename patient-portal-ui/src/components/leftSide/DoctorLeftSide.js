@@ -4,29 +4,18 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-// import InsertPatientDataModal from "../modals/InsertPatientDataModal";
 import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal";
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
-
-
-
-
-
-class patientNav extends Component {
-
+class DoctorLeftSide extends Component {
     render() {
-
         return (
-
             <Box sx={{ mt: 1, mb: 1, width: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <VisualPatientDataModal />
-                        {/* <InsertPatientDataModal /> */}
                         <ChooseInsertPatientDataModal />
                         <IconButton
                             variant="outlined"
@@ -39,9 +28,6 @@ class patientNav extends Component {
                         >
                             <CalendarMonthIcon color="inherit" />
                         </IconButton>
-                        {/* </NavLink> */}
-
-                        {/* <Button color="inherit">Login</Button> */}
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -49,4 +35,4 @@ class patientNav extends Component {
 
     }
 }
-export default patientNav;
+export default DoctorLeftSide;
