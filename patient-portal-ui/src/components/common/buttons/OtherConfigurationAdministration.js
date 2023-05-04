@@ -4,16 +4,16 @@ import { Button } from "@mui/material";
 
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
-const ManageProfile = ({ setAuth }) => {
+const OtherConfigurationAdministration = ({ setAuth }) => {
   return (
-    <Button disabled startIcon={<ManageAccountsIcon />} component={Link} to="/PatientHome"
-      sx={{ width: 1, mt: 1 }}
+    <Button startIcon={<ManageAccountsIcon />} component={Link} to="/AdministrationOtherConfiguration"
+      sx={{ width: 1, mt: 1, mb: 2 }}
       variant="contained"
       style={{ justifyContent: "flex-start" }}
       color="primary">
-      Manage Profile
+      Other Configuration
     </Button>
   );
 };
 
-export default ManageProfile;
+export default OtherConfigurationAdministration;

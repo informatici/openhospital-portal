@@ -275,7 +275,7 @@ export default function InsertPatientDataModal(props) {
         <Box sx={style}>
           <Box component="span"
             display="flex"
-            alignItems="center" sx={{ width: 1 }}>
+            sx={{ width: 1 }}>
             <Typography variant="h6" component="h2" display="inline" sx={{ width: 0.8 }}>Insert Data: </Typography>
             <Typography variant="body1" align="right" display="inline" sx={{ width: 0.3 }}>
               <IconButton onClick={handleClose}

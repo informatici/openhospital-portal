@@ -6,6 +6,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AdministrationNav from "../../components/navBars/AdministrationNav";
+
+import ResetPassword from "../../components/common/buttons/ResetPasswordAdministration";
+import SelectLanguage from "../../components/common/buttons/SelectLanguage";
+import ManageMisureAdministration from "../../components/common/buttons/ManageMisureAdministration";
+import OtherConfigurationAdministration from "../../components/common/buttons/OtherConfigurationAdministration";
 const AdministrationHome = ({ setAuth }) => {
   return (
     <Container
@@ -13,34 +18,20 @@ const AdministrationHome = ({ setAuth }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
         height: "100vh",
       }}
     >
-      <Box sx={{ mt: 2 }}>
-        <Logo />
-      </Box>
+
       <AdministrationNav />
 
-      <Accordion sx={{ width: 1 }}>
-        <AccordionSummary sx={{ bgcolor: "#b25977", color: '#fff' }}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel_annsca-content"
-          id="panel_annsca-header"
-
-        >
-          <Typography>Agenda ADMINISTRATION</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Annunci/ScadenzeAnnunci/ScadenzeAnnunci/Scadenze
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Button sx={{ mt: 1 }} size="large" variant="contained" onClick={() => setAuth(false)}>
-        Log out
-      </Button>
+      <Typography>
+        AdministrationHome
+      </Typography>
+      <ResetPassword />
+      <SelectLanguage />
+      <ManageMisureAdministration />
+      <OtherConfigurationAdministration />
     </Container>
   );
 };

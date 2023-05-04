@@ -6,6 +6,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AdminNav from "../../components/navBars/AdminNav";
+
+import ResetPassword from "../../components/common/buttons/ResetPasswordAdministration";
+import SelectLanguage from "../../components/common/buttons/SelectLanguage";
+import ManageMisureAdministration from "../../components/common/buttons/ManageMisureAdministration";
+import OtherConfigurationAdministration from "../../components/common/buttons/OtherConfigurationAdministration";
 const AdminHome = ({ setAuth }) => {
   return (
     <Container
@@ -18,17 +23,16 @@ const AdminHome = ({ setAuth }) => {
         height: "100vh",
       }}
     >
-      <Box sx={{ mt: 2 }}>
-        <Logo />
-      </Box>
+
       <AdminNav />
 
       <Typography>
         AdminHome
       </Typography>
-      <Button sx={{ mt: 1 }} size="large" variant="contained" onClick={() => setAuth(false)}>
-        Log out
-      </Button>
+      <ResetPassword />
+      <SelectLanguage />
+      <ManageMisureAdministration />
+      <OtherConfigurationAdministration />
     </Container>
   );
 };

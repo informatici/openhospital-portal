@@ -2,18 +2,18 @@ import * as React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
-const Logout = ({ setAuth }) => {
+const ManageMisureAdministration = ({ setAuth }) => {
   return (
-    <Button startIcon={<ExitToAppIcon />} component={Link} to="/logout"
+    <Button startIcon={<LeaderboardIcon />} component={Link} to="/AdministrationManageMisure"
       sx={{ width: 1, mt: 1, mb: 2 }}
       variant="contained"
       style={{ justifyContent: "flex-start" }}
       color="primary">
-      Log out
+      Manage Misure
     </Button>
   );
 };
 
-export default Logout;
+export default ManageMisureAdministration;

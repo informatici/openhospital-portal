@@ -6,7 +6,14 @@ import HomeIcon from '@mui/icons-material/Home';
 
 const GoHomePatient = ({ setAuth }) => {
   return (
-    <Button startIcon={<HomeIcon />} component={Link} to="/PatientHome" sx={{ width: 1, mt: 1, mb: 2 }} variant="contained" color="primary">
+    <Button 
+    startIcon={<HomeIcon />} 
+    to="/PatientHome" 
+    component={Link}    
+    sx={{ width: 1, mt: 1, mb: 2 }} 
+    variant="contained" 
+    style={{ justifyContent: "flex-start" }}
+    color="primary">
       Go Home
     </Button>
   );

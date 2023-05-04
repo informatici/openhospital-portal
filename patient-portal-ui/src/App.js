@@ -3,11 +3,14 @@ import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminHome from "./pages/admin/AdminHome";
-import AdministrationHome from "./pages/administration/AdministrationHome";
 
-import PatientHome from "./pages/patient/PatientHome";
+
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import SelectLanguage from "./pages/common/SelectLanguage";
+
+import PatientHome from "./pages/patient/PatientHome";
 import PatientAgenda from "./pages/patient/PatientAgenda";
 import PatientAdsDeadlines from "./pages/patient/PatientAdsDeadlines";
 import PatientExams from "./pages/patient/PatientExams";
@@ -19,6 +22,11 @@ import PatientVisits from "./pages/patient/PatientVisits";
 
 import DoctorHome from "./pages/doctor/DoctorHome";
 import DoctorAgenda from "./pages/doctor/DoctorAgenda";
+
+import AdministrationHome from "./pages/administration/AdministrationHome";
+import AdministrationManageMisure from "./pages/administration/AdministrationManageMisure";
+import AdministrationResetPassword from "./pages/administration/AdministrationResetPassword";
+import AdministrationOtherConfiguration from "./pages/administration/AdministrationOtherConfiguration";
 
 
 
@@ -51,6 +59,12 @@ function App() {
         <Route path="/DoctorHome" element={<DoctorHome setAuth={setAuth} />} />
         <Route path="/DoctorAgenda" element={<DoctorAgenda setAuth={setAuth} />} />
 
+        <Route path="/AdministrationHome" element={<AdministrationHome setAuth={setAuth} />} />
+        <Route path="/AdministrationResetPassword" element={<AdministrationResetPassword setAuth={setAuth} />} />
+        <Route path="/AdministrationManageMisure" element={<AdministrationManageMisure setAuth={setAuth} />} />
+        <Route path="/AdministrationOtherConfiguration" element={<AdministrationOtherConfiguration setAuth={setAuth} />} />
+
+        <Route path="/SelectLanguage" element={<SelectLanguage setAuth={setAuth} />} />
         <Route
           path="/"
           element={
