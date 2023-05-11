@@ -37,11 +37,12 @@ class Idiuresis_vol_24h extends Component {
         } else {
             this.setState({ disAddIcon: false });
         }
+        this.setState({ io_vis: "output" });
     }
     render() {
         if (this.state.io_vis == "input") {
             return (
-                <Box sx={{ height: 60, width: 1, mt: 1.5 }}>
+                <Box sx={{ width: 1, mt: 1.5 }}>
                     <TextField
                         label="Diuresis Vol 24h - ml"
                         id="Idiuresis_vol_24h"
@@ -50,7 +51,7 @@ class Idiuresis_vol_24h extends Component {
                         name="Diuresis Vol 24h"
                         onChange={this.handleChange}
                         defaultValue=""
-                        sx={{ width: 0.8 }}
+                        sx={{ width: 1 }}
                         helperText=""
                     >
                         {this.props.dataDef.map((option) => (
@@ -59,15 +60,12 @@ class Idiuresis_vol_24h extends Component {
                             </MenuItem>
                         ))}
                     </TextField>
-                    <IconButton disabled={this.state.disAddIcon} onClick={this.ioDataIn} sx={{}} color="primary" aria-label="insert" size="large">
-                        <AddIcon fontSize="inherit" />
-                    </IconButton>
                 </Box>
             );
         }
         if (this.state.io_vis == "output") {
             return (
-                <Box sx={{ height: 60, width: 1, mt: 1.5 }}
+                <Box sx={{  width: 1, mt: 1.5 }}
                     component="span"
                     display="flex"
                     justifyContent="space-between"

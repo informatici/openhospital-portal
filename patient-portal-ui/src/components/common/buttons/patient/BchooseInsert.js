@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
-
 import IconButton from '@mui/material/IconButton';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
-const GoHomePatient = ({ setAuth }) => {
+import AddIcon from '@mui/icons-material/Add';
+
+const BchooseInsert = ({ setAuth }) => {
   return (
     <IconButton
       variant="outlined"
@@ -12,12 +12,13 @@ const GoHomePatient = ({ setAuth }) => {
       edge="start"
       color="inherit"
       aria-label="menu"
-      to="/PatientHome"
-      component={Link}
+      component={Link} to={{
+        pathname: '/PatientChooseMeasurements',
+      }}
     >
-      <HomeOutlinedIcon color="inherit" />
+      <AddIcon color="inherit" />
     </IconButton>
   );
 };
 
-export default GoHomePatient;
+export default BchooseInsert;

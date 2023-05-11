@@ -37,11 +37,13 @@ class Ibowel extends Component {
         } else {
             this.setState({ disAddIcon: false });
         }
+        this.setState({ io_vis: "output" });
     }
     render() {
+        console.log(this.props);
         if (this.state.io_vis == "input") {
             return (
-                <Box sx={{ height: 60, width: 1, mt: 1.5 }}>
+                <Box sx={{ width: 1, mt: 1.5 }}>
                     <TextField
                         label="Bowel"
                         id="Ibowel"
@@ -50,7 +52,7 @@ class Ibowel extends Component {
                         name="Bowel"
                         onChange={this.handleChange}
                         defaultValue=""
-                        sx={{ width: 0.8 }}
+                        sx={{ width: 1 }}
                         helperText=""
                     >
                         {this.props.dataDef.map((option) => (
@@ -59,19 +61,16 @@ class Ibowel extends Component {
                             </MenuItem>
                         ))}
                     </TextField>
-                    <IconButton disabled={this.state.disAddIcon} onClick={this.ioDataIn} sx={{}} color="primary" aria-label="insert" size="large">
-                        <AddIcon fontSize="inherit" />
-                    </IconButton>
                 </Box>
             );
         }
         if (this.state.io_vis == "output") {
             return (
-                <Box sx={{ height: 60, width: 1, mt: 1.5 }}
+                <Box sx={{  width: 1, mt: 1.5 }}
                     component="span"
                     display="flex"
                     justifyContent="space-between"
-                    alignItems="center"
+                    // alignItems="center"
                 >
                     <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Bowel: </Typography>
                     <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalue}</Typography>

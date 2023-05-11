@@ -25,7 +25,6 @@ const DoctorHome = ({ setAuth }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
         height: "100vh",
       }}
@@ -34,7 +33,7 @@ const DoctorHome = ({ setAuth }) => {
       <DoctorNav />
       <SearchPatient />
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>
@@ -64,7 +63,7 @@ const DoctorHome = ({ setAuth }) => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>
@@ -94,7 +93,7 @@ const DoctorHome = ({ setAuth }) => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>
@@ -124,7 +123,7 @@ const DoctorHome = ({ setAuth }) => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>
@@ -154,7 +153,7 @@ const DoctorHome = ({ setAuth }) => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>
@@ -184,7 +183,7 @@ const DoctorHome = ({ setAuth }) => {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ minWidth: 275, m: 1 }}>
             <CardContent>
               <Stack direction="row" spacing={2}>

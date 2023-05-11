@@ -9,6 +9,18 @@ import DoctorNav from "../../components/navBars/DoctorNav";
 import SearchPatient from "../../components/utility/doctor/SearchPatient";
 import { Scheduler } from "@aldabil/react-scheduler";
 import { useState } from "react";
+import "../../style.css";
+const styles = {
+  cellCal: {
+    fontFamily: "-apple-system",
+    fontSize: "1rem",
+    fontWeight: 1.5,
+    lineHeight: 1.5,
+    color: "#292b2c",
+    backgroundColor: "red",
+    padding: "0 2em"
+  }
+};
 const DoctorHome = ({ setAuth }) => {
   return (
     <Container
@@ -16,14 +28,20 @@ const DoctorHome = ({ setAuth }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
         height: "100vh",
       }}
     >
 
-      <DoctorNav />
+      <DoctorNav />dd
       <Scheduler
+        style={styles.cellCal}
+        sx={{
+          height: 100,
+          width: 1,
+          fontSize: 1,
+          fontWeight: 'bold',
+        }}
         view="month"
         events={[
           {

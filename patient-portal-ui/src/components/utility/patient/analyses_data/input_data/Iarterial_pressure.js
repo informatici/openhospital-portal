@@ -57,16 +57,47 @@ const maxAp = [
     },
 ];
 class Iarterial_pressure extends Component {
+    constructor(props) {
+        super(props)
+        // Set initial state
+        this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+        this.ioDataOut = this.ioDataOut.bind(this);
+        this.ioDataIn = this.ioDataIn.bind(this);
+        this.ioDataDel = this.ioDataDel.bind(this);
+        this.handleChangeMin = this.valueDetectMin.bind(this);
+        this.handleChangeMax = this.valueDetectMax.bind(this);
+
+    }
+    ioDataOut() {
+        this.setState({ io_vis: "input" });
+
+    }
+    ioDataIn() {
+        this.setState({ io_vis: "output" });
+    }
+    ioDataDel() {
+        this.setState({ getvalue: "" });
+        this.setState({ io_vis: "input", disAddIcon: true });
+    }
+    valueDetectMin(e) {
+        let { name, value } = e.target;
+        this.setState({ getvalueMin: value });
+        if (value == '') {
+            this.setState({ disAddIcon: true });
+        } else {
+            this.setState({ disAddIcon: false });
+        }
+        this.setState({ io_vis: "output" });
+    }
     render() {
         return (
-            <Box>
+            <Box sx={{ width: 1, mt: 1.5 }}>
                 <TextField
                     id="min"
                     select
-                    label="Min - mmHg"
+                    label="Min - Arterial Pressure"
                     defaultValue="mmHg"
-                    sx={{ width: 0.38 }}
-                    helperText="Min - Arterial Pressure"
+                    sx={{ width: 1 }}
                 >
                     {minAp.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -74,23 +105,14 @@ class Iarterial_pressure extends Component {
                         </MenuItem>
                     ))}
                 </TextField>
-                {/* <TextField
-                    label="Min - Arterial Pressure"
-                    id="Iarterial_pressure_min"
-                    sx={{ width: 0.38 }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start">mmHg</InputAdornment>,
-                    }}
-                /> */}
 
-                <Typography variant="body1" display="inline" sx={{ fontSize: 30, lineHeight: 1.8, fontWeight: 'bold', textAlign: 'bottom', padding: 0.3 }}>/</Typography>
                 <TextField
                     id="max"
                     select
-                    label="Max - mmHg"
+                    label="Max - Arterial Pressure"
                     defaultValue="mmHg"
-                    sx={{ width: 0.38 }}
-                    helperText="Max - Arterial Pressure"
+                    sx={{ width: 1, mt: 1. }}
+
                 >
                     {maxAp.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -98,14 +120,7 @@ class Iarterial_pressure extends Component {
                         </MenuItem>
                     ))}
                 </TextField>
-                {/* <TextField
-                    label="Max - Arterial Pressure"
-                    id="Iarterial_pressure_max"
-                    sx={{ width: 0.38 }}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start">mmHg</InputAdornment>,
-                    }}
-                /> */}
+
                 <IconButton color="primary" aria-label="insert" size="large">
                     <AddIcon fontSize="inherit" />
                 </IconButton>

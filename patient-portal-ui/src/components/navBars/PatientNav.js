@@ -8,6 +8,14 @@ import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
 import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { positions } from '@mui/system';
+
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { NavLink } from "react-router-dom";
 
@@ -57,6 +65,7 @@ class PatientNav extends Component {
                     aria-label="menu"
                     sx={{ ml: 1 }}
                 >
+                    
                     <FormatListNumberedRtlIcon color="inherit" />
                 </IconButton>
             </Link>
@@ -64,14 +73,26 @@ class PatientNav extends Component {
         }
         // console.log("state:" + this.state.main);
         return (
-            <Box sx={{ mt: 1, mb: 1, width: 1 }}>
-                <AppBar position="static">
-                    <Toolbar  >
-                        <VisualPatientDataModal sx={{ width: 0.6 }} />
-                        <ChooseInsertPatientDataModal sx={{ width: 0.2 }} />
-                        {button}
-                    </Toolbar>
-                </AppBar>
+            <Box display="flex"  sx={{ mt: 1, verticalAlign: 'top',width: 1, position: 'absolute',alignItems: 'flex-start',zIndex: 'modal'  }}>
+                <div>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>Accordion 1</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                                malesuada lacus ex, sit amet blandit leo lobortis eget.
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+
+                </div>
+              
             </Box>
         );
 

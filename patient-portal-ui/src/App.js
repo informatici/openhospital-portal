@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CssBaseline } from "@mui/material";
-import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminHome from "./pages/admin/AdminHome";
 
@@ -11,6 +11,9 @@ import Signup from "./pages/Signup";
 import SelectLanguage from "./pages/common/SelectLanguage";
 
 import PatientHome from "./pages/patient/PatientHome";
+import PatientChooseMeasurements from "./pages/patient/PatientChooseMeasurements";
+import PatientInsertMeasurements from "./pages/patient/PatientInsertMeasurements";
+import PatientMeasurements from "./pages/patient/PatientMeasurements";
 import PatientAgenda from "./pages/patient/PatientAgenda";
 import PatientAdsDeadlines from "./pages/patient/PatientAdsDeadlines";
 import PatientExams from "./pages/patient/PatientExams";
@@ -29,24 +32,31 @@ import AdministrationResetPassword from "./pages/administration/AdministrationRe
 import AdministrationOtherConfiguration from "./pages/administration/AdministrationOtherConfiguration";
 
 
+// import { LocalizationProvider } from '@mui/x-date-pickers';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 
-function App() {
+function App(props) {
 
   const [auth, setAuth] = useState(false);
   const [profile, setProfile] = useState("aaaaa");
   const location = useLocation();
-  // console.log("----");
-  // console.log(auth);
-  // console.log(profile);
+  console.log("--");
+  console.log(location.state);
   return (
     <>
       <CssBaseline />
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {children}
+      </LocalizationProvider> */}
       <Routes>
         <Route path="/logout" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
         <Route path="/login" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
         <Route path="/signup" element={<Signup setAuth={setAuth} />} />
         <Route path="/PatientHome" element={<PatientHome setAuth={setAuth} />} />
+        <Route path="/PatientChooseMeasurements" element={<PatientChooseMeasurements setAuth={setAuth} />} />
+        <Route path="/PatientInsertMeasurements" element={<PatientInsertMeasurements setAuth={setAuth} setType={location.state} />} />
+        <Route path="/PatientMeasurements" element={<PatientMeasurements setAuth={setAuth} />} />
         <Route path="/PatientAgenda" element={<PatientAgenda setAuth={setAuth} />} />
         <Route path="/PatientAdsDeadlines" element={<PatientAdsDeadlines setAuth={setAuth} />} />
         <Route path="/PatientExams" element={<PatientExams setAuth={setAuth} />} />

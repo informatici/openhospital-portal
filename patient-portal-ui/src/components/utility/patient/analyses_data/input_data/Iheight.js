@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-class Iweight extends Component {
+class Iheight extends Component {
     constructor(props) {
         super(props)
         // Set initial state
@@ -44,11 +44,11 @@ class Iweight extends Component {
             return (
                 <Box sx={{ width: 1, mt: 1.5 }}>
                     <TextField
-                        label="Weight - Kg"
-                        id="Iweight"
+                        label="Height - cm"
+                        id="Iheight"
                         value={this.state.getvalue}
                         select
-                        name="Weight"
+                        name="Height"
                         onChange={this.handleChange}
                         defaultValue=""
                         sx={{ width: 1 }}
@@ -71,7 +71,7 @@ class Iweight extends Component {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Weight: </Typography>
+                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Height: </Typography>
                     <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalue} Kg</Typography>
                     <Typography variant="body1" align="right" display="inline" sx={{}}>
                         <IconButton onClick={this.ioDataOut} sx={{}} color="primary" aria-label="insert" size="large">
@@ -88,4 +88,4 @@ class Iweight extends Component {
         }
     }
 }
-export default Iweight;
+export default Iheight;

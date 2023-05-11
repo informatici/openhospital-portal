@@ -8,6 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import Iarterial_pressure from "../utility/patient/analyses_data/input_data/Iarterial_pressure";
 import Itemperature from "../utility/patient/analyses_data/input_data/Itemperature";
+import Ibowel from "../utility/patient/analyses_data/input_data/Ibowel";
+
 import Iheart_rate from "../utility/patient/analyses_data/input_data/Iheart_rate";
 import Isaturation from "../utility/patient/analyses_data/input_data/Isaturation";
 import Ihgt from "../utility/patient/analyses_data/input_data/Ihgt";
@@ -289,6 +291,7 @@ export default function InsertPatientDataModal(props) {
           </Box>
 
           {props.chooseDef.includes('Itemperature') ? <Itemperature dataDef={values[0].temperature} /> : null}
+          {/* {props.chooseDef.includes('Ibowel') ? <Ibowel dataDef={values[0].bowel} /> : null} */}
           {props.chooseDef.includes('Iheart_rate') ? <Iheart_rate dataDef={values[0].heart_rate} /> : null}
           {props.chooseDef.includes('Isaturation') ? <Isaturation dataDef={values[0].saturation} /> : null}
           {props.chooseDef.includes('Ihgt') ? <Ihgt dataDef={values[0].hgt} /> : null}

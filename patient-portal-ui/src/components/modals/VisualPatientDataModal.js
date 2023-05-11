@@ -74,7 +74,7 @@ export default function VisualPatientDataModal() {
 
   const list = (anchor) => (
     <Box
-      sx={{ maxHeight: "90%", width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{marginTop: "50px", maxHeight: "90%", width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -103,6 +103,7 @@ export default function VisualPatientDataModal() {
         <React.Fragment key={anchor}>
           <Button startIcon={<AccountCircleIcon />} color="inherit" sx={{ width: 1, }} onClick={toggleDrawer(anchor, true)}>{anchor} Profile</Button>
           <SwipeableDrawer
+            sx={{  }}
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}

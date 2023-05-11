@@ -10,6 +10,7 @@ import { BrowserRouter, Link } from "react-router-dom";
 import NavBar from "./../../components/NavBar";
 import DefTesttable from "./../../components/tables/defTesttable";
 import PatientNav from "./../../components/navBars/PatientNav";
+import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
 // import AdsClickIcon from '@mui/icons-material/AdsClick';
 
 //////////////////////////////////////
@@ -32,12 +33,13 @@ const PatientHome = ({ setAuth }) => {
 
       }}
     >
-      {/* <Box sx={{ mt: 2 }}>
-        <Logo />
-      </Box> */}
       <PatientNav />
+      <PatientSmartNav sx={{mt:10}} page={'PatientHome'} />
+      <Button component={Link} to="/PatientMeasurements" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
+        Measurements
+      </Button>
       <Button component={Link} to="/PatientAdsDeadlines" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
-        Ads/Deadlines
+        Ads/Deadliness
       </Button>
       <Button component={Link} to="/PatientExams" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
         Exams

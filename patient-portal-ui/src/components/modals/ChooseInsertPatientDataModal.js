@@ -54,7 +54,7 @@ export default function ChooseInsertPatientDataModal() {
         {
           value: 'Iarterial_pressure',
           label: 'Arterial Pressure',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
@@ -68,21 +68,21 @@ export default function ChooseInsertPatientDataModal() {
         {
           value: 'Ibowel',
           label: 'Bowel',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
         {
           value: 'Idiuresis_vol_24h',
           label: 'Diuresis vol 24h',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
         {
           value: 'Idiuresis',
           label: 'Diuresis',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
@@ -124,7 +124,7 @@ export default function ChooseInsertPatientDataModal() {
         {
           value: 'Iweight',
           label: 'Weight',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
