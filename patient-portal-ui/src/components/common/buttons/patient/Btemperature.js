@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 
 const Btemperature = ({ setAuth }) => {
+  let misure = {
+    id: null,
+    type: "temperature",
+  }
   return (
     <Button variant="outlined" component={Link} to={{
       pathname: '/PatientInsertMeasurements',
 
     }}
-      state="temperature"
+    state={misure}
       fullWidth
       sx={{
         height: "6em",

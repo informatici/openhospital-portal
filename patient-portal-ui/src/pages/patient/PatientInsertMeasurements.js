@@ -318,8 +318,8 @@ const values = [
 
 function PatientInsertMeasurements(props) {
 
-
-  console.log(props.setType);
+  console.log("--- props --- PatientInsertMeasurements");
+  console.log(props);
   return (
     <Container
       maxWidth="lg"
@@ -332,19 +332,20 @@ function PatientInsertMeasurements(props) {
       }}
     >
       <PatientSmartNav page={'PatientInsertMeasurements'} />
-      {props.setType == 'weight' ? <Iweight dataDef={values[0].weight} /> : null}
-      {props.setType == 'height' ? <Iheight dataDef={values[0].height} /> : null}
-      {props.setType == 'temperature' ? <Itemperature dataDef={values[0].temperature} /> : null}
-      {props.setType == 'bowel' ? <Ibowel dataDef={values[0].bowel} /> : null}
-      {props.setType == 'heart_rate' ? <Iheart_rate dataDef={values[0].heart_rate} /> : null}
-      {props.setType == 'saturation' ? <Isaturation dataDef={values[0].saturation} /> : null}
-      {props.setType == 'hgt' ? <Ihgt dataDef={values[0].hgt} /> : null}
-      {props.setType == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} /> : null}
-      {props.setType == 'respiration_rate' ? <Irespiration_rate dataDef={values[0].respiration_rate} /> : null}
-      {props.setType == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={values[0].diuresis_vol_24h} /> : null}
-      {props.setType == 'diuresis' ? <Idiuresis dataDef={values[0].diuresis} /> : null}
-      {props.setType == 'pressure' ? <Iarterial_pressure dataDef={values[0].arterial_pressure} /> : null}
-      <Idate_time />
+      {props.setType.type == 'weight' ? <Iweight dataDef={values[0].weight} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'height' ? <Iheight dataDef={values[0].height} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'temperature' ? <Itemperature dataDef={values[0].temperature} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'heart_rate' ? <Iheart_rate dataDef={values[0].heart_rate} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'saturation' ? <Isaturation dataDef={values[0].saturation} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'hgt' ? <Ihgt dataDef={values[0].hgt} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={values[0].respiration_rate} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={values[0].diuresis_vol_24h} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'diuresis' ? <Idiuresis dataDef={values[0].diuresis} dataSelected={props.setType.value} /> : null}
+      {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={values[0].arterial_pressure} dataSelected={props.setType.value} /> : null}
+      {props.setType.date && props.setType.hour ? <Idate_time dateSelected={props.setType.date + " " + props.setType.hour} /> : <Idate_time/>}
+
       <Save />
     </Container>
 

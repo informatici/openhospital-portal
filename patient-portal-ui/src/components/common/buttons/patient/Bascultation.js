@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 
 const Bascultation = ({ setAuth }) => {
+  let misure = {
+    id: null,
+    type: "ascultation",
+  }
   return (
     <Button
       variant="outlined"
@@ -11,7 +15,7 @@ const Bascultation = ({ setAuth }) => {
         pathname: '/PatientInsertMeasurements',
 
       }}
-      state="ascultation"
+      state={misure}
       fullWidth
       sx={{
         height: "6em",

@@ -34,9 +34,12 @@ const PatientHome = ({ setAuth }) => {
       }}
     >
       <PatientNav />
-      <PatientSmartNav sx={{mt:10}} page={'PatientHome'} />
+      <PatientSmartNav sx={{ mt: 10 }} page={'PatientHome'} />
       <Button component={Link} to="/PatientMeasurements" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
         Measurements
+      </Button>
+      <Button component={Link} to="/PatientVisits" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
+        Visits
       </Button>
       <Button component={Link} to="/PatientAdsDeadlines" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
         Ads/Deadliness
@@ -56,9 +59,7 @@ const PatientHome = ({ setAuth }) => {
       <Button component={Link} to="/PatientVaccinations" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
         Vaccinations
       </Button>
-      <Button component={Link} to="/PatientVisits" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
-        Visits
-      </Button>
+
     </Container>
   );
 };

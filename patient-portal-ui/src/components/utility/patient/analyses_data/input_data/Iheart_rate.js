@@ -10,12 +10,18 @@ import EditIcon from '@mui/icons-material/Edit';
 class Iheart_rate extends Component {
     constructor(props) {
         super(props)
-        // Set initial state
-        this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+          // Set initial state
+          if (props.dataSelected) {
+            this.state = { io_vis: "output", getvalue: props.dataSelected, disAddIcon: false }
+        } else {
+            this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+        }
         this.ioDataOut = this.ioDataOut.bind(this);
         this.ioDataIn = this.ioDataIn.bind(this);
         this.ioDataDel = this.ioDataDel.bind(this);
         this.handleChange = this.valueDetect.bind(this);
+        console.log("---innn");
+        console.log(props);
 
     }
     ioDataOut() {

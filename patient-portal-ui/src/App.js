@@ -22,6 +22,8 @@ import PatientPayments from "./pages/patient/PatientPayments";
 import PatientTherapies from "./pages/patient/PatientTherapies";
 import PatientVaccinations from "./pages/patient/PatientVaccinations";
 import PatientVisits from "./pages/patient/PatientVisits";
+import PatientVisitDetails from "./pages/patient/PatientVisitDetails";
+
 
 import DoctorHome from "./pages/doctor/DoctorHome";
 import DoctorAgenda from "./pages/doctor/DoctorAgenda";
@@ -42,7 +44,7 @@ function App(props) {
   const [profile, setProfile] = useState("aaaaa");
   const location = useLocation();
   console.log("--");
-  console.log(location.state);
+  console.log(location);
   return (
     <>
       <CssBaseline />
@@ -65,6 +67,8 @@ function App(props) {
         <Route path="/PatientTherapies" element={<PatientTherapies setAuth={setAuth} />} />
         <Route path="/PatientVaccinations" element={<PatientVaccinations setAuth={setAuth} />} />
         <Route path="/PatientVisits" element={<PatientVisits setAuth={setAuth} />} />
+        <Route path="/PatientVisitDetails" element={<PatientVisitDetails setAuth={setAuth} setType={location.state}/>} />
+
 
         <Route path="/DoctorHome" element={<DoctorHome setAuth={setAuth} />} />
         <Route path="/DoctorAgenda" element={<DoctorAgenda setAuth={setAuth} />} />

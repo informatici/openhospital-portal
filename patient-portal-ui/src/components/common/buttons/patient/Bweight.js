@@ -4,13 +4,17 @@ import Button from '@mui/material/Button';
 import { useState } from "react";
 
 const Bweight = ({ setAuth }) => {
+  let misure = {
+    id: null,
+    type: "weight",
+  }
   const [data, setData] = useState({ id: "1t4", title: " How to pass state in react-router-dom", tag: ["reactjs", "react-router-dom"] });
   return (
     <Button variant="outlined" component={Link} to={{
       pathname: '/PatientInsertMeasurements',
 
     }}
-      state="weight"
+      state={misure}
       fullWidth
       sx={{
         height: "6em",

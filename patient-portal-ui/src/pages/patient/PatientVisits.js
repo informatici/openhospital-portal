@@ -1,104 +1,89 @@
 import * as React from 'react';
 import { Button, Typography, Container, Box } from "@mui/material";
+import Logo from "../../components/Logo";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PatientNav from "../../components/navBars/PatientNav";
 import Divider from '@mui/material/Divider';
-import { styled } from '@mui/material/styles';
-import GoHomePatient from "../../components/common/buttons/GoHomePatient";
+import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { useNavigate } from "react-router-dom";
 
-const Root = styled('div')(({ theme }) => ({
-  width: '100%',
-  ...theme.typography.body2,
-  '& > :not(style) + :not(style)': {
-    marginTop: theme.spacing(2),
-  },
-}));
-const PatientVisits = ({ setAuth }) => {
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 0, hide: true },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
+  { field: 'date', headerName: 'Data', width: 110 },
+  { field: 'hour', headerName: 'Hour', width: 70 },
+  { field: 'value', headerName: 'Value', width: 70 },
+  { field: 'pathology', headerName: 'Pathology', width: 180 },
+  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'category', headerName: 'Category', width: 180 },
+  { field: 'diagnosis', headerName: 'Diagnosis', width: 180 },
+  { field: 'note', headerName: 'Note', width: 180 },
+];
+
+const rows = [
+  { id: 1, id_measure: 122, date: "12/05/2022", hour: '9:00', value: '94', pathology: 'Malaria', type: 'weight', category: 'categoria della .Malaria..', diagnosis: 'diagnosis diagnosis Malariadiagnosis', note: 'note Malarianote note' },
+  { id: 2, id_measure: 125, date: "12/05/2022", hour: '9:00', value: '96', pathology: 'Bronchite', type: 'weight', category: 'categoria della .Bronchite..', diagnosis: 'diagnosis diagnosis diagnosis', note: 'note note note' },
+  { id: 3, id_measure: 126, date: "12/05/2022", hour: '9:00', value: '94', pathology: 'Bronchite', type: 'height', category: 'categoria della .Bronchite..', diagnosis: 'diagnosis diagnosis diagnosis', note: 'note note note' },
+  { id: 4, id_measure: 127, date: "12/05/2022", hour: '9:30', value: '94', pathology: 'Malaria', type: 'height', category: 'categoria dellaMalaria ...', diagnosis: 'diagnosis diagnosis Malaria diagnosis', note: 'note Malaria note note' },
+  { id: 5, id_measure: 129, date: "12/05/2022", hour: '9:00', value: '95', pathology: 'Frattura', type: 'height', category: 'categoria della ..Frattura.', diagnosis: 'diagnosis Frattura diagnosis diagnosis', note: 'note note note' },
+  { id: 6, id_measure: 132, date: "12/05/2022", hour: '9:00', value: '94', pathology: 'Frattura', type: 'height', category: 'categoria della ..Frattura .', diagnosis: 'diagnosis diagnosis Frattura diagnosis', note: 'note note note' },
+  { id: 7, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+];
+const PatientVisitDetails = ({ setAuth }) => {
+  let navigate = useNavigate();
   return (
     <Container
       maxWidth="lg"
       sx={{
+
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
 
-        border: "1px solid rgba(0,0,0,.1)",
       }}
     >
-      {/* <Box sx={{ mt: 2 }}>
-        <Logo />
-      </Box> */}
-      <PatientNav />
-      <Root>
-      <Typography variant="h6" component="h2" display="inline" sx={{ width: 1 }}>Visits: </Typography>
-     
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "red",
-        }}>24/04/2023 Ore 12:30</Divider>
-        <div>
-          Esame 1 (sala 12) testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "green",
-        }}>25/04/2023 Ore 12:22</Divider>
-        <div >
-          Esame 232 (sala 12)
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "red",
-        }}>26/04/2023 Ore 19:30</Divider>
-        <div>
-          Ritiro Analisi 1 (Ospedale 12 )
-          testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "red",
-        }}>01/05/2023 Ore 12:30</Divider>
-        <div>
-          Esame 12 (sala 12), Testo testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "blue",
-        }}>05/05/2023 Ore 12:30</Divider>
-        <div>
-          Ritiro Analisi 1 (sala 12) testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "green",
-        }}>12/05/2023 Ore 14:30</Divider>
-        <div>
-          Esame 444 (sala 12 Piano Terra )
-          testo  testo  testo  testo
-        </div>
-        <Divider textAlign="left" sx={{
-          fontWeight: 'bold',
-          color: "red",
-        }}>24/05/2023 Ore 17:30</Divider>
-        <div>
-          Pagamento 1 (sala 12)
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-          testo  testo  testo  testo
-        </div>
-      </Root>
-      <GoHomePatient />
+      <PatientSmartNav page={'PatientVisitDetails'} />
+      <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
+          onCellClick={(params, event) => {
+            if (!event.ctrlKey) {
+              console.log(params);
+              console.log(params.row.pathology);
+              console.log("aaa");
+              navigate("/PatientVisitDetails", {
+                state: params.row,
+              })
+            }
+          }}
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                id: false,
+                id_measure: false,
+                value: false,
+                type: false,
+                category: false,
+                diagnosis: false,
+                note: false,
+              },
+            },
+          }}
+          size="medium"
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+        />
+      </div>
     </Container>
   );
+
 };
 
-export default PatientVisits;
+export default PatientVisitDetails;

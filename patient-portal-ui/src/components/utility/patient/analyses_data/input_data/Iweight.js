@@ -11,12 +11,15 @@ class Iweight extends Component {
     constructor(props) {
         super(props)
         // Set initial state
-        this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+        if (props.dataSelected) {
+            this.state = { io_vis: "output", getvalue: props.dataSelected, disAddIcon: false }
+        } else {
+            this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
+        }
         this.ioDataOut = this.ioDataOut.bind(this);
         this.ioDataIn = this.ioDataIn.bind(this);
         this.ioDataDel = this.ioDataDel.bind(this);
         this.handleChange = this.valueDetect.bind(this);
-
     }
     ioDataOut() {
         this.setState({ io_vis: "input" });
@@ -65,7 +68,7 @@ class Iweight extends Component {
         }
         if (this.state.io_vis == "output") {
             return (
-                <Box sx={{  width: 1, mt: 1.5 }}
+                <Box sx={{ width: 1, mt: 1.5 }}
                     component="span"
                     display="flex"
                     justifyContent="space-between"

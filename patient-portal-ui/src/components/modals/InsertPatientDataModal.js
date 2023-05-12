@@ -35,6 +35,8 @@ const style = {
 };
 
 export default function InsertPatientDataModal(props) {
+  console.log("props");
+  console.log(props);
   const [modal2, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -292,7 +294,7 @@ export default function InsertPatientDataModal(props) {
 
           {props.chooseDef.includes('Itemperature') ? <Itemperature dataDef={values[0].temperature} /> : null}
           {/* {props.chooseDef.includes('Ibowel') ? <Ibowel dataDef={values[0].bowel} /> : null} */}
-          {props.chooseDef.includes('Iheart_rate') ? <Iheart_rate dataDef={values[0].heart_rate} /> : null}
+          {props.chooseDef.includes('Iheart_rate') ? <Iheart_rate dataDef={values[0].heart_rate} dataSelected={values[0].heart_rate} /> : null}
           {props.chooseDef.includes('Isaturation') ? <Isaturation dataDef={values[0].saturation} /> : null}
           {props.chooseDef.includes('Ihgt') ? <Ihgt dataDef={values[0].hgt} /> : null}
           {props.chooseDef.includes('Iascultation') ? <Iascultation dataDef={values[0].ascultation} /> : null}
