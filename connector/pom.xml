@@ -15,7 +15,7 @@
 	<description>OpenHospital Patient Portal Connector</description>
 	<properties>
 		<java.version>11</java.version>
-        <oh.version>1.12.0</oh.version>
+        <oh.version>1.12.0-SNAPSHOT</oh.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <license.maven.plugin.version>4.1</license.maven.plugin.version>
         <!-- <spring-shell.version>3.0.0-M2</spring-shell.version> -->
