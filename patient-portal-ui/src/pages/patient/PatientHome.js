@@ -34,7 +34,9 @@ const PatientHome = ({ setAuth }) => {
       }}
     >
       <PatientNav />
-      <PatientSmartNav sx={{ mt: 10 }} page={'PatientHome'} />
+      <Box sx={{ mt: 14, width: 1 }}>
+        <PatientSmartNav page={'PatientHome'} />
+      </Box>
       <Button component={Link} to="/PatientMeasurements" sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
         Measurements
       </Button>

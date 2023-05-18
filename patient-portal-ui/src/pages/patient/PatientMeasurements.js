@@ -46,7 +46,7 @@ const PatientMeasurements = ({ setAuth }) => {
       }}
     >
       <PatientSmartNav page={'PatientMeasurements'} />
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ width: '100%' ,height: '600px' }}>
         <DataGrid
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {

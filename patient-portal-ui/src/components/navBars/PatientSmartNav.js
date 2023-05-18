@@ -32,29 +32,29 @@ class PatientSmartNav extends Component {
 
         // console.log("state:" + this.state.main);
         return (
-            <Box sx={{ mt: 1, mb: 1, width: 1 }}>
-                <AppBar position="static" >
-                    <Toolbar  >
-                        <Grid
-                            container
-                        >
-                            <Grid item xs={1}>
-                                {this.props.page != 'PatientHome' ? <GoBack /> : null}
-                            </Grid>
-                            <Grid item xs={1}>
-                                {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
-                            </Grid>
-                            <Grid item xs={8}>
-
-                            </Grid>
-                            <Grid item xs={1}>
-                            </Grid>
-                            <Grid item xs={1}>
-                                {this.props.page == 'PatientHome' || this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
-                            </Grid>
+            <Box sx={{ width: 1 }}>
+                {/* <AppBar position="static" > */}
+                <Toolbar >
+                    <Grid  
+                        container
+                    >
+                        <Grid item xs={2}>
+                            {this.props.page != 'PatientHome' ? <GoBack /> : null}
                         </Grid>
-                    </Toolbar>
-                </AppBar>
+                        <Grid item xs={2}>
+                            {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
+                        </Grid>
+                        <Grid item xs={5}>
+
+                        </Grid>
+                        <Grid item xs={1}>
+                        </Grid>
+                        <Grid item xs={2}>
+                            {this.props.page == 'PatientHome' || this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+                {/* </AppBar> */}
             </Box>
         );
 

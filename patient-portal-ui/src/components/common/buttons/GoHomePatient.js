@@ -3,20 +3,30 @@ import { Link } from "react-router-dom";
 
 import IconButton from '@mui/material/IconButton';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import Fab from '@mui/material/Fab';
 
 const GoHomePatient = ({ setAuth }) => {
   return (
-    <IconButton
-      variant="outlined"
-      size="large"
-      edge="start"
-      color="inherit"
-      aria-label="menu"
+    <Fab
+      color="primary"
+      aria-label="add"
+      size="small"
       to="/PatientHome"
       component={Link}
     >
       <HomeOutlinedIcon color="inherit" />
-    </IconButton>
+    </Fab>
+    //     <IconButton
+    //   variant="outlined"
+    //   size="large"
+    //   edge="start"
+    //   color="inherit"
+    //   aria-label="menu"
+    //   to="/PatientHome"
+    //   component={Link}
+    // >
+    //   <HomeOutlinedIcon color="inherit" />
+    // </IconButton>
   );
 };
 

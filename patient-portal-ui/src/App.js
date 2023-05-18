@@ -33,20 +33,81 @@ import AdministrationManageMisure from "./pages/administration/AdministrationMan
 import AdministrationResetPassword from "./pages/administration/AdministrationResetPassword";
 import AdministrationOtherConfiguration from "./pages/administration/AdministrationOtherConfiguration";
 
+import { red } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-// import { LocalizationProvider } from '@mui/x-date-pickers';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-
-
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#673ab7",
+    },
+  },
+});
 function App(props) {
-
+  const theme_1 = createTheme({
+    palette: {
+      primary: {
+        light: "#b39ddb",
+        main: "#673ab7",
+        dark: "#512da8",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#448aff",
+        main: "#2979ff",
+        dark: "#2962ff",
+        contrastText: "#000",
+      },
+    },
+  });
+  const theme_2 = createTheme({
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#00bcd4',
+      },
+      secondary: {
+        main: '#ffea00',
+      },
+      info: {
+        main: '#80d8ff',
+      },
+    },
+  });
+  // export const themeOptions: ThemeOptions = {
+  //   palette: {
+  //     mode: 'light',
+  //     primary: {
+  //       main: '#3f51b5',
+  //     },
+  //     secondary: {
+  //       main: '#f50057',
+  //     },
+  //   },
+  // };
   const [auth, setAuth] = useState(false);
   const [profile, setProfile] = useState("aaaaa");
   const location = useLocation();
-  console.log("--");
-  console.log(location);
+  const [themeUser, setThemeUser] = useState("uu");
+  const sendDataToParent = (index) => { // the callback. Use a better name
+    console.log(index);
+    setThemeUser(index);
+  };
+  // const [message, setMessage] = React.useState("Hello World");  
+  const chooseThemeUser = (themeUser) => {
+    setThemeUser(themeUser);
+  };
+  console.log("----------------------------------------------------------------------------------");
+  console.log(themeUser);
+  let theme = theme_1;
+  if (themeUser == "theme_1") {
+    theme = theme_1;
+  } else {
+    theme = theme_2;
+  }
   return (
-    <>
+    // <ThemeProvider theme={themeUser}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         {children}
@@ -67,7 +128,7 @@ function App(props) {
         <Route path="/PatientTherapies" element={<PatientTherapies setAuth={setAuth} />} />
         <Route path="/PatientVaccinations" element={<PatientVaccinations setAuth={setAuth} />} />
         <Route path="/PatientVisits" element={<PatientVisits setAuth={setAuth} />} />
-        <Route path="/PatientVisitDetails" element={<PatientVisitDetails setAuth={setAuth} setType={location.state}/>} />
+        <Route path="/PatientVisitDetails" element={<PatientVisitDetails setAuth={setAuth} setType={location.state} />} />
 
 
         <Route path="/DoctorHome" element={<DoctorHome setAuth={setAuth} />} />
@@ -91,7 +152,7 @@ function App(props) {
               ) : profile == "Doctor" ? (
                 <DoctorHome setAuth={setAuth} />
               ) : profile == "Patient" ? (
-                <PatientHome setAuth={setAuth} />
+                <PatientHome theme={theme_2} setAuth={setAuth} />
               ) :
                 <PatientHome setAuth={setAuth} />
             ) : (
@@ -100,7 +161,7 @@ function App(props) {
           }
         />
       </Routes>
-    </>
+    </ThemeProvider>
   );
 }
 

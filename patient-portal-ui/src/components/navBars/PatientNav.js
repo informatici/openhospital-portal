@@ -9,15 +9,30 @@ import VisualPatientDataModal from "../modals/VisualPatientDataModal";
 import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { positions } from '@mui/system';
-
+import UserProfile from "../common/userProfile/UserProfile";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import PatientUserProfile from "../common/userProfile/PatientUserProfile";
 import { NavLink } from "react-router-dom";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+
+import Oname from "../utility/patient/registry_data/output_data/Oname";
+import Oage from "../utility/patient/registry_data/output_data/Oage";
+import Osex from "../utility/patient/registry_data/output_data/Osex";
+import Oadress from "../utility/patient/registry_data/output_data/Oadress";
+import Otelephone from "../utility/patient/registry_data/output_data/Otelephone";
+import Logout from "../common/buttons/Logout";
+import ChangePalette from "../common/buttons/ChangePalette";
+import IT from 'country-flag-icons/react/3x2/IT'
 
 class PatientNav extends Component {
     constructor(props) {
@@ -25,7 +40,13 @@ class PatientNav extends Component {
         // Set initial state
         console.log("inizial");
         console.log(props);
+        console.log(this.state);
         this.state = { main: true };
+        this.state = {
+            setThemeUser: 'themeaaasasa'
+        };
+        this.aaaaaaccgendaClick = this.aaaaaaccgendaClick.bind(this);
+
     }
     listClick() {
         console.log("listClick");
@@ -37,65 +58,70 @@ class PatientNav extends Component {
         this.setState({ main: false });
         console.log("state:" + this.state.main);
     }
+    aaaaaaccgendaClick = () => {
+        // this.props.chooseThemeUser("eeeed")
+    }
     render() {
-        // const main = this.state.main;
-        let button;
-        console.log("state:" + this.state.main);
-        if (this.state.main) {
-            button = <Link style={{ color: '#fff' }} to="/PatientAgenda" onClick={() => { this.agendaClick() }}>
-                <IconButton
-                    variant="outlined"
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ ml: 1 }}
-                >
-                    <CalendarMonthIcon color="inherit" />
-                </IconButton>
-            </Link >;
-        }
-        else {
-            button = <Link style={{ color: '#fff' }} to="/PatientHome" onClick={() => { this.listClick() }} >
-                <IconButton
-                    variant="outlined"
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ ml: 1 }}
-                >
-                    
-                    <FormatListNumberedRtlIcon color="inherit" />
-                </IconButton>
-            </Link>
-
-        }
-        // console.log("state:" + this.state.main);
         return (
-            <Box display="flex"  sx={{ mt: 1, verticalAlign: 'top',width: 1, position: 'absolute',alignItems: 'flex-start',zIndex: 'modal'  }}>
-                <div>
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography>Accordion 1</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
+            <Accordion sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', alignItems: 'flex-start', zIndex: 'modal' }}>
+                <AccordionSummary
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Box borderRadius={2} sx={{
+                        p: 1,
+                        width: 1,
+                        backgroundColor: 'primary.dark',
+                    }}>
+                        <Stack direction="row" spacing={2} sx={{
+                            width: 1,
+                        }}>
+                            <div style={{ "width": "20%" }}>
+                                <Avatar onClick={this.aaaaaaccgendaClick()} alt="Remy Sharp" src="/static/images/avatar/1.jpeg" />
+                            </div>
+                            <div style={{ "width": "60%" }}>
+                                <Typography variant="h6">
+                                    Mario Rossi
+                                </Typography>
+                                <Typography variant="button" >
+                                    ID: xxxxxxx
+                                </Typography>
+                            </div>
+                            <div style={{ "width": "10%", margin: "2%" }} >
+                                <IT title="United States" />
+                            </div>
+                        </Stack>
+                    </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box
+                        // sx={{ maxHeight: "90%", width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+                        role="presentation"
+                    >
+                        <Box sx={{ alignItems: 'flex-end' }}>
+                            <ChangePalette sx={{ ml: 15 }} />
+                        </Box>
+                        <List sx={{ p: 1 }}>
+                            <Stack direction="row" spacing={2}>
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpeg" />
+                                <Oname />
+                            </Stack>
+                            <Divider />
+                            <Oage />
+                            <Osex />
+                            <Divider />
+                            <Oadress />
+                            <Otelephone />
+                        </List>
 
-                </div>
-              
-            </Box>
+                        <List alignItems="center" sx={{ m: 1 }}>
+                            <Divider />
+                            <Logout />
+                        </List>
+                    </Box>
+                </AccordionDetails>
+            </Accordion >
         );
-
     }
 }
 export default PatientNav;

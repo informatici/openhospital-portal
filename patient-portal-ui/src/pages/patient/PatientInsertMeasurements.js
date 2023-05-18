@@ -287,6 +287,54 @@ const values = [
         label: '97',
       },
     ],
+    "min_arterial_pressure": [
+      {
+        value: '',
+        label: '',
+      },
+      {
+        value: '10',
+        label: '10',
+      },
+      {
+        value: '11',
+        label: '11',
+      },
+      {
+        value: '12',
+        label: '12',
+      },
+      {
+        value: '13',
+        label: '13',
+      },
+    ],
+    "max_arterial_pressure": [
+      {
+        value: '',
+        label: '',
+      },
+      {
+        value: '90',
+        label: '90',
+      },
+      {
+        value: '95',
+        label: '95',
+      },
+      {
+        value: '100',
+        label: '100',
+      },
+      {
+        value: '105',
+        label: '105',
+      },
+      {
+        value: '110',
+        label: '110',
+      },
+    ],
     "respiration_rate": [
       {
         value: '',
@@ -343,8 +391,8 @@ function PatientInsertMeasurements(props) {
       {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={values[0].respiration_rate} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={values[0].diuresis_vol_24h} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'diuresis' ? <Idiuresis dataDef={values[0].diuresis} dataSelected={props.setType.value} /> : null}
-      {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={values[0].arterial_pressure} dataSelected={props.setType.value} /> : null}
-      {props.setType.date && props.setType.hour ? <Idate_time dateSelected={props.setType.date + " " + props.setType.hour} /> : <Idate_time/>}
+      {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{min:props.setType.value, max:props.setType.value}} /> : null}
+      {props.setType.date && props.setType.hour ? <Idate_time dateSelected={props.setType.date + " " + props.setType.hour} /> : <Idate_time />}
 
       <Save />
     </Container>

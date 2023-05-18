@@ -33,6 +33,17 @@ const rows = [
   { id: 5, id_measure: 129, date: "12/05/2022", hour: '9:00', value: '95', pathology: 'Frattura', type: 'height', category: 'categoria della ..Frattura.', diagnosis: 'diagnosis Frattura diagnosis diagnosis', note: 'note note note' },
   { id: 6, id_measure: 132, date: "12/05/2022", hour: '9:00', value: '94', pathology: 'Frattura', type: 'height', category: 'categoria della ..Frattura .', diagnosis: 'diagnosis diagnosis Frattura diagnosis', note: 'note note note' },
   { id: 7, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+  { id: 8, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+  { id: 9, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+  { id: 10, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 11, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 12, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 13, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 14, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 15, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 16, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 17, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
+ { id: 18, id_measure: 135, date: "12/05/2022", hour: '9:00', value: '97', pathology: 'Height', type: 'height', category: 'categoria della ..Height.', diagnosis: 'diagnosis Height diagnosis diagnosis', note: 'note Heightnote note' },
 ];
 const PatientVisitDetails = ({ setAuth }) => {
   let navigate = useNavigate();
@@ -49,7 +60,7 @@ const PatientVisitDetails = ({ setAuth }) => {
       }}
     >
       <PatientSmartNav page={'PatientVisitDetails'} />
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ width: '100%' ,height: '600px' }}>
         <DataGrid
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {
