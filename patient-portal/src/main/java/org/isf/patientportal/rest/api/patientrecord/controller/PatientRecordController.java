@@ -42,6 +42,10 @@ public class PatientRecordController {
 	@Autowired
 	private final PatientRecordService service;
 
+	public PatientRecordController() {
+       service = null;
+    }
+	
     public PatientRecordController(PatientRecordService service) {
         this.service = service;
     }
@@ -63,45 +67,6 @@ public class PatientRecordController {
         return service.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find patient record with id " + id));
     }
-    
-    
-    @ApiOperation(value = "New patient record", notes = "Create a new patient record.")
-    @ApiResponse(code = 200, message = "")
-    @PostMapping(value="/patientrecords", produces=MediaType.APPLICATION_JSON_VALUE)
-    PatientRecord create(@RequestBody PatientRecordDto newPatientRecord) {
-         return service.create(newPatientRecord);
-    }
-    
-    
-    @ApiOperation(value = "Update patient record", notes = "Update a patient record by id.")
-    @ApiResponse(code = 200, message = "")
-    @PutMapping(value="/patientrecords/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-    PatientRecordDto update(@RequestBody PatientRecordDto updatedItem, @PathVariable Long id) {
-    	return null;   	
-    }
-    
-    /*@DeleteMapping("/patients/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-    void deletePatientRecord(@PathVariable Long id) {
-    	service.delete(id);
-    }*/
-    
-    
-    /***************** BY PATIENT **********************/
-	
-    @ApiOperation(value = "Retrieve patient records by patient id", notes = "Retrieve all patient records a patient by id.")
-    @ApiResponse(code = 200, message = "")
-    @GetMapping(value="/patientrecords/{patient}", produces=MediaType.APPLICATION_JSON_VALUE)
-    Stream<PatientRecordDto> all(@PathVariable Long patientId) {
-        return service.findByPatientId(patientId);
-    }
-    
-    
-    @ApiOperation(value = "Retrieve patient records of a specific measurement by patient id", 
-    				notes = "Retrieve all patient records of a specific measurement a patient by id.")
-    @ApiResponse(code = 200, message = "")
-    @GetMapping(value="/patientrecords/{patient}/{measurement}", produces=MediaType.APPLICATION_JSON_VALUE)
-    Stream<PatientRecordDto> all(@PathVariable Long patientId, @PathVariable Measurement measurement) {
-        return service.findByPatientIdMeasurement(patientId, measurement);
-    }
+
     	
 }

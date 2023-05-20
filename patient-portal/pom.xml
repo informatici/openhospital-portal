@@ -14,7 +14,7 @@
 	<name>patientportal</name>
 	<description>Open Hospital Patient Portal</description>
 	<properties>
-		<java.version>18</java.version>
+		<java.version>17</java.version>
         <flyway.version>8.5.13</flyway.version>
         <!-- <database.url>jdbc:mariadb://mysql:3306/ohpp?createDatabaseIfNotExist=true</database.url>
         <database.user>patientportal</database.user>
@@ -178,6 +178,9 @@
                     <locations>
                         <location>filesystem:sql/migrations</location>
                     </locations>
+                    <!-- <configFiles>
+						<configFile>src\main\resources\flyway.conf</configFile>
+					</configFiles> -->
                     <!--url>${database.url}</url>
                     <user>${database.user}</user>
                     <password>${databese.password}</password-->

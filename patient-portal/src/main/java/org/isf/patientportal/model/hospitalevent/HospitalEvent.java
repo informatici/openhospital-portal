@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.isf.patientportal.model.patient.Patient;
@@ -32,9 +34,14 @@ public class HospitalEvent {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private LocalDateTime date;
 	
+	@OneToOne
+	@NotNull
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
 	
+	@OneToOne
 	@NotNull
+	@JoinColumn(name = "event_type_id")
 	private EventType eventType;
 	
 	private String payload;

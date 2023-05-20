@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.isf.patientportal.model.patient.Patient;
@@ -20,7 +23,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "PatientRecord")
 public class PatientRecord {
 	
 	@Id
@@ -28,11 +31,13 @@ public class PatientRecord {
     private Long id;
 	
 	@NotNull
-	private LocalDateTime date;
+	private LocalDateTime recordDate;
 	
-	@NotNull
+	@ManyToOne
+    @NotNull
 	private Patient patient;
 	
+	@OneToOne
 	@NotNull
 	private RecordType recordType;
 	
@@ -62,7 +67,7 @@ public class PatientRecord {
 					String optionValue, 
 					String note) {
 		this.id = id;
-		this.date = date;
+		this.recordDate = date;
 		this.patient = patient;
 		this.recordType = recordType;
 		this.value1 = value1;
@@ -75,7 +80,7 @@ public class PatientRecord {
 	public PatientRecord updateWith(PatientRecord item) {
         return new PatientRecord(
             this.id,
-            item.date,
+            item.recordDate,
             item.patient,
             item.recordType,
             item.value1,

@@ -18,7 +18,7 @@ public class PatientRecordDto {
 
     private Long id;
 	
-	private LocalDateTime date;
+	private LocalDateTime recordDate;
 	
 	private Patient patient;
 	

@@ -63,7 +63,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "RecordType")
 public class RecordType {
 
 	public enum MeasurementType {NUMERIC, OPTION}
@@ -78,7 +78,7 @@ public class RecordType {
 	private Measurement measurement;
 	
 	@NotNull
-	private MeasurementType mType;
+	private MeasurementType measurementType;
 	
 	private String description;
 	

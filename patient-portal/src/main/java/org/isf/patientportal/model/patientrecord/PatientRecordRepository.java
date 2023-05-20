@@ -15,17 +15,17 @@ public interface PatientRecordRepository extends CrudRepository<PatientRecord, L
 	
 	Streamable<PatientRecord> findAll();
 	
-	Streamable<PatientRecord> findByMeasurement(Measurement measurement);
+	//Streamable<PatientRecord> findByMeasurement(Measurement measurement);
 	
-	PatientRecord create(PatientRecord patientRecord);
+	//PatientRecord create(PatientRecord patientRecord);
 	
-	PatientRecord update(PatientRecord patientRecord, Long id);
+	//PatientRecord update(PatientRecord patientRecord, Long id);
 
 	
 	/***************** BY PATIENT **********************/
 	
-	Streamable<PatientRecord> findByPatientId(Long patientId);
+	/*Streamable<PatientRecord> findByPatientId(Long patientId);
 	
 	Streamable<PatientRecord> findByPatientIdMeasurement(Long patientId, Measurement measurement);
-
+*/
 }
