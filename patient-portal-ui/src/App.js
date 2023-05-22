@@ -99,8 +99,8 @@ function App(props) {
   };
   console.log("----------------------------------------------------------------------------------");
   console.log(themeUser);
-  let theme = theme_1;
-  if (themeUser == "theme_1") {
+  let theme = theme_2;
+  if (themeUser == "theme_2") {
     theme = theme_1;
   } else {
     theme = theme_2;

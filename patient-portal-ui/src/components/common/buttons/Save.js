@@ -27,7 +27,7 @@ const Save = ({ setAuth }) => {
   };
   return (
 
-    <><Button onClick={clickSave} startIcon={<SaveIcon />} sx={{ width: 1, mt: 1 }} style={{ justifyContent: "flex-start" }} variant="contained" size="large" color="primary">
+    <><Button onClick={clickSave} startIcon={<SaveIcon />} sx={{  mt: 1 }} style={{ justifyContent: "flex-start" }} variant="contained" size="large" color="primary">
       Save
     </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

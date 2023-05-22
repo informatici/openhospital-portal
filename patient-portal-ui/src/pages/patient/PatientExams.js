@@ -27,7 +27,7 @@ const PatientExams = ({ setAuth }) => {
     >
       {/* <Box sx={{ mt: 2 }}>
         <Logo />
-      </Box> */}
+      </Box> */} 
       <PatientNav />
       <Root>
       <Typography variant="h6" component="h2" display="inline" sx={{ width: 1 }}>Exams: </Typography>

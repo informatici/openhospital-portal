@@ -7,7 +7,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 const ManageProfile = ({ setAuth }) => {
   return (
     <Button disabled startIcon={<ManageAccountsIcon />} component={Link} to="/PatientHome"
-      sx={{ width: 1, mt: 1 }}
+      sx={{  mt: 1 }}
       variant="contained"
       style={{ justifyContent: "flex-start" }}
       color="primary">
