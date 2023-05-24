@@ -180,7 +180,6 @@ const PatientVisit = ({ setAuth }) => {
   if (rows) {
     // rows.sort(compare);
   }
-  console.log("aaa");
   let navigate = useNavigate();
   return (
     <Container

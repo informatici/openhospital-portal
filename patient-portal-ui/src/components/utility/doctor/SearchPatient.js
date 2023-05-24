@@ -10,7 +10,7 @@ import { Button, Typography, Container, TextField, Box } from "@mui/material";
 class SearchPatient extends Component {
     render() {
         return (
-            <Container sx={{ m: 1 }}>
+            <Container >
                 <TextField
                     id="search"
                     type="search"

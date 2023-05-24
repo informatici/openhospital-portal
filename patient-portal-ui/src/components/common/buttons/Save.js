@@ -22,12 +22,12 @@ const Save = ({ setAuth }) => {
   const clickSave = event => {
     console.log("clickSavea");
     setOpen(true);
-    setTimeout(()=> navigate(-1), 1500);
-   
+    setTimeout(() => navigate(-1), 1500);
+
   };
   return (
 
-    <><Button onClick={clickSave} startIcon={<SaveIcon />} sx={{  mt: 1 }} style={{ justifyContent: "flex-start" }} variant="contained" size="large" color="primary">
+    <><Button onClick={clickSave} startIcon={<SaveIcon />} sx={{ mt: 1 }} style={{ justifyContent: "flex-start" }} variant="outlined" size="large" color="primary">
       Save
     </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

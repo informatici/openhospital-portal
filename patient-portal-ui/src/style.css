@@ -1,11 +1,11 @@
 .css-96e9fn {
-  width: 21em;
+  /* width: 21em; */
 }
 
 .rs__cell,
 .css-e572m3 .rs__cell:not(.rs__time) {
-  font-size: 1rem !important;
+  /* font-size: 1rem !important;
   width: 2.8em !important;
   min-width: 0px !important;
-  border-width: 0 1px 1px 0 !important;
+  border-width: 0 1px 1px 0 !important; */
 }

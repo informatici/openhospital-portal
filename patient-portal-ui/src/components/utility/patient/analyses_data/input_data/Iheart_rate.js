@@ -20,7 +20,6 @@ class Iheart_rate extends Component {
         this.ioDataIn = this.ioDataIn.bind(this);
         this.ioDataDel = this.ioDataDel.bind(this);
         this.handleChange = this.valueDetect.bind(this);
-        console.log("---innn");
         console.log(props);
 
     }

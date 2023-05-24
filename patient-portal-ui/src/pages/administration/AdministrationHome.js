@@ -24,14 +24,19 @@ const AdministrationHome = ({ setAuth }) => {
     >
 
       <AdministrationNav />
-
-      <Typography>
-        AdministrationHome
-      </Typography>
-      <ResetPassword />
-      <SelectLanguage />
-      <ManageMisureAdministration />
-      <OtherConfigurationAdministration />
+      <Box sx={{
+        mt: 14, width: 0.7,
+        display: 'flex',
+        flexDirection: 'column',
+        alignContent: "center"
+      }} >
+        <Typography>
+        </Typography>
+        <ResetPassword />
+        <SelectLanguage />
+        <ManageMisureAdministration />
+        <OtherConfigurationAdministration />
+      </Box>
     </Container>
   );
 };

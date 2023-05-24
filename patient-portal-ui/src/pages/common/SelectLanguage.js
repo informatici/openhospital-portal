@@ -5,7 +5,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AdministrationNav from "../../components/navBars/AdministrationNav";
+import AdministrationSmartNav from "../../components/navBars/AdministrationSmartNav";
 import Ichange_language from "../../components/utility/common/input_data/Ichange_language";
 import Save from "../../components/common/buttons/Save";
 import GoHomeAdministration from "../../components/common/buttons/GoHomeAdministration";
@@ -14,17 +14,26 @@ const SelectLanguage = ({ setAuth }) => {
     <Container
       maxWidth="lg"
       sx={{
-        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
         height: "100vh",
       }}
     >
-      <AdministrationNav />
-      <GoHomeAdministration />
-      <Typography>
-        Seleziona Lingua
+
+      <AdministrationSmartNav />
+      <Typography variant="h5" >
+        Select Language
       </Typography>
       <Ichange_language />
-      <Save />
+      <Box sx={{
+        mt: 14, width: 0.7,
+        display: 'flex',
+        flexDirection: 'column',
+        alignContent: "center"
+      }} >
+        <Save />
+      </Box>
     </Container>
   );
 };

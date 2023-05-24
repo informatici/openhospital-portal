@@ -4,14 +4,15 @@ import { Button } from "@mui/material";
 
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-const Logout = ({ setAuth }) => {
+const ReqOtp = ({ setAuth }) => {
   return (
     <Button startIcon={<ExitToAppIcon />} component={Link} to="/logout"
-    sx={{ mt: 1 }}
-      variant="outlined" color="primary">
-      Log out
+      sx={{ mt: 1, mb: 2 }}
+      variant="contained"
+      color="primary">
+      Request OTP
     </Button>
   );
 };
 
-export default Logout;
+export default ReqOtp;

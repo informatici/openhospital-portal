@@ -8,7 +8,7 @@ import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
 import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 import GoBack from "../common/buttons/GoBack";
-import GoHomePatient from "../common/buttons/GoHomePatient";
+import GoHome from "../common/buttons/GoHome";
 import Bagenda from "../common/buttons/patient/Bagenda";
 import Bhome from "../common/buttons/patient/Bhome";
 
@@ -38,10 +38,9 @@ class PatientSmartNav extends Component {
                         container
                     >
                         <Grid item xs={2}>
-                            {this.props.page != 'PatientHome' ? <GoBack /> : null}
+                            {this.props.page != 'DoctorHome' ? <GoBack /> : null}
                         </Grid>
                         <Grid item xs={2}>
-                            {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
                         </Grid>
                         <Grid item xs={4}>
 

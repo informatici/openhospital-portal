@@ -5,22 +5,23 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AdministrationNav from "../../components/navBars/AdministrationNav";
+import AdministrationSmartNav from "../../components/navBars/AdministrationSmartNav";
 import GoHomeAdministration from "../../components/common/buttons/GoHomeAdministration";
 const AdministrationManageMisure = ({ setAuth }) => {
   return (
     <Container
       maxWidth="lg"
       sx={{
-        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
         height: "100vh",
       }}
     >
 
-      <AdministrationNav />
-      <GoHomeAdministration />
-      <Typography>
-        AdministrationManageMisure
+      <AdministrationSmartNav />
+      <Typography variant="h5" >
+        Administration Manage Misure
       </Typography>
 
     </Container>

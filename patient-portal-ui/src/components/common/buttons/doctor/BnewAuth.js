@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 
-const BchooseInsert = ({ setAuth }) => {
+const BnewAuth = ({ setAuth }) => {
   return (
     <Fab
       color="primary"
       aria-label="add"
       size="small"
       component={Link} to={{
-        pathname: '/PatientChooseMeasurements',
+        pathname: '/DoctorjReqAuth',
       }}
     >
       <AddIcon color="inherit" />
@@ -19,4 +19,4 @@ const BchooseInsert = ({ setAuth }) => {
   );
 };
 
-export default BchooseInsert;
+export default BnewAuth;

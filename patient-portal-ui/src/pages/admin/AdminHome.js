@@ -18,22 +18,19 @@ const AdminHome = ({ setAuth }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
         height: "100vh",
       }}
     >
 
       <AdminNav />
-
-      <Typography>
-        AdminHome
+      <Typography sx={{ mt: 14, width: 1 }} variant="h1" >
+        ???
       </Typography>
-      <ResetPassword />
-      <SelectLanguage />
-      <ManageMisureAdministration />
-      <OtherConfigurationAdministration />
+
     </Container>
+
+
   );
 };
 

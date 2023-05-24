@@ -5,7 +5,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 let rows = [];
-console.log("||||");
 const values = [
   {
     "xy1457fff": {

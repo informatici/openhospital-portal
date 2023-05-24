@@ -13,7 +13,6 @@ class Idate_time extends Component {
     constructor(props) {
         super(props)
         // Set initial state
-        console.log("dataEEEEEEEEEEEEEEEEEEE");
         console.log(props);
         let now = Date.now();
 

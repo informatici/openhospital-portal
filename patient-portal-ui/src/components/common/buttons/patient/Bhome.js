@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 
-import AddIcon from '@mui/icons-material/Add';
+import ViewDayIcon from '@mui/icons-material/ViewDay';
 import Fab from '@mui/material/Fab';
 
-const BchooseInsert = ({ setAuth }) => {
+const Bhome = ({ setAuth }) => {
   return (
     <Fab
       color="primary"
       aria-label="add"
       size="small"
       component={Link} to={{
-        pathname: '/PatientChooseMeasurements',
+        pathname: '/PatientHome',
       }}
     >
-      <AddIcon color="inherit" />
+      <ViewDayIcon color="inherit" />
     </Fab>
   );
 };
 
-export default BchooseInsert;
+export default Bhome;

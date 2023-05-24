@@ -18,8 +18,6 @@ function ChangePalette(props) {
   const [themeUser, setThemeUser] = React.useState(true);
 
   const handleChange = (event) => {
-    console.log("handleChange");
-    console.log(event.target.checked);
     if (event.target.checked == true) {
       setThemeUser("theme_1");
     } else {
@@ -27,31 +25,15 @@ function ChangePalette(props) {
     }
 
   };
+  console.log("themeUser in palette");
+  console.log(themeUser);
   // function changeColor(e) {
   //   console.log("e");
   //   console.log(e);
   //   props.setThemeUser = "ggg";
   // }
   return (
-    <div>
-      <Switch onChange={handleChange} {...label} defaultChecked label="Theme" />
-    </div>
-    // <Box
-    //   sx={{
-    //     display: 'flex',
-    //     '& > *': {
-    //       m: 1,
-    //     },
-    //   }}
-    // >
-    //   <ButtonGroup
-    //     orientation="vertical"
-    //     aria-label="vertical outlined button group"
-    //   >
-    //     {buttons}
-    //   </ButtonGroup>
-    // </Box>
-
+    <Switch onChange={handleChange} {...label} defaultChecked label="Theme" />
   );
 };
 
