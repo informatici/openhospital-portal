@@ -3,10 +3,8 @@ package org.isf.patientportal.rest.api.patientrecord.service;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.isf.patientportal.model.recordtype.RecordType.Measurement;
-import org.isf.patientportal.model.patient.Patient;
-import org.isf.patientportal.model.patientrecord.PatientRecord;
 import org.isf.patientportal.model.patientrecord.PatientRecordRepository;
+import org.isf.patientportal.model.recordtype.RecordType.MeasurementType;
 import org.isf.patientportal.rest.api.patientrecord.dto.PatientRecordDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +42,15 @@ public class PatientRecordService {
             .get();
     }
     
-
+    public Stream<PatientRecordDto> findByPatientId(Long patientId) {
+		return patientRecordRepository.findByPatientId(patientId)
+			.map(patientRecord -> modelMapper.map(patientRecord, PatientRecordDto.class))
+			.get();
+	}
+    
+    public Stream<PatientRecordDto> findByPatientIdMeasurementType(Long patientId, MeasurementType measurementType) {
+		return patientRecordRepository.findByPatientIdMeasurementType(patientId, measurementType)
+			.map(patientRecord -> modelMapper.map(patientRecord, PatientRecordDto.class))
+			.get();
+	}
 }

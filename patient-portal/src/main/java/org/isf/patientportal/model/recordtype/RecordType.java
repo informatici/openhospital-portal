@@ -2,6 +2,8 @@ package org.isf.patientportal.model.recordtype;
 
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
@@ -66,17 +68,19 @@ import lombok.Setter;
 @Entity(name = "RecordType")
 public class RecordType {
 
-	public enum MeasurementType {NUMERIC, OPTION}
-	public enum Measurement {HEIGHT, WEIGHT, BP, HR, TEMPERATURE, SATURATION, HGT, RR, DIURESIS_VOL, DIURESIS, BOWEL, AUSCULTATION}
+	public enum MeasurementValueType {NUMERIC, OPTION}
+	public enum MeasurementType {HEIGHT, WEIGHT, BP, HR, TEMPERATURE, SATURATION, HGT, RR, DIURESIS_VOL, DIURESIS, BOWEL, AUSCULTATION}
 
 	
 	@Id
     @GeneratedValue
     private Long id;
 	
+	@Enumerated(EnumType.STRING)
 	@NotNull
-	private Measurement measurement;
+	private MeasurementValueType measurementValueType;
 	
+	@Enumerated(EnumType.STRING)
 	@NotNull
 	private MeasurementType measurementType;
 	

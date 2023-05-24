@@ -21,8 +21,8 @@
         note varchar(255),
         option_value varchar(255),
         record_date datetime not null,
-        value1 float not null,
-        value2 float not null,
+        value1 float,
+        value2 float,
         patient_id bigint not null,
         record_type_id bigint not null,
         primary key (id)
@@ -32,9 +32,9 @@
        id bigint not null,
         default_value float not null,
         description varchar(255),
-        measurement_type integer not null,
+        measurement_type varchar (255) not null,
         max_value float not null,
-        measurement integer not null,
+        measurement_value_type varchar (255) not null,
         min_value float not null,
         uom varchar(255) not null,
         primary key (id)

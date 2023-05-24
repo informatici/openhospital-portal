@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.isf.patientportal.model.patient.Patient;
 import org.isf.patientportal.model.recordtype.RecordType;
+import org.isf.patientportal.rest.api.patient.dto.PatientDto;
+import org.isf.patientportal.rest.api.recordtype.dto.RecordTypeDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +22,9 @@ public class PatientRecordDto {
 	
 	private LocalDateTime recordDate;
 	
-	private Patient patient;
+	private PatientDto patient;
 	
-	private RecordType recordType;
+	private RecordTypeDto recordType;
 	
 	private float value1;
 	

@@ -178,9 +178,9 @@
                     <locations>
                         <location>filesystem:sql/migrations</location>
                     </locations>
-                    <!-- <configFiles>
+                    <configFiles>
 						<configFile>src\main\resources\flyway.conf</configFile>
-					</configFiles> -->
+					</configFiles>
                     <!--url>${database.url}</url>
                     <user>${database.user}</user>
                     <password>${databese.password}</password-->
