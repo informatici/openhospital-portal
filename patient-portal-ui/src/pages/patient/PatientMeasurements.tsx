@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Container, Box } from "@mui/material";
-import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
+import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -340,11 +340,11 @@ const getDateLab = (date_to_c: string | number | Date) => {
 let btFilters: string[] = [];
 Object.keys(values[0]["xy1457uuu"]).forEach(function (key) {
   btFilters.push(key);
-  rows.push([values[0]["xy1457uuu"][key].map((e: { id_measure: any; date: string | number | Date; value: any; }) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: (key) }))])
+  // rows.push([values[0]["xy1457uuu"][key].map((e: { id_measure: any; date: string | number | Date; value: any; }) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: (key) }))])
 });
 rows = rows.flat(2);
 Object.keys(rows).forEach(function (key, value) {
-  rows[key].id = key;
+  // rows[key].id = key;
 });
 let rows_def = rows.sort(compare);
 function compare(a: { date_complete: number; }, b: { date_complete: number; }) {
@@ -393,7 +393,8 @@ const PatientMeasurements = () => {
           <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
             <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
             {btFilters.map((bt_el) => (
-              <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
+              //  <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
+              <Button key={bt_el} color="primary" >{bt_el}</Button>
             ))}
           </ButtonGroup>
         </Box>

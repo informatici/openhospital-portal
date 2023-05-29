@@ -110,11 +110,11 @@ class Iarterial_pressure extends Component<Iarterial_pressureProps, Iarterial_pr
                             sx={{ width: 1 }}
                             helperText=""
                         >
-                            {this.props.dataDef?.min.map((option) => (
+                            {/* {this.props.dataDef?.min.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
-                            ))}
+                            ))} */}
                         </TextField>
                     </Box>
                 ) : (
@@ -150,11 +150,11 @@ class Iarterial_pressure extends Component<Iarterial_pressureProps, Iarterial_pr
                             sx={{ width: 1, mt: 1 }}
                             helperText=""
                         >
-                            {this.props.dataDef?.max?.map((option) => (
+                            {/* {this.props.dataDef?.max?.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
-                            ))}
+                            ))} */}
                         </TextField>
                     </Box>
                 ) : (
