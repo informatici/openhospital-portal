@@ -6,6 +6,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DoctorSmartNav from "../../components/navBars/DoctorSmartNav";
+import DoctorTopAgendaNav from "../../components/navBars/DoctorTopAgendaNav";
 import DoctorLeftAgendaNav from "../../components/navBars/DoctorLeftAgendaNav";
 import Grid from '@mui/material/Grid';
 import SearchPatient from "../../components/utility/doctor/SearchPatient";
@@ -23,16 +24,16 @@ const DoctorAgenda = ({ setAuth }) => {
         height: "100vh",
       }}
     >
-
       <Grid container spacing={2}>
+      <Grid item md={12}>
+          <DoctorTopAgendaNav />
+        </Grid>
         <Grid item md={3}>
           <DoctorLeftAgendaNav />
         </Grid>
         <Grid item md={9}>
           <DoctorSmartNav />
           <Scheduler
-            // style={styles.cellCal}
-
             view="month"
             events={[
               {

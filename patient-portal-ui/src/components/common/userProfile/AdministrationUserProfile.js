@@ -12,11 +12,11 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Chip from '@mui/material/Chip';
 
-import Oname from "../../utility/patient/registry_data/output_data/Oname";
-import Oage from "../../utility/patient/registry_data/output_data/Oage";
-import Osex from "../../utility/patient/registry_data/output_data/Osex";
-import Oadress from "../../utility/patient/registry_data/output_data/Oadress";
-import Otelephone from "../../utility/patient/registry_data/output_data/Otelephone";
+import Oname from "../../utility/user/output_data/Oname";
+import Oage from "../../utility/user/output_data/Oage";
+import Osex from "../../utility/user/output_data/Osex";
+import Oadress from "../../utility/user/output_data/Oadress";
+import Otelephone from "../../utility/user/output_data/Otelephone";
 
 import ChangePassword from "../buttons/ChangePassword";
 import ManageProfile from "../buttons/ManageProfile";

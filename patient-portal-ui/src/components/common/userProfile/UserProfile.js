@@ -9,11 +9,11 @@ import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 
-import Oname from "../../utility/patient/registry_data/output_data/Oname";
-import Oage from "../../utility/patient/registry_data/output_data/Oage";
-import Osex from "../../utility/patient/registry_data/output_data/Osex";
-import Oadress from "../../utility/patient/registry_data/output_data/Oadress";
-import Otelephone from "../../utility/patient/registry_data/output_data/Otelephone";
+import Oname from "../../utility/user/output_data/Oname";
+import Oage from "../../utility/user/output_data/Oage";
+import Osex from "../../utility/user/output_data/Osex";
+import Oadress from "../../utility/user/output_data/Oadress";
+import Otelephone from "../../utility/user/output_data/Otelephone";
 
 import ChangePassword from "../../common/buttons/ChangePassword";
 import ManageProfile from "../../common/buttons/ManageProfile";

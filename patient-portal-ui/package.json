@@ -13,6 +13,10 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.1",
+    "@types/node": "^20.2.4",
+    "@types/react": "^17.0.60",
+    "@types/react-dom": "^18.2.4",
     "country-flag-icons": "^1.5.7",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
@@ -23,6 +27,7 @@
     "react-mui-scheduler": "^2.0.4",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
+    "typescript": "^5.0.4",
     "web-vitals": "^2.1.4",
     "yup": "^0.28.5"
   },
