@@ -125,7 +125,7 @@ docker compose -f docker-compose-matomo.yaml stop
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop
 ```
 
-### Cleaning
+### 6. Cleaning
 
 Remove all containers and volumes
 
@@ -141,7 +141,7 @@ Clean previous data
 rm -rf data/$ENVIRONMENT_NAME
 ```
 
-#### Screenshots
+## Screenshots
 
 ![42iDuJPFd1XxX66M](https://user-images.githubusercontent.com/2938553/221145369-20f95889-6d00-4ab0-a172-b79896101b5c.png)
 
