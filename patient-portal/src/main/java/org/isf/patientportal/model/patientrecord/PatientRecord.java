@@ -29,6 +29,7 @@ public class PatientRecord {
     @GeneratedValue
     private Long id;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	@NotNull
 	private LocalDateTime recordDate;
 	

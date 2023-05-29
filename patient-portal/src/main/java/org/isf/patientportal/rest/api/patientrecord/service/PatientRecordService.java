@@ -3,6 +3,7 @@ package org.isf.patientportal.rest.api.patientrecord.service;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.isf.patientportal.model.patientrecord.PatientRecord;
 import org.isf.patientportal.model.patientrecord.PatientRecordRepository;
 import org.isf.patientportal.model.recordtype.RecordType.MeasurementType;
 import org.isf.patientportal.rest.api.patientrecord.dto.PatientRecordDto;
@@ -28,7 +29,32 @@ public class PatientRecordService {
     }
 
     
-    /***************** GENERIC **********************/
+    public PatientRecord create(PatientRecordDto item) {
+		PatientRecordDto copy = new PatientRecordDto(
+				item.getId(),
+                item.getRecordDate(),
+                item.getPatient(),
+                item.getRecordType(),
+                item.getValue1(),
+                item.getValue2(),
+                item.getOptionValue(),
+                item.getNote()
+        );
+        return patientRecordRepository.save(modelMapper.map(copy, PatientRecord.class));
+	}
+	
+	
+    public Optional<PatientRecord> update(Long patientRecordId, PatientRecordDto newItem) {
+        return patientRecordRepository.findById(patientRecordId)
+                .map(oldItem -> {PatientRecord updated = oldItem.updateWith(modelMapper.map(newItem, PatientRecord.class));
+                   return patientRecordRepository.save(updated);
+                });   
+    }
+
+    public void delete(Long patientRecordId) {
+    	patientRecordRepository.deleteById(patientRecordId);
+	}
+	
     
     public Optional<PatientRecordDto> findById(Long id) {
 		return patientRecordRepository.findById(id)
@@ -42,11 +68,13 @@ public class PatientRecordService {
             .get();
     }
     
+    
     public Stream<PatientRecordDto> findByPatientId(Long patientId) {
 		return patientRecordRepository.findByPatientId(patientId)
 			.map(patientRecord -> modelMapper.map(patientRecord, PatientRecordDto.class))
 			.get();
 	}
+    
     
     public Stream<PatientRecordDto> findByPatientIdMeasurementType(Long patientId, MeasurementType measurementType) {
 		return patientRecordRepository.findByPatientIdMeasurementType(patientId, measurementType)

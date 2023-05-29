@@ -15,6 +15,9 @@
         primary key (id)
     ) engine=InnoDB;
 
+    alter table patient 
+       add column hospital_id varchar(255) not null;
+
     create table patient_record (
        id bigint not null,
         created datetime not null,
@@ -30,12 +33,13 @@
 
     create table record_type (
        id bigint not null,
-        default_value float not null,
-        description varchar(255),
-        measurement_type varchar (255) not null,
-        max_value float not null,
-        measurement_value_type varchar (255) not null,
-        min_value float not null,
+        default_option_value varchar(255),
+        default_value1 float,
+        default_value2 float,
+        min_value float,
+        max_value float,
+        measurement_type varchar(255) not null,
+        measurement_value_type varchar(255) not null,
         uom varchar(255) not null,
         primary key (id)
     ) engine=InnoDB;

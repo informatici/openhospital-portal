@@ -18,10 +18,6 @@ public class PatientDto {
 
     private LocalDate birthDate;
 
-	private int age;
-
-	private String agetype;
-
 	private char sex;
 	
 	private String address;

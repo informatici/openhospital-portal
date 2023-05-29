@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
 import lombok.Setter;
 
 
@@ -63,14 +62,17 @@ import lombok.Setter;
    		AUSCULTATION_INIT = normal
  * */
 
-@Getter
+
 @Setter
 @Entity(name = "RecordType")
 public class RecordType {
 
 	public enum MeasurementValueType {NUMERIC, OPTION}
-	public enum MeasurementType {HEIGHT, WEIGHT, BP, HR, TEMPERATURE, SATURATION, HGT, RR, DIURESIS_VOL, DIURESIS, BOWEL, AUSCULTATION}
-
+	public enum MeasurementType {HEIGHT, WEIGHT, BLOOD_PRESSURE, HR, TEMPERATURE, SATURATION, HGT, RR, DIURESIS_VOL, DIURESIS, BOWEL, AUSCULTATION}
+	public enum DiuresisOption {PHYSIOLOGICAL, OLIGURIA, ANURIA, FEQUENT, NOCTURIA, STRANGURIA, HEMATURIA, PYURIA}
+	public enum BowelOption {REGULAR, IRREGULAR, CONSTIPATION, DIARRHEAL}
+	public enum AuscultationOption {NORMAL, WHEEZES, RHONCHI, CRACKLES, STRIDOR, BRONCHIAL}
+	
 	
 	@Id
     @GeneratedValue
@@ -84,10 +86,11 @@ public class RecordType {
 	@NotNull
 	private MeasurementType measurementType;
 	
-	private String description;
+	private String defaultOptionValue;
 	
-	@NotNull
-	private float defaultValue;
+	private float defaultValue1;
+	
+	private float defaultValue2;
 	
 	private float minValue;
 	
@@ -96,4 +99,93 @@ public class RecordType {
 	@NotNull
 	private String uom;
 
+	
+	public Long getId() {
+		return id;
+	}
+
+	
+	public MeasurementValueType getMeasurementValueType() {
+		return measurementValueType;
+	}
+
+	
+	public MeasurementType getMeasurementType() {
+		return measurementType;
+	}
+
+	
+	public String getDefaultOptionValue() {
+		switch(measurementType) {
+			case DIURESIS:
+				defaultOptionValue = DiuresisOption.PHYSIOLOGICAL.name();
+				break;
+			case BOWEL:
+				defaultOptionValue = BowelOption.REGULAR.name();
+				break;
+			case AUSCULTATION:
+				defaultOptionValue = AuscultationOption.NORMAL.name();
+				break;
+			default:
+				defaultOptionValue = null;
+		}
+		return defaultOptionValue;
+	}
+
+	
+	public float getDefaultValue1() {
+		switch(measurementType) {
+			//case HEIGHT: case WEIGHT: case HR: case DIURESIS_VOL:
+			//	defaultValue1 = 0;
+			//	break;
+			case BLOOD_PRESSURE:
+				defaultValue1 = 80;
+				break;
+			case TEMPERATURE:
+				defaultValue1 = 36;
+				break;
+			case SATURATION:
+				defaultValue1 = 98;
+				break;
+			case HGT:
+				defaultValue1 = 80;
+				break;
+			case RR:
+				defaultValue1 = 20;
+				break;
+			default:
+				defaultValue1 = 0;
+		}
+		return defaultValue1;
+	}
+	
+	
+	public float getDefaultValue2() {
+		switch(measurementType) {
+			case BLOOD_PRESSURE:
+				defaultValue2 = 120;
+				break;
+			default:
+				defaultValue2 = 0;
+		}
+		return defaultValue2;
+	}
+
+	
+	public float getMinValue() {
+		return minValue;
+	}
+
+	
+	public float getMaxValue() {
+		return maxValue;
+	}
+
+	
+	public String getUom() {
+		return uom;
+	}
+
+	
+	
 }
