@@ -49,7 +49,7 @@ public class SwaggerConfig {
                 .host(host)
                 .protocols(protocols)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.isf.patientportal"))
+                .apis(RequestHandlerSelectors.basePackage("org.isf.patientportal.rest"))
                 //.apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()

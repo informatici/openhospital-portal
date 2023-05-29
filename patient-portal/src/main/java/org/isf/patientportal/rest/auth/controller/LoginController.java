@@ -36,7 +36,8 @@ import io.swagger.annotations.ApiResponses;
  *
  * @author antonio
  */
-@Api("Login")
+
+@Api(value = "Login", tags={ "AUTH_API" } )
 @RestController
 public class LoginController {
     /**

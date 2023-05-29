@@ -31,6 +31,9 @@ public class Patient {
     @Id
     @GeneratedValue
     private Long id;
+    
+    @NotNull
+    private String hospitalId;
 
     @NotNull
     private String firstName;
@@ -40,12 +43,6 @@ public class Patient {
 
     @NotNull
     private LocalDate birthDate;
-
-    @NotNull
-    private int age;
-
-    @NotNull
-    private String agetype;
 
     @NotNull
     private char sex;
@@ -58,7 +55,7 @@ public class Patient {
     private String nextKin;
 
     @NotNull
-    private String telephone;
+    private String telephone; //spostare in user??
 
     private String note;
     

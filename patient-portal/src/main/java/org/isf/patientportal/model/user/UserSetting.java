@@ -9,6 +9,9 @@ import javax.persistence.Id;
 
 @Entity
 class UserSetting {
+	
+	// settingName = LANGUAGE, THEME, NOTIFICATIONS
+	// settingValue
     @Id
     @GeneratedValue
     private Long id;
