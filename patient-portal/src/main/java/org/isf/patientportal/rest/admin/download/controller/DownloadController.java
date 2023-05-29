@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import io.swagger.annotations.Api;
+
 import org.isf.patientportal.model.download.Download;
 import org.isf.patientportal.model.download.DownloadRepository;
 import org.springframework.http.HttpStatus;
 
+@Api(value = "Download", tags={ "ADMIN_API" } )
 @RestController
 public class DownloadController {
 
