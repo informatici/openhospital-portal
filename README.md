@@ -65,19 +65,19 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml pull api
 
 ### 2. init DB (only once)
 
-start mysql database/service (in background) and wait some seconds to finish the startup
+start mysql database/service (in background) and wait several seconds to finish the startup
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
 
-create file schema + db. Interrupt with CTRL-C after fully started (WARNING: if exits with errors, repeat the command until it is fully started)
+create file schema + db. Interrupt with CTRL-C after fully started.
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
 ```
 
-remove migration file
+WARNING: if exits with errors, remove migration file and repeat the command above, until it is fully started:
 
 ```
 rm -rf data/$ENVIRONMENT_NAME/sql/migrations/*
@@ -99,30 +99,21 @@ docker compose -f docker-compose-matomo.yaml up -d
 
 - Patient Portal (ui) will be available at `https://develop.ohpp.local/` 
 
-- Api will be available at `https://develop-api.ohpp.local/` and `http://localhost:18080/`
+- Api will be available at `https://develop-api.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
 
 - Loadbalancer dashboard (traefik) will be available at `http://localhost:8080`
 
 - Matomo will be available at `http://develop-matomo.ohpp.local/` and `http://localhost:28080/`
 
-    - connect and configure the first time (installation)
+- Instructions for Matomo (please read it carefully):
+
+    - connect and configure the first time (installation) from http://develop-matomo.ohpp.local/
+    - setup DB and users like in .env file
+    - setup super user as root and choose a password (main user, don't forget!)
     - Website name: "Open Hospital Patient Portal"
-    - Website URL: https://develop.ohpp.local/
-    - In Administration > Privacy > Users opt-out, under “Support Do Not Track preference” disable Do Not Track support
+    - Website URL: http://develop.ohpp.local
+    - Untick "Enable Do Not Track support" or (after) in Administration > Privacy > Users opt-out, under “Support Do Not Track preference” disable
 
-#### Screenshots
-
-![42iDuJPFd1XxX66M](https://user-images.githubusercontent.com/2938553/221145369-20f95889-6d00-4ab0-a172-b79896101b5c.png)
-
-![image](https://user-images.githubusercontent.com/2938553/221145575-2877d137-4928-423c-a3a1-bdd7420c0a72.png)
-
-![image](https://user-images.githubusercontent.com/2938553/221145603-24444a1d-45ab-4d69-bd72-488d39092289.png)
-
-![image](https://user-images.githubusercontent.com/2938553/221145636-2f1a61c4-8fa5-4109-a356-82072b84bfc0.png)
-
-![image](https://user-images.githubusercontent.com/2938553/221145659-c7c17405-002c-484a-8f6c-519d474ea1e4.png)
-
-    
 ## Stopping
 
 ### 5. stop all containers
@@ -149,6 +140,19 @@ Clean previous data
 ```
 rm -rf data/$ENVIRONMENT_NAME
 ```
+
+#### Screenshots
+
+![42iDuJPFd1XxX66M](https://user-images.githubusercontent.com/2938553/221145369-20f95889-6d00-4ab0-a172-b79896101b5c.png)
+
+![image](https://user-images.githubusercontent.com/2938553/221145575-2877d137-4928-423c-a3a1-bdd7420c0a72.png)
+
+![image](https://user-images.githubusercontent.com/2938553/221145603-24444a1d-45ab-4d69-bd72-488d39092289.png)
+
+![image](https://user-images.githubusercontent.com/2938553/221145636-2f1a61c4-8fa5-4109-a356-82072b84bfc0.png)
+
+![image](https://user-images.githubusercontent.com/2938553/221145659-c7c17405-002c-484a-8f6c-519d474ea1e4.png)
+
 
 ## Developing
 
