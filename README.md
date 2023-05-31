@@ -44,7 +44,7 @@ Create the folder structure
 
 ```
 export $(grep ENVIRONMENT_NAME .env | xargs)
-mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql
+mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations
 
 ```
 
@@ -71,16 +71,10 @@ start mysql database/service (in background) and wait several seconds to finish 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
 
-create file schema + db. Interrupt with CTRL-C after fully started.
+create file schema + db. Interrupt with CTRL-C after shutdown (don't mind the errors)
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
-```
-
-WARNING: if exits with errors, remove migration file and repeat the command above, until it is fully started:
-
-```
-rm -rf data/$ENVIRONMENT_NAME/sql/migrations/*
 ```
 
 ## Starting
@@ -88,11 +82,11 @@ rm -rf data/$ENVIRONMENT_NAME/sql/migrations/*
 ### 3. start the app mode with output in the terminal
 
 ```
+# matomo instance (optional, in background)
+docker compose -f docker-compose-matomo.yaml up -d
+
 # the portal
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
-
-# matomo instance (optional)
-docker compose -f docker-compose-matomo.yaml up -d
 ```
 
 ### 4. available services
