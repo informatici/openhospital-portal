@@ -46,134 +46,138 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig {
+
 	@Autowired
-    private UserDetailsService userDetailsService;
-	
+	private UserDetailsService userDetailsService;
+
 	@Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
 	private TokenProvider tokenProvider;
 
 	public SecurityConfig(TokenProvider tokenProvider) {
 		this.tokenProvider = tokenProvider;
 	}
-	
+
 	// @Override
 	// protected void configure(AuthenticationManagerBuilder auth)
-	//   throws Exception {
-	//     auth.authenticationProvider(authenticationProvider());
+	// throws Exception {
+	// auth.authenticationProvider(authenticationProvider());
 	// }
-	
+
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
-	    DaoAuthenticationProvider authProvider
-	      = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userDetailsService);
-	    authProvider.setPasswordEncoder(encoder());
-	    return authProvider;
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(encoder());
+		return authProvider;
 	}
-	
+
 	@Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public PasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	@Bean
+	public CorsFilter corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedHeader("*");
-        // config.setAllowedHeaders(Arrays.asList("Accept", "Accept-Encoding", "Accept-Language", "Authorization", "Content-Type", "Cache-Control", "Connection", "Cookie", "Host", "Pragma", "Referer, User-Agent"));
-        config.setAllowedMethods(Arrays.asList("*"));
-        // config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("*"));
-        config.setMaxAge(3600L);
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+		CorsConfiguration config = new CorsConfiguration();
+		config.addAllowedHeader("*");
+		// config.setAllowedHeaders(Arrays.asList("Accept", "Accept-Encoding", "Accept-Language", "Authorization", "Content-Type", "Cache-Control",
+		// "Connection", "Cookie", "Host", "Pragma", "Referer, User-Agent"));
+		config.setAllowedMethods(Arrays.asList("*"));
+		// config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		config.setAllowCredentials(true);
+		// config.setAllowedOrigins(Arrays.asList("*"));
+		config.addAllowedOriginPattern("*");
+		config.setMaxAge(3600L);
+		source.registerCorsConfiguration("/**", config);
+		return new CorsFilter(source);
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement()
-		    .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.cors().and().csrf().disable()
-			.authorizeRequests()
-            .expressionHandler(webExpressionHandler())
-            .and()
-            .exceptionHandling()
-            	//.accessDeniedHandler(accessDeniedHandler)
-            	.authenticationEntryPoint(restAuthenticationEntryPoint)
-            .and()
-            .authorizeRequests()
-            	.antMatchers("/auth/**").permitAll()
-            .and()
-          	.formLogin()
-          		.loginPage("/auth/login")
-            		.successHandler(successHandler())
-            		.failureHandler(failureHandler())
-            .and()
-			.apply(securityConfigurerAdapter())
-			.and()
-            .httpBasic()
-            .and()
-          	.logout()
-				.logoutUrl("/auth/logout")
-				.permitAll();
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.sessionManagement()
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+						.cors().and().csrf().disable()
+						.authorizeRequests()
+						.expressionHandler(webExpressionHandler())
+						.and()
+						.exceptionHandling()
+						// .accessDeniedHandler(accessDeniedHandler)
+						.authenticationEntryPoint(restAuthenticationEntryPoint)
+						.and()
+						.authorizeRequests()
+						.antMatchers("/auth/**").permitAll()
+						.and()
+						.formLogin()
+						.loginPage("/auth/login")
+						.successHandler(successHandler())
+						.failureHandler(failureHandler())
+						.and()
+						.apply(securityConfigurerAdapter())
+						.and()
+						.httpBasic()
+						.and()
+						.logout()
+						.logoutUrl("/auth/logout")
+						.permitAll();
+		return http.build();
+	}
 
 	private JWTConfigurer securityConfigurerAdapter() {
 		return new JWTConfigurer(tokenProvider);
 	}
-    
-    @Bean
+
+	@Bean
 	public SimpleUrlAuthenticationFailureHandler failureHandler() {
-    	return new SimpleUrlAuthenticationFailureHandler();
-    }
-    
-    @Bean
+		return new SimpleUrlAuthenticationFailureHandler();
+	}
+
+	@Bean
 	public SimpleUrlAuthenticationSuccessHandler successHandler() {
-    	return new OHSimpleUrlAuthenticationSuccessHandler(tokenProvider);
-    }
+		return new OHSimpleUrlAuthenticationSuccessHandler(tokenProvider);
+	}
 
-    @Bean
-    public RoleHierarchy roleHierarchy() {
-        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "ROLE_ADMIN > ROLE_FAMILYMANAGER \n ROLE_FAMILYMANAGER > ROLE_USER";
-        roleHierarchy.setHierarchy(hierarchy);
-        return roleHierarchy;
-    }
+	@Bean
+	public RoleHierarchy roleHierarchy() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		String hierarchy = "ROLE_ADMIN > ROLE_FAMILYMANAGER \n ROLE_FAMILYMANAGER > ROLE_USER";
+		roleHierarchy.setHierarchy(hierarchy);
+		return roleHierarchy;
+	}
 
-    private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
-        DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
-        defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
-        return defaultWebSecurityExpressionHandler;
-    }
+	private SecurityExpressionHandler<FilterInvocation> webExpressionHandler() {
+		DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+		defaultWebSecurityExpressionHandler.setRoleHierarchy(roleHierarchy());
+		return defaultWebSecurityExpressionHandler;
+	}
 
-    @Bean
-    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
-        WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier, 
-        EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
-        List<ExposableEndpoint<?>> allEndpoints = new ArrayList<ExposableEndpoint<?>>();
-        Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
-        allEndpoints.addAll(webEndpoints);
-        allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
-        allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
-        String basePath = webEndpointProperties.getBasePath();
-        EndpointMapping endpointMapping = new EndpointMapping(basePath);
-        boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
-        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath), shouldRegisterLinksMapping, null);
-    }
+	@Bean
+	public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
+					WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier,
+					ControllerEndpointsSupplier controllerEndpointsSupplier,
+					EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties,
+					Environment environment) {
+		List<ExposableEndpoint< ? >> allEndpoints = new ArrayList<ExposableEndpoint< ? >>();
+		Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
+		allEndpoints.addAll(webEndpoints);
+		allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
+		allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
+		String basePath = webEndpointProperties.getBasePath();
+		EndpointMapping endpointMapping = new EndpointMapping(basePath);
+		boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
+		return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsProperties.toCorsConfiguration(),
+						new EndpointLinksResolver(allEndpoints, basePath), shouldRegisterLinksMapping, null);
+	}
 
-
-    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
-        return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
-    }
+	private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
+		return webEndpointProperties.getDiscovery().isEnabled()
+						&& (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+	}
 }
