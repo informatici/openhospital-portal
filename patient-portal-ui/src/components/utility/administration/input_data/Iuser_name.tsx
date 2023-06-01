@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-class Iuser_name extends Component {
-    constructor(props) {
+class Iuser_name extends React.Component<{}, { defDate: string | Date | number }> {
+    constructor(props: any) {
         super(props)
     }
     render() {

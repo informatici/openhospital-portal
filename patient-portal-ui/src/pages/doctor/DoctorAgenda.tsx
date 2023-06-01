@@ -13,7 +13,7 @@ import SearchPatient from "../../components/utility/doctor/SearchPatient";
 import { Scheduler } from "@aldabil/react-scheduler";
 import { useState } from "react";
 
-const DoctorAgenda = ({ setAuth }) => {
+const DoctorAgenda = () => {
   return (
     <Container
       maxWidth="lg"
@@ -25,7 +25,7 @@ const DoctorAgenda = ({ setAuth }) => {
       }}
     >
       <Grid container spacing={2}>
-      <Grid item md={12}>
+        <Grid item md={12}>
           <DoctorTopAgendaNav />
         </Grid>
         <Grid item md={3}>

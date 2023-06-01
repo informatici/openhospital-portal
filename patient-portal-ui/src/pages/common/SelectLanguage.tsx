@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { Button, Typography, Container, Box } from "@mui/material";
-import Logo from "../../components/Logo";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Typography, Container, Box } from "@mui/material";
+
 import AdministrationSmartNav from "../../components/navBars/AdministrationSmartNav";
 import Ichange_language from "../../components/utility/common/input_data/Ichange_language";
 import Save from "../../components/common/buttons/Save";
-import GoHomeAdministration from "../../components/common/buttons/GoHomeAdministration";
-const SelectLanguage = ({ setAuth }) => {
+
+const SelectLanguage = () => {
   return (
     <Container
       maxWidth="lg"
@@ -20,7 +16,6 @@ const SelectLanguage = ({ setAuth }) => {
         height: "100vh",
       }}
     >
-
       <AdministrationSmartNav />
       <Typography variant="h5" >
         Select Language

@@ -1,28 +1,23 @@
 
 import React, { Component } from "react";
 import Box from '@mui/material/Box';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs'
 
-class Idate_time extends Component {
-    constructor(props) {
+class Idate_time extends React.Component<{}, { defDate: string | Date | number }> {
+    constructor(props: any) {
         super(props)
         // Set initial state
         console.log(props);
         let now = Date.now();
-
-
         if (props.dateSelected) {
             this.state = { defDate: props.dateSelected }
         } else {
             this.state = { defDate: now }
         }
-
     }
 
     render() {

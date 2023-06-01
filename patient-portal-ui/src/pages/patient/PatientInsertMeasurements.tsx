@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button, Typography, Container, Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
-import Save from "./../../components/common/buttons/Save";
+import PatientSmartNav from "../../components/navBars/PatientSmartNav";
+import Save from "../../components/common/buttons/Save";
 
 
 import Iweight from "../../components/utility/patient/analyses_data/input_data/Iweight";

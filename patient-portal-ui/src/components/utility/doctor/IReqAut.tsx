@@ -4,15 +4,15 @@ import TextField from '@mui/material/TextField';
 import ReqOtp from "../../common/buttons/doctor/ReqOtp";
 import ConfirmOTP from "../../common/buttons/doctor/ConfirmOTP";
 class IReqAut extends Component {
-    constructor(props) {
+    constructor(props: {}) {
         super(props)
         console.log("in button");
         console.log(props);
-        if (props.idUser) {
-            this.state = { idUser: props.idUser }
-        } else {
-            this.state = { idUser: null }
-        }
+        // if (props.idUser) {
+        //     this.state = { idUser: props.idUser }
+        // } else {
+        //     this.state = { idUser: null }
+        // }
     }
     render() {
         return (
@@ -28,10 +28,8 @@ class IReqAut extends Component {
                 <TextField
                     label="Id Paziente"
                     id="IReqAut"
-                    value={this.state.idUser}
-                    // select
+                    // value={this.state.idUser}
                     name="id_paziente"
-                    // onChange={this.handleChange}
                     defaultValue=""
                     sx={{ width: 1 }}
                     helperText=""
@@ -41,19 +39,11 @@ class IReqAut extends Component {
                 <TextField
                     label="OTP"
                     id="IReqAut"
-                    // value={this.state.getvalue}
-                    // select
                     name="otp"
-                    // onChange={this.handleChange}
                     defaultValue=""
                     sx={{ width: 1 }}
                     helperText=""
                 >
-                    {/* {this.props.dataDef.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))} */}
                 </TextField>
                 <ConfirmOTP />
             </Container>

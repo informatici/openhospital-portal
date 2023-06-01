@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Button, Typography, Container } from "@mui/material";
-import Logo from "../../components/Logo";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -25,9 +24,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
-import Scheduler from "react-mui-scheduler"
 import { useState } from "react";
-function DoctorHome({ setAuth }) {
+function DoctorHome() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   console.log("---------------------------matchdes");

@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Link, Box, Divider } from "@mui/material";
+import { Button, Container, Typography, Link, Box, Divider } from "@mui/material";
 import styled from "@emotion/styled";
 import LoginForm from "../components/LoginForm";
 import SocialAuth from "../components/SocialAuth";
 import Logo from "../components/Logo";
 import { motion } from "framer-motion";
 import HelpDevLogin from "../components/modals/HelpDevLogin";
-
 //////////////////////////////////
 const RootStyle = styled("div")({
   background: "rgb(249, 250, 251)",
@@ -49,7 +48,32 @@ const fadeInUp = {
 
 const Login = ({ setAuth, setProfile }) => {
   console.log("Login");
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    fetch('http://api.plos.org/search?q=title:DNA')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("test out");
+        console.log(data);
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:8080/api/public/patientrecords')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("test inn");
+        console.log(data);
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
   return (
     <RootStyle>
       <Container maxWidth="sm">

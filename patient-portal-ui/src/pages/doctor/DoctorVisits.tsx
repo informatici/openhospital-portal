@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { Button, Typography, Container, Box } from "@mui/material";
-import Logo from "../components/Logo";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DoctorNav from "../components/navBars/doctorNav";
-import SearchPatient from "../components/doctor/SearchPatient";
+import DoctorNav from "../../components/navBars/DoctorNav";
+import SearchPatient from "../../components/utility/doctor/SearchPatient";
 
-
-import Scheduler from "react-mui-scheduler"
 import { useState } from "react";
-const DoctorHome = ({ setAuth }) => {
+const DoctorHome = () => {
+  function setAuth(arg0: boolean): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <Container
       maxWidth="lg"

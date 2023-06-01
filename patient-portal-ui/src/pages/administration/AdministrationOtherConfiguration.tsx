@@ -1,13 +1,7 @@
 import * as React from 'react';
-import { Button, Typography, Container, Box } from "@mui/material";
-import Logo from "../../components/Logo";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Typography, Container, Box } from "@mui/material";
 import AdministrationSmartNav from "../../components/navBars/AdministrationSmartNav";
-import GoHomeAdministration from "../../components/common/buttons/GoHomeAdministration";
-const AdministrationOtherConfiguration = ({ setAuth }) => {
+const AdministrationOtherConfiguration = () => {
   return (
     <Container
       maxWidth="lg"

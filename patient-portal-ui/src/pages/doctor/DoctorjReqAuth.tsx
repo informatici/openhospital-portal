@@ -22,7 +22,7 @@ const styles = {
     padding: "0 2em"
   }
 };
-function DoctorjReqAuth(props) {
+function DoctorjReqAuth(props: { setType: any; }) {
 
   console.log("--- props --- DoctorjReqAuth");
   console.log(props);
@@ -38,7 +38,9 @@ function DoctorjReqAuth(props) {
       }}
     >
       <DoctorSmartNav />
-      <IReqAut idUser={props.setType} />
+      <IReqAut
+      // idUser={props.setType}
+      />
     </Container>
   );
 };

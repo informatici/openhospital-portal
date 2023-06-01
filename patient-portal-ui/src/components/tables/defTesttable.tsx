@@ -17,7 +17,7 @@ const columns = [
         description: 'This column has a value getter and is not sortable.',
         sortable: false,
         width: 160,
-        valueGetter: (params) =>
+        valueGetter: (params: any) =>
             `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     },
 ];
@@ -40,8 +40,6 @@ class defTesttable extends Component {
             <DataGrid
                 rows={rows}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
                 checkboxSelection
             />
         </div>
