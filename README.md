@@ -43,7 +43,7 @@ Add in the `hosts` file the following entry `127.0.0.1 develop.ohpp.local develo
 Create the folder structure
 
 ```
-export $(grep ENVIRONMENT_NAME .env | xargs)
+export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)
 mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations
 
 ```
@@ -54,7 +54,7 @@ mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo 
 ### 1. build images from sources
 
 ```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build build-api
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-arg ENVIRONMENT_NAME --build-arg BASE_DOMAIN build-api
 ```
 
 or launch image from ghcr
@@ -63,19 +63,22 @@ or launch image from ghcr
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml pull api
 ```
 
-### 2. init DB (only once)
+### 2. create first migration script for the DB (only once)
 
-start mysql database/service (in background) and wait several seconds to finish the startup
+Start mysql database/service (in background).
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
+Wait several seconds to finish the startup.
 
-create file schema + db. Interrupt with CTRL-C after shutdown (don't mind the errors)
+Let Hibernate to create the script in data/sql/migrations folder.
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
 ```
+
+Interrupt with CTRL-C after finish (don't mind the errors)
 
 ## Starting
 

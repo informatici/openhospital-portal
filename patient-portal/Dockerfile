@@ -1,5 +1,8 @@
 FROM openjdk:17-alpine as build
 
+ARG ENVIRONMENT_NAME
+ARG BASE_DOMAIN
+
 WORKDIR /app
 
 COPY mvnw .
@@ -8,6 +11,8 @@ COPY pom.xml .
 COPY src src
 
 RUN sed -i 's/\r$//' mvnw
+RUN sed -i "s/ENVIRONMENT_NAME/${ENVIRONMENT_NAME}/g" src/main/resources/application.properties
+RUN sed -i "s/BASE_DOMAIN/${BASE_DOMAIN}/g" src/main/resources/application.properties
 RUN --mount=type=cache,target=/root/.m2 ./mvnw install -DskipTests
 RUN --mount=type=cache,target=/root/.m2 ./mvnw -B clean package spring-boot:repackage -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
