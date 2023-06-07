@@ -30,9 +30,15 @@ function DoctorHome() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    DeafutlAllData.getTest().then((res) => {
-      console.log("response in comp");
+    DeafutlAllData.getToken().then((res) => {
+      console.log("response getToken");
       console.log(res);
+      localStorage.setItem("Token", res)
+
+      DeafutlAllData.getPatients().then((res) => {
+        console.log("response getPatients");
+        console.log(res);
+      });
     });
   }, []);
 
