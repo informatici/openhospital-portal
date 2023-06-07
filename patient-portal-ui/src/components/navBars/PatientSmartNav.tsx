@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import GoBack from "../common/buttons/GoBack";
 import GoHomePatient from "../common/buttons/GoHomePatient";
@@ -18,7 +18,6 @@ interface PatientSmartNavState {
     main?: boolean;
 }
 
-
 class PatientSmartNav extends Component<PatientSmartNavProps, PatientSmartNavState> {
     constructor(props: any | Readonly<{}>) {
         super(props);
@@ -35,31 +34,31 @@ class PatientSmartNav extends Component<PatientSmartNavProps, PatientSmartNavSta
 
         // console.log("state:" + this.state.main);
         return (
-            <Box sx={{ width: 1 }}>
+            <Box sx={{ width: 1, mt: 1 }}>
                 {/* <AppBar position="static" > */}
-                <Toolbar >
-                    <Grid
-                        container
-                    >
-                        <Grid item xs={2}>
-                            {this.props.page != 'PatientHome' ? <GoBack /> : null}
-                        </Grid>
-                        <Grid item xs={2}>
-                            {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
-                        </Grid>
-                        <Grid item xs={4}>
-
-                        </Grid>
-                        <Grid item xs={2}>
-                            {this.props.page == 'PatientHome' || this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
-                        </Grid>
-                        <Grid item xs={2}>
-                            {this.props.page == 'PatientHome' ? <Bagenda /> : null}
-                            {this.props.page == 'PatientAgenda' ? <Bhome /> : null}
-                        </Grid>
+                {/* <Toolbar sx={{
+                    width: 1,
+                }}> */}
+                <Grid container sx={{ width: 1 }} >
+                    <Grid container justifyContent="flex-start" item xs={2}>
+                        {this.props.page != 'PatientHome' ? <GoBack /> : null}
+                    </Grid>
+                    <Grid container justifyContent="flex-start" item xs={2}>
+                        {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
+                    </Grid>
+                    <Grid container justifyContent="flex-start" item xs={4}>
 
                     </Grid>
-                </Toolbar>
+                    <Grid container justifyContent="flex-end" item xs={2}>
+                        {this.props.page == 'PatientHome' ? <BchooseInsert /> : null}
+                    </Grid>
+                    <Grid container justifyContent="flex-end" item xs={2}>
+                        {this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
+                        {this.props.page == 'PatientHome' ? <Bagenda /> : null}
+                        {this.props.page == 'PatientAgenda' ? <Bhome /> : null}
+                    </Grid>
+                </Grid>
+                {/* </Toolbar> */}
                 {/* </AppBar> */}
             </Box>
         );

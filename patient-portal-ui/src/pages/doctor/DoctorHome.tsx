@@ -50,67 +50,102 @@ function DoctorHome() {
         height: "100vh",
       }}
     >
-
-      <Grid container spacing={2}>
-        <Grid item xs={11} md={3}>
-          {matches ? <DoctorLeftNav /> : <DoctorNav />}
-        </Grid>
-        <Grid item xs={11} md={9}>
-          {matches ? <Box sx={{ mt: 0, width: 1 }}>
+      {matches ?
+        <Grid container sx={{ mt: 1 }} spacing={2}>
+          <Grid item xs={12} md={3}>
+            <DoctorLeftNav />
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <Box sx={{ mt: 0, width: 1 }}>
+              <Grid container sx={{ width: 1 }} spacing={2}>
+                <Grid container justifyContent="flex-start" item xs={10} md={10} >
+                  <SearchPatient />
+                </Grid>
+                <Grid container justifyContent="flex-end" item xs={2} md={1}>
+                  <BnewAuth />
+                </Grid>
+                <Grid item md={1}><Bagenda />
+                </Grid>
+              </Grid>
+            </Box>
             <Grid container spacing={2}>
-              <Grid item xs={10} md={10} >
-                <SearchPatient />
-              </Grid>
-              <Grid item xs={2} md={1}>
-                <BnewAuth />
-              </Grid>
-              {matches ? <Grid item md={1}><Bagenda />
-              </Grid> : null}
+              <Grid item xs={12} md={3}>
+                {data_json.patient.map((button: any) => (
+                  <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
+                    <CardContent>
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Id: {button.id_patient}
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {button.surname_patient} {button.name_patient}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button variant="outlined" component={Link} to={{
+                        pathname: '/DoctorjReqAuth',
 
-            </Grid>
-          </Box> : <Box sx={{ mt: 14, width: 1 }}>
-
-            <Grid container spacing={2}>
-              <Grid item xs={10} >
-                <SearchPatient />
+                      }}
+                        state={"768445"}
+                        fullWidth
+                        color="primary"
+                        aria-label="insert"
+                        size="small">
+                        Get OTP
+                      </Button>
+                    </CardActions>
+                  </Card>
+                ))}
               </Grid>
-              <Grid item xs={2}>
-                <BnewAuth />
-              </Grid>
-            </Grid>
-          </Box>
-          }
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              {data_json.patient.map((button: any) => (
-                <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
-                  <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                      Id: {button.id_patient}
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                      {button.surname_patient} {button.name_patient}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button variant="outlined" component={Link} to={{
-                      pathname: '/DoctorjReqAuth',
-
-                    }}
-                      state={"768445"}
-                      fullWidth
-                      color="primary"
-                      aria-label="insert"
-                      size="small">
-                      Get OTP
-                    </Button>
-                  </CardActions>
-                </Card>
-              ))}
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+        :
+        <>
+
+          <DoctorNav />
+          <Grid item xs={12} md={9}>
+            <Box sx={{ mt: 14, width: 1 }}>
+              <Grid container sx={{ width: 1 }} spacing={2}>
+                <Grid container justifyContent="flex-start" item xs={10}>
+                  <SearchPatient />
+                </Grid>
+                <Grid container justifyContent="flex-end" item xs={2}>
+                  <BnewAuth />
+                </Grid>
+              </Grid>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                {data_json.patient.map((button: any) => (
+                  <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
+                    <CardContent>
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Id: {button.id_patient}
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {button.surname_patient} {button.name_patient}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button variant="outlined" component={Link} to={{
+                        pathname: '/DoctorjReqAuth',
+                      }}
+                        state={"768445"}
+                        fullWidth
+                        color="primary"
+                        aria-label="insert"
+                        size="small">
+                        Get OTP
+                      </Button>
+                    </CardActions>
+                  </Card>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid></>
+      }
+
       <Stack spacing={2}>
         <Pagination count={10} variant="outlined" shape="rounded" />
       </Stack>

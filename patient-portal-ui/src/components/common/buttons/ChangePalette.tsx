@@ -58,16 +58,20 @@ export default function ChangePalette() {
   const buttons = [
     <Button onClick={function () {
       return setTheme(theme_1)
-    }} key="1"><div style={styles.theme_1_a}></div><div style={styles.theme_1_b}></div></Button>,
+    }} key="1"><div style={styles.theme_1_a}></div><div style={styles.theme_1_b}></div>
+    </Button>,
     <Button onClick={function () {
       return setTheme(theme_2)
-    }} key="2"><div style={styles.theme_2_a}></div><div style={styles.theme_2_b}></div></Button>,
+    }} key="2"><div style={styles.theme_2_a}></div><div style={styles.theme_2_b}></div>
+    </Button>,
     <Button onClick={function () {
       return setTheme(theme_3)
-    }} key="3"><div style={styles.theme_3_a}></div><div style={styles.theme_3_b}></div></Button>,
+    }} key="3"><div style={styles.theme_3_a}></div><div style={styles.theme_3_b}></div>
+    </Button>,
     <Button onClick={function () {
       return setTheme(theme_4)
-    }} key="4" ><div style={styles.theme_4_a}></div><div style={styles.theme_4_b}></div></Button >,
+    }} key="4" ><div style={styles.theme_4_a}></div><div style={styles.theme_4_b}></div>
+    </Button >,
   ];
 
 

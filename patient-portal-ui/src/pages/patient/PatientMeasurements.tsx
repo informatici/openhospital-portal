@@ -80,7 +80,7 @@ const PatientMeasurements = () => {
       }}
     >
       <PatientSmartNav page={'PatientMeasurements'} />
-      <div style={{ width: '90%', height: '600px' }}>
+      <div style={{ width: '100%', height: '600px' }}>
         <Box
           sx={{
             overflowX: "scroll",

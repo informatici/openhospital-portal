@@ -17,54 +17,33 @@ interface DoctorSmartNavNavProps {
 interface DoctorSmartNavNavState {
     main?: boolean;
 }
-
-
 class DoctorSmartNavNav extends Component<DoctorSmartNavNavProps, DoctorSmartNavNavState> {
     constructor(props: any | Readonly<{}>) {
-
-
         super(props);
-        // Set initial state
-        console.log("inizial");
-        console.log(props);
         this.state = { main: true };
     }
 
     render() {
-        // const main = this.state.main;
-        let button;
-        console.log("state:" + this.state.main);
-
-        // console.log("state:" + this.state.main);
         return (
-            <Box sx={{ width: 1 }}>
-                {/* <AppBar position="static" > */}
-                <Toolbar >
-                    <Grid
-                        container
-                    >
-                        <Grid item xs={2}>
-                            {this.props.page != 'DoctorHome' ? <GoBack /> : null}
-                        </Grid>
-                        <Grid item xs={2}>
-                        </Grid>
-                        <Grid item xs={4}>
-
-                        </Grid>
-                        <Grid item xs={2}>
-                            {this.props.page == 'PatientHome' || this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
-                        </Grid>
-                        <Grid item xs={2}>
-                            {this.props.page == 'PatientHome' ? <Bagenda /> : null}
-                            {this.props.page == 'PatientAgenda' ? <Bhome /> : null}
-                        </Grid>
-
+            <Box sx={{ width: 1, mt: 1 }}>
+                <Grid container sx={{ width: 1 }} >
+                    <Grid container justifyContent="flex-start" item xs={2}>
+                        {this.props.page != 'DoctorHome' ? <GoBack /> : null}
                     </Grid>
-                </Toolbar>
-                {/* </AppBar> */}
+                    <Grid container justifyContent="flex-start" item xs={2}>
+                    </Grid>
+                    <Grid container justifyContent="flex-start" item xs={4}>
+                    </Grid>
+                    <Grid container justifyContent="flex-end" item xs={2}>
+                        {this.props.page == 'PatientHome' || this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
+                    </Grid>
+                    <Grid container justifyContent="flex-end" item xs={2}>
+                        {this.props.page == 'PatientHome' ? <Bagenda /> : null}
+                        {this.props.page == 'PatientAgenda' ? <Bhome /> : null}
+                    </Grid>
+                </Grid>
             </Box>
         );
-
     }
 }
 export default DoctorSmartNavNav;
