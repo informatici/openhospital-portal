@@ -1,6 +1,7 @@
 package org.isf.patientportal.model.recordtype;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -73,10 +74,14 @@ public class RecordType {
 	public enum BowelOption {REGULAR, IRREGULAR, CONSTIPATION, DIARRHEAL}
 	public enum AuscultationOption {NORMAL, WHEEZES, RHONCHI, CRACKLES, STRIDOR, BRONCHIAL}
 	
-	
-	@Id
+
     @GeneratedValue
     private Long id;
+	
+    @Id
+	@NotNull
+	@Column(length = 10)
+	private String code;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -96,7 +101,6 @@ public class RecordType {
 	
 	private float maxValue;
 	
-	@NotNull
 	private String uom;
 
 	
