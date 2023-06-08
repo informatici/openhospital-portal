@@ -9,6 +9,7 @@ import AdminHome from "./pages/admin/AdminHome";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
 import SelectLanguage from "./pages/common/SelectLanguage";
 
 import PatientHome from "./pages/patient/PatientHome";
@@ -67,6 +68,7 @@ function App(props) {
           <Route path="/logout" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
           <Route path="/login" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
           <Route path="/signup" element={<Signup setAuth={setAuth} />} />
+          <Route path="/resetPassword" element={<ResetPassword setAuth={setAuth} />} />
 
           <Route path="/PatientHome" element={<PatientHome setAuth={setAuth} />} />
           <Route path="/PatientChooseMeasurements" element={<PatientChooseMeasurements setAuth={setAuth} />} />
