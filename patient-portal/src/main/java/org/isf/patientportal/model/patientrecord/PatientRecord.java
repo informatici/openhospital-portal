@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -39,12 +40,14 @@ public class PatientRecord {
 	
 	@OneToOne
 	@NotNull
+	@JoinColumn(referencedColumnName = "code")
 	private RecordType recordType;
 	
 	private float value1;
 	
 	private float value2;
 	
+	@Column(nullable = true)
 	private String optionValue;
 	
 	private String note;

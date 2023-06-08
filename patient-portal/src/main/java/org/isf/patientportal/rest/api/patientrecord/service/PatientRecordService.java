@@ -1,5 +1,6 @@
 package org.isf.patientportal.rest.api.patientrecord.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -38,7 +39,8 @@ public class PatientRecordService {
                 item.getValue1(),
                 item.getValue2(),
                 item.getOptionValue(),
-                item.getNote()
+                item.getNote(),
+                LocalDateTime.now()
         );
         return patientRecordRepository.save(modelMapper.map(copy, PatientRecord.class));
 	}
