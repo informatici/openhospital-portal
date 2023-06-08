@@ -88,8 +88,14 @@ Interrupt with CTRL-C after finish (don't mind the errors)
 # matomo instance (optional, in background)
 docker compose -f docker-compose-matomo.yaml up -d
 
-# the portal
+# the portal (it will create the DB the first time)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
+```
+
+Demo data (optional, only once): From another window, with everything started, run:
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
 ### 4. available services
