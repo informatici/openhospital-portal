@@ -9,7 +9,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 - [Instructions](#instructions)
 - [Building](#building)
   * [1. build images from sources](#1-build-images-from-sources)
-  * [2. init DB (only once)](#2-init-db-only-once)
+  * [2. create first migration script for the DB (only once)](#2-create-first-migration-script-for-the-db-only-once)
 - [Starting](#starting)
   * [3. start the app mode with output in the terminal](#3-start-the-app-mode-with-output-in-the-terminal)
   * [4. available services](#4-available-services)
