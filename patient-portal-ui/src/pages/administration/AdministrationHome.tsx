@@ -5,6 +5,7 @@ import AdministrationNav from "../../components/navBars/AdministrationNav";
 import ResetPassword from "../../components/common/buttons/ResetPasswordAdministration";
 import SelectLanguage from "../../components/common/buttons/SelectLanguage";
 import ManageMisureAdministration from "../../components/common/buttons/ManageMisureAdministration";
+import ManageUsersAdministration from "../../components/common/buttons/ManageUsersAdministration";
 import OtherConfigurationAdministration from "../../components/common/buttons/OtherConfigurationAdministration";
 const AdministrationHome = () => {
   return (
@@ -30,6 +31,7 @@ const AdministrationHome = () => {
         <ResetPassword />
         <SelectLanguage />
         <ManageMisureAdministration />
+        <ManageUsersAdministration />
         <OtherConfigurationAdministration />
       </Box>
     </Container>

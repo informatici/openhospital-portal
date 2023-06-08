@@ -39,6 +39,7 @@ import DoctorjReqAuth from "./pages/doctor/DoctorjReqAuth";
 import AdministrationHome from "./pages/administration/AdministrationHome";
 import AdministrationManageMisure from "./pages/administration/AdministrationManageMisure";
 import AdministrationResetPassword from "./pages/administration/AdministrationResetPassword";
+import ManageUsersAdministration from "./pages/administration/ManageUsersAdministration";
 import AdministrationOtherConfiguration from "./pages/administration/AdministrationOtherConfiguration";
 
 import { red } from '@mui/material/colors';
@@ -96,6 +97,7 @@ function App(props) {
           <Route path="/AdministrationHome" element={<AdministrationHome setAuth={setAuth} />} />
           <Route path="/AdministrationResetPassword" element={<AdministrationResetPassword setAuth={setAuth} />} />
           <Route path="/AdministrationManageMisure" element={<AdministrationManageMisure setAuth={setAuth} />} />
+          <Route path="/ManageUsersAdministration" element={<ManageUsersAdministration setAuth={setAuth} />} />
           <Route path="/AdministrationOtherConfiguration" element={<AdministrationOtherConfiguration setAuth={setAuth} />} />
 
           <Route path="/SelectLanguage" element={<SelectLanguage setAuth={setAuth} />} />
