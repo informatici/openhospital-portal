@@ -44,7 +44,7 @@ class PatientSmartNav extends Component<PatientSmartNavProps, PatientSmartNavSta
                         {this.props.page != 'PatientHome' ? <GoBack /> : null}
                     </Grid>
                     <Grid container justifyContent="flex-start" item xs={2}>
-                        {this.props.page != 'PatientHome' ? <GoHomePatient /> : null}
+                        {/* {this.props.page != 'PatientHome' ? <GoHomePatient /> : null} */}
                     </Grid>
                     <Grid container justifyContent="flex-start" item xs={4}>
 
