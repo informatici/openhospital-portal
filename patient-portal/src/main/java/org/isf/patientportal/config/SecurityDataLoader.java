@@ -63,20 +63,6 @@ public class SecurityDataLoader implements
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
-		System.out.println(passwordEncoder.encode("hospadmin2023"));
-		System.out.println(passwordEncoder.encode("doctor2023"));
-		System.out.println(passwordEncoder.encode("justin2023"));
-		System.out.println(passwordEncoder.encode("anthon2023"));
-		System.out.println(passwordEncoder.encode("veronique2023"));
-		System.out.println(passwordEncoder.encode("cypher2023"));
-		System.out.println(passwordEncoder.encode("serena2023"));
-		System.out.println(passwordEncoder.encode("bardsley2023"));
-		System.out.println(passwordEncoder.encode("graney2023"));
-		System.out.println(passwordEncoder.encode("ackman2023"));
-		System.out.println(passwordEncoder.encode("pohlman2023"));
-		System.out.println(passwordEncoder.encode("jeana2023"));
-		System.out.println(passwordEncoder.encode("abramo2023"));
-
 		if (alreadySetup)
 			return;
 		Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
