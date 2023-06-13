@@ -9,6 +9,7 @@ import AdminHome from "./pages/admin/AdminHome";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
 import SelectLanguage from "./pages/common/SelectLanguage";
 
 import PatientHome from "./pages/patient/PatientHome";
@@ -38,6 +39,7 @@ import DoctorjReqAuth from "./pages/doctor/DoctorjReqAuth";
 import AdministrationHome from "./pages/administration/AdministrationHome";
 import AdministrationManageMisure from "./pages/administration/AdministrationManageMisure";
 import AdministrationResetPassword from "./pages/administration/AdministrationResetPassword";
+import ManageUsersAdministration from "./pages/administration/ManageUsersAdministration";
 import AdministrationOtherConfiguration from "./pages/administration/AdministrationOtherConfiguration";
 
 import { red } from '@mui/material/colors';
@@ -67,6 +69,7 @@ function App(props) {
           <Route path="/logout" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
           <Route path="/login" element={<Login setAuth={setAuth} setProfile={setProfile} />} />
           <Route path="/signup" element={<Signup setAuth={setAuth} />} />
+          <Route path="/resetPassword" element={<ResetPassword setAuth={setAuth} />} />
 
           <Route path="/PatientHome" element={<PatientHome setAuth={setAuth} />} />
           <Route path="/PatientChooseMeasurements" element={<PatientChooseMeasurements setAuth={setAuth} />} />
@@ -94,6 +97,7 @@ function App(props) {
           <Route path="/AdministrationHome" element={<AdministrationHome setAuth={setAuth} />} />
           <Route path="/AdministrationResetPassword" element={<AdministrationResetPassword setAuth={setAuth} />} />
           <Route path="/AdministrationManageMisure" element={<AdministrationManageMisure setAuth={setAuth} />} />
+          <Route path="/ManageUsersAdministration" element={<ManageUsersAdministration setAuth={setAuth} />} />
           <Route path="/AdministrationOtherConfiguration" element={<AdministrationOtherConfiguration setAuth={setAuth} />} />
 
           <Route path="/SelectLanguage" element={<SelectLanguage setAuth={setAuth} />} />
