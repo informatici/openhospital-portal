@@ -21,24 +21,23 @@
  */
 package org.isf.patientportal.rest.auth.dto;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginResponse {
+public class LoginRequest {
 
-    private String token;
-    private String displayName;
+	@NotBlank
+	private String username;
 
+	@NotBlank
+	private String password;
 
-    private String username;
-
-    private List<String> roles;
 }
