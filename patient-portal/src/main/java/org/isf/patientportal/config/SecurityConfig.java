@@ -49,7 +49,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -62,6 +64,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -89,6 +92,11 @@ public class SecurityConfig {
 	// throws Exception {
 	// auth.authenticationProvider(authenticationProvider());
 	// }
+	
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -134,20 +142,21 @@ public class SecurityConfig {
 						.authenticationEntryPoint(restAuthenticationEntryPoint)
 						.and()
 						.authorizeRequests()
-						.antMatchers("/auth/**").permitAll()
-						.and()
-						.formLogin()
-						.loginPage("/auth/login")
-						.successHandler(successHandler())
-						.failureHandler(failureHandler())
+						.antMatchers("/api/auth/**").permitAll()
+						//.and()
+						//.formLogin()
+						//.loginPage("/api/auth/login").permitAll()
+						//.successHandler(successHandler())
+						//.failureHandler(failureHandler())
 						.and()
 						.apply(securityConfigurerAdapter())
 						.and()
 						.httpBasic()
 						.and()
 						.logout()
-						.logoutUrl("/auth/logout")
+						.logoutUrl("/api/auth/logout")
 						.permitAll();
+		
 		return http.build();
 	}
 

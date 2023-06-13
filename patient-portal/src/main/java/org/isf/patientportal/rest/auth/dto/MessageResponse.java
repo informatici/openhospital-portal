@@ -21,8 +21,6 @@
  */
 package org.isf.patientportal.rest.auth.dto;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,13 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LoginResponse {
+public class MessageResponse {
 
-    private String token;
-    private String displayName;
-
-
-    private String username;
-
-    private List<String> roles;
+	private String message;
 }
