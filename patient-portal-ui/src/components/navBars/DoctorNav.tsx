@@ -32,25 +32,40 @@ interface DoctorNavState {
 }
 
 class DoctorNav extends Component<DoctorNavProps, DoctorNavState> {
-
+    wrapperRef: any;
     constructor(props: any | Readonly<{}>) {
         super(props);
         this.state = { main: true };
         this.state = {
             setThemeUser: 'theme1'
         };
-        console.log(this.state);
-        // this.wrapperRef = React.createRef();
+        this.wrapperRef = React.createRef();
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+    }
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+    // --- Custom Manage click Over Acccordion (TODO) ---
+    handleClickOutside(event: { target: any; }) {
+        if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+            let el: any = document.getElementById('panel1a-header');
+            let elAE = el.getAttribute('aria-expanded');
+            if (elAE === "true") {
+                el.click();
+            }
+        }
     }
     render() {
         return (
-            <Accordion sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
+            <Accordion ref={this.wrapperRef} sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
                 <AccordionSummary
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
                     <Box
-                        //  ref={this.wrapperRef} 
                         borderRadius={2} sx={{
                             p: 1,
                             width: 1,

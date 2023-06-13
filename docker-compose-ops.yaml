@@ -9,7 +9,15 @@ services:
       context: ./patient-portal/
       dockerfile: ./Dockerfile
     restart: "no"
-    
+
+  demo-data:
+    extends:
+      file: docker-compose.yaml
+      service: mysql
+    volumes:
+      - demo_sql_files:/sql
+    command: sh -c "mysql -v --host mysql -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /sql/load-data-demo.sql"
+          
   ui-dev:
     image: patient-portal-ui-dev-image:latest
     build:
@@ -63,3 +71,10 @@ volumes:
       o: bind
       type: none
       device: ${ROOT}/patient-portal-ui
+      
+  demo_sql_files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${ROOT}/patient-portal/sql

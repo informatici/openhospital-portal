@@ -52,7 +52,7 @@ const LoginForm = ({ setAuth, setProfile }) => {
     onSubmit: () => {
       console.log("submitting...");
       // --- start gestione profilo TODO ---
-      console.log(values.email);      
+      console.log(values.email);
       if (values.email == "a@a.com") {
         amb = "Admin";
       } else if (values.email == "as@a.com") {
@@ -82,6 +82,8 @@ const LoginForm = ({ setAuth, setProfile }) => {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Box
+          // spacing={1}
+          sx={{ mt: 3 }}
           component={motion.div}
           animate={{
             transition: {
@@ -93,7 +95,7 @@ const LoginForm = ({ setAuth, setProfile }) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: 3,
+              gap: 1,
             }}
             component={motion.div}
             initial={{ opacity: 0, y: 40 }}
@@ -136,11 +138,12 @@ const LoginForm = ({ setAuth, setProfile }) => {
           </Box>
 
           <Box
+           sx={{ mt: 1 }}
             component={motion.div}
             initial={{ opacity: 0, y: 20 }}
             animate={animate}
           >
-            <Stack
+            {/* <Stack
               direction="row"
               alignItems="center"
               justifyContent="space-between"
@@ -164,9 +167,10 @@ const LoginForm = ({ setAuth, setProfile }) => {
               >
                 Forgot password?
               </Link>
-            </Stack>
+            </Stack> */}
 
             <LoadingButton
+              // sx={{ mt:2 }}
               fullWidth
               size="large"
               type="submit"

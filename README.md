@@ -9,7 +9,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 - [Instructions](#instructions)
 - [Building](#building)
   * [1. build images from sources](#1-build-images-from-sources)
-  * [2. init DB (only once)](#2-init-db-only-once)
+  * [2. create first migration script for the DB (only once)](#2-create-first-migration-script-for-the-db-only-once)
 - [Starting](#starting)
   * [3. start the app mode with output in the terminal](#3-start-the-app-mode-with-output-in-the-terminal)
   * [4. available services](#4-available-services)
@@ -88,8 +88,14 @@ Interrupt with CTRL-C after finish (don't mind the errors)
 # matomo instance (optional, in background)
 docker compose -f docker-compose-matomo.yaml up -d
 
-# the portal
+# the portal (it will create the DB the first time)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
+```
+
+Demo data (optional, only once): From another window, with everything started, run:
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
 ### 4. available services

@@ -26,6 +26,7 @@
         <springfox-swagger.version>2.6.1</springfox-swagger.version>
         <joda.version>2.1</joda.version>
         <start-class>org.isf.patientportal.connector.ConnectorApplication</start-class>
+        <license.maven.plugin.version>4.2</license.maven.plugin.version>
 	</properties>
 	<dependencies>
 		<!-- <dependency>
@@ -193,6 +194,53 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${license.maven.plugin.version}</version>
+                <configuration>
+                    <!-- <header>.license-header/license-header.txt</header> -->
+                    <licenseSets>
+                        <licenseSet>
+                            <header>.license-header/license-header.txt</header>
+                            <excludes>
+                                <exclude>./license-header/**</exclude>
+                                <exclude>./ide-settings/eclipse/**</exclude>
+                                <exclude>./ide-settings/idea/**</exclude>
+                                <exclude>.editorconfig</exclude>
+                                <exclude>.springBeans</exclude>
+                                <exclude>**/README</exclude>
+                                <exclude>doc/**/*.txt</exclude>
+                                <exclude>lib/**</exclude>
+                                <exclude>sql/**</exclude>
+                                <exclude>src/test/resources/**</exclude>
+                                <exclude>src/main/resources/**</exclude>
+                                <exclude>**/*.properties</exclude>
+                                <exclude>**/*.xml</exclude>
+                                <exclude>**/*.yml</exclude>
+                                <exclude>**/*.jfd</exclude>
+                                <exclude>**/*.tmp</exclude>
+                                <exclude>**/Dockerfile</exclude>
+                            </excludes>
+                        </licenseSet>
+                    </licenseSets>
+                    <properties>
+                        <owner>Informatici Senza Frontiere</owner>
+                        <email>info@informaticisenzafrontiere.org</email>
+                        <project.inceptionYear>2006</project.inceptionYear>
+                        <project.name>Open Hospital</project.name>
+                        <project.url>www.open-hospital.org</project.url>
+                        <project.description>Open Hospital is a free and open source software for healthcare data management.</project.description>
+                    </properties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin-git</artifactId>
+                        <version>${license.maven.plugin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
