@@ -30,6 +30,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -86,6 +88,8 @@ import lombok.Setter;
 
 
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "RecordType")
 public class RecordType {
 
@@ -129,6 +133,9 @@ public class RecordType {
 		return id;
 	}
 
+	public String getCode() {
+		return code;
+	}
 	
 	public MeasurementValueType getMeasurementValueType() {
 		return measurementValueType;
@@ -211,6 +218,20 @@ public class RecordType {
 		return uom;
 	}
 
-	
+	public RecordType updateWith(RecordType item) {
+        return new RecordType(
+            this.id,
+            this.code,
+            item.getMeasurementValueType(),
+            item.getMeasurementType(),
+            item.getDefaultOptionValue(),
+            item.getDefaultValue1(),
+            item.getDefaultValue2(),
+            item.getMinValue(),
+            item.getMaxValue(),
+            item.getUom()
+        );
+    }
+
 	
 }

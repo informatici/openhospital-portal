@@ -40,10 +40,12 @@ import org.isf.patientportal.model.recordtype.RecordType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity(name = "PatientRecord")
 public class PatientRecord {
 	
@@ -77,10 +79,6 @@ public class PatientRecord {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Date created = new Date();
 	
-	
-	public PatientRecord() {
-		super();
-	}
 	
 	public PatientRecord(Long id, 
 					@NotNull LocalDateTime date, 
