@@ -35,6 +35,8 @@ public class RecordTypeDto {
 
 	private Long id;
 	
+	private String code;
+	
 	@ApiModelProperty(allowableValues = "NUMERIC, OPTION")
 	private String measurementValueType;
 	

@@ -54,17 +54,17 @@ INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
 
 DELETE FROM `patient`;
 INSERT INTO `patient` (`id`, `address`, `birth_date`, `city`, `created`, `first_name`, `hospital_id`, `next_kin`, `note`, `second_name`, `sex`, `telephone`, `user_id`) VALUES
-	(1, 'Kernigan', '1955-07-30', 'Long Road - 58', '2023-05-31 20:59:32', 'Justin', '10001', NULL, NULL, 'Frederick', 'M', '+343341314', 10),
-	(2, 'Winnipeg', '1986-08-04', 'Westerton Road', '2023-06-04 16:12:01', 'Anthon', '10002', NULL, NULL, 'Geremy', 'M', '', 11),
-	(3, 'Old Avenue', '1985-01-19', 'Scholton', '2023-06-04 16:12:01', 'Veronique', '10003', NULL, NULL, 'Fountain', 'F', '', 12),
-	(4, 'Oak street 5', '1962-02-02', 'Norwalk', '2023-06-04 16:12:01', 'Cypher', '10004', NULL, NULL, 'Marica', 'F', '+24521666', 13),
-	(5, 'Parkhurst', '1970-03-29', 'Norwich', '2023-06-04 16:12:01', 'Serena', '10005', NULL, NULL, 'Levinson', 'F', '', 14),
-	(6, 'Memorial Road 01', '1970-01-27', 'Ramonville', '2023-06-04 16:12:01', 'Bardsley', '10006', NULL, NULL, 'Zenaida', 'M', '', 15),
-	(7, 'Brooksby', '1948-06-04', 'Putnam', '2023-06-04 16:12:01', 'Graney', '10007', NULL, NULL, 'Almedan', 'M', '+6525235325', 16),
-	(8, 'Fairhaven St. N 1', '1985-03-18', 'Shelton', '2023-06-04 16:12:01', 'Ackman', '10008', NULL, NULL, 'Sammy', 'M', '', 17),
-	(9, 'William', '1988-07-21', 'Southington', '2023-06-04 16:12:01', 'Pohlman', '10009', NULL, NULL, 'Margot', 'F', '', 18),
-	(10, 'Worcester st. 11', '1940-06-11', 'Cutley', '2023-06-04 16:12:01', 'Jeana', '10010', NULL, NULL, 'Bennett', 'F', '', 19),
-	(11, 'Timpany', '1950-07-07', 'Torrington', '2023-06-04 16:12:01', 'Abramo', '10011', NULL, NULL, 'Oliver', 'M', '+5113212343', 20);
+	(1, 'Kernigan', '1955-07-30', 'Long Road - 58', '2023-05-31 20:59:32', 'Justin', '10001', NULL, NULL, 'Frederick', 'M', '+343341314', 4),
+	(2, 'Winnipeg', '1986-08-04', 'Westerton Road', '2023-06-04 16:12:01', 'Anthon', '10002', NULL, NULL, 'Geremy', 'M', '', 5),
+	(3, 'Old Avenue', '1985-01-19', 'Scholton', '2023-06-04 16:12:01', 'Veronique', '10003', NULL, NULL, 'Fountain', 'F', '', 6),
+	(4, 'Oak street 5', '1962-02-02', 'Norwalk', '2023-06-04 16:12:01', 'Cypher', '10004', NULL, NULL, 'Marica', 'F', '+24521666', 7),
+	(5, 'Parkhurst', '1970-03-29', 'Norwich', '2023-06-04 16:12:01', 'Serena', '10005', NULL, NULL, 'Levinson', 'F', '', 8),
+	(6, 'Memorial Road 01', '1970-01-27', 'Ramonville', '2023-06-04 16:12:01', 'Bardsley', '10006', NULL, NULL, 'Zenaida', 'M', '', 9),
+	(7, 'Brooksby', '1948-06-04', 'Putnam', '2023-06-04 16:12:01', 'Graney', '10007', NULL, NULL, 'Almedan', 'M', '+6525235325', 10),
+	(8, 'Fairhaven St. N 1', '1985-03-18', 'Shelton', '2023-06-04 16:12:01', 'Ackman', '10008', NULL, NULL, 'Sammy', 'M', '', 11),
+	(9, 'William', '1988-07-21', 'Southington', '2023-06-04 16:12:01', 'Pohlman', '10009', NULL, NULL, 'Margot', 'F', '', 12),
+	(10, 'Worcester st. 11', '1940-06-11', 'Cutley', '2023-06-04 16:12:01', 'Jeana', '10010', NULL, NULL, 'Bennett', 'F', '', 13),
+	(11, 'Timpany', '1950-07-07', 'Torrington', '2023-06-04 16:12:01', 'Abramo', '10011', NULL, NULL, 'Oliver', 'M', '+5113212343', 14);
 
 DELETE FROM `patient_record`;
 INSERT INTO `patient_record` (`id`, `created`, `note`, `option_value`, `record_date`, `value1`, `value2`, `patient_id`, `record_type_code`) VALUES
