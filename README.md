@@ -98,6 +98,28 @@ Demo data (optional, only once): From another window, with everything started, r
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
+Demo users
+
+```
+USERNAME				PASSWORD			ROLE
+admin@patientportal.isf.org		admin				ADMIN
+hospital.admin@ermail.com		hospadmin2023			ADMIN	
+doctor@email.com			doctor2023			DOCTOR
+justin.frederick@email.com		justin2023			PATIENT
+anthon.geremy@email.com			anthon2023			PATIENT
+veronique.fountain@email.com		veronique2023			PATIENT
+cypher.marica@email.com			cypher2023			PATIENT
+serena.levinson@email.com		serena2023			PATIENT
+bardsley.zenaida@email.com		bardsley2023			PATIENT
+graney.almedan@email.com		graney2023			PATIENT
+ackman.sammy@email.com			ackman2023			PATIENT
+pohlman.margot@email.com		pohlman2023			PATIENT
+jeana.bennett@email.com			jeana2023			PATIENT
+abramo.oliver@email.com			abramo2023			PATIENT
+
+```
+
+
 ### 4. available services
 
 - Patient Portal (ui) will be available at `https://develop.ohpp.local/` 

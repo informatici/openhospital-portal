@@ -27,8 +27,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import org.modelmapper.Converter;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,16 +35,14 @@ import lombok.Setter;
 @Entity
 public class EventType {
 
-	
-    @GeneratedValue
-    private Long id;
-	
-    @Id
+	@GeneratedValue
+	private Long id;
+
+	@Id
 	@NotNull
 	@Column(length = 2)
 	private String code;
-	
+
 	private String name;
-	
 
 }

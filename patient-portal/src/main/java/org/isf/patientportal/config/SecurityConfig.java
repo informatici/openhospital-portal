@@ -64,7 +64,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -92,7 +91,7 @@ public class SecurityConfig {
 	// throws Exception {
 	// auth.authenticationProvider(authenticationProvider());
 	// }
-	
+
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
@@ -143,11 +142,11 @@ public class SecurityConfig {
 						.and()
 						.authorizeRequests()
 						.antMatchers("/api/auth/**").permitAll()
-						//.and()
-						//.formLogin()
-						//.loginPage("/api/auth/login").permitAll()
-						//.successHandler(successHandler())
-						//.failureHandler(failureHandler())
+						// .and()
+						// .formLogin()
+						// .loginPage("/api/auth/login").permitAll()
+						// .successHandler(successHandler())
+						// .failureHandler(failureHandler())
 						.and()
 						.apply(securityConfigurerAdapter())
 						.and()
@@ -156,7 +155,7 @@ public class SecurityConfig {
 						.logout()
 						.logoutUrl("/api/auth/logout")
 						.permitAll();
-		
+
 		return http.build();
 	}
 
@@ -177,7 +176,7 @@ public class SecurityConfig {
 	@Bean
 	public RoleHierarchy roleHierarchy() {
 		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-		String hierarchy = "ROLE_ADMIN > ROLE_FAMILYMANAGER \n ROLE_FAMILYMANAGER > ROLE_USER";
+		String hierarchy = "ROLE_ADMIN \n ROLE_PATIENT \n ROLE_DOCTOR";
 		roleHierarchy.setHierarchy(hierarchy);
 		return roleHierarchy;
 	}

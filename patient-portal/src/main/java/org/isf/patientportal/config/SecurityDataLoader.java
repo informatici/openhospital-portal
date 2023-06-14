@@ -65,23 +65,48 @@ public class SecurityDataLoader implements
 
 		if (alreadySetup)
 			return;
-		Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
-		Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
 
-		Privilege ownReadPrivilege = createPrivilegeIfNotFound("OWN_READ_PRIVILEGE");
+		Privilege readPatientPrivilege = createPrivilegeIfNotFound("patient.read");
+		Privilege writePatientPrivilege = createPrivilegeIfNotFound("patient.write");
+		Privilege updatePatientPrivilege = createPrivilegeIfNotFound("patient.update");
+		Privilege deletePatientPrivilege = createPrivilegeIfNotFound("patient.delete");
 
-		Privilege familyReadPrivilege = createPrivilegeIfNotFound("FAMILY_READ_PRIVILEGE");
+		Privilege readPatientRecordPrivilege = createPrivilegeIfNotFound("patientrecord.read");
+		Privilege writePatientRecordPrivilege = createPrivilegeIfNotFound("patientrecord.write");
+		Privilege updatePatientRecordPrivilege = createPrivilegeIfNotFound("patientrecord.update");
+		Privilege deletePatientRecordPrivilege = createPrivilegeIfNotFound("patientrecord.delete");
 
-		List<Privilege> adminPrivileges = Arrays.asList(
-						readPrivilege, writePrivilege);
-		List<Privilege> familyManagerPrivileges = Arrays.asList(
-						ownReadPrivilege, familyReadPrivilege);
-		List<Privilege> userManagerPrivileges = Arrays.asList(
-						ownReadPrivilege);
+		Privilege readRecordTypePrivilege = createPrivilegeIfNotFound("recordtype.read");
+		Privilege writeRecordTypePrivilege = createPrivilegeIfNotFound("recordtype.write");
+		Privilege updateRecordTypePrivilege = createPrivilegeIfNotFound("recordtype.update");
+		Privilege deleteRecordTypePrivilege = createPrivilegeIfNotFound("recordtype.delete");
+
+		Privilege readUserPrivilege = createPrivilegeIfNotFound("user.read");
+		Privilege writeUserPrivilege = createPrivilegeIfNotFound("user.write");
+		Privilege updateUserPrivilege = createPrivilegeIfNotFound("user.update");
+		Privilege deleteUserPrivilege = createPrivilegeIfNotFound("user.delete");
+
+		Privilege readHospitalEventPrivilege = createPrivilegeIfNotFound("hospitalevent.read");
+		Privilege writeHospitalEventPrivilege = createPrivilegeIfNotFound("hospitalevent.write");
+		Privilege updateHospitalEventPrivilege = createPrivilegeIfNotFound("hospitalevent.update");
+		Privilege deleteHospitalEventPrivilege = createPrivilegeIfNotFound("hospitalevent.delete");
+
+		List<Privilege> adminPrivileges = Arrays.asList(readPatientPrivilege, writePatientPrivilege, updatePatientPrivilege, deletePatientPrivilege,
+						readPatientRecordPrivilege, writePatientRecordPrivilege, updatePatientRecordPrivilege, deletePatientRecordPrivilege,
+						readRecordTypePrivilege, writeRecordTypePrivilege, updateRecordTypePrivilege, deleteRecordTypePrivilege,
+						readUserPrivilege, writeUserPrivilege, updateUserPrivilege, deleteUserPrivilege,
+						readHospitalEventPrivilege, writeHospitalEventPrivilege, updateHospitalEventPrivilege, deleteHospitalEventPrivilege);
+		List<Privilege> doctorPrivileges = Arrays.asList(readPatientPrivilege, readPatientRecordPrivilege, readRecordTypePrivilege, readUserPrivilege,
+						readHospitalEventPrivilege);
+		List<Privilege> patientPrivileges = Arrays.asList(readPatientPrivilege, updatePatientPrivilege,
+						readPatientRecordPrivilege, writePatientRecordPrivilege, updatePatientRecordPrivilege, deletePatientRecordPrivilege,
+						readRecordTypePrivilege,
+						readUserPrivilege, updateUserPrivilege,
+						readHospitalEventPrivilege);
 
 		createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-		createRoleIfNotFound("ROLE_FAMILYMANAGER", familyManagerPrivileges);
-		createRoleIfNotFound("ROLE_USER", userManagerPrivileges);
+		createRoleIfNotFound("ROLE_DOCTOR", doctorPrivileges);
+		createRoleIfNotFound("ROLE_PATIENT", patientPrivileges);
 
 		if (userRepository.findByEmail("admin@patientportal.isf.org") == null) {
 

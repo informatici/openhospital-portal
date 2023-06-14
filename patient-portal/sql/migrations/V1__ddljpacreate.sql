@@ -84,7 +84,7 @@
     ) engine=InnoDB;
 
     create table role (
-       id bigint not null,
+       id bigint not null auto_increment,
         name varchar(255) not null,
         primary key (id)
     ) engine=InnoDB;
@@ -104,7 +104,7 @@
     ) engine=InnoDB;
 
     create table user (
-       id bigint not null,
+       id bigint not null auto_increment,
         account_verified bit not null,
         active bit not null,
         created datetime not null,
