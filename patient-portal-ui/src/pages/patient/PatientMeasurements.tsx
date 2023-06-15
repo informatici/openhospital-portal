@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Misure from '../../datajs/Misure'
-let rows: any[] = [];
+
+import { DeafutlAllData } from '../../datajs/DeafutlAllData'
+
+let btFilters: string[] = [];
 const values = Misure;
 
 const columns = [
@@ -31,20 +34,8 @@ const getDateLab = (date_to_c: string | number | Date) => {
   if (d < 10) d = '0' + d;
   if (m < 10) m = '0' + m;
   let res = d + '/' + m + '/' + y;
-
   return res;
 };
-
-let btFilters: string[] = [];
-Object.keys(values[0]["xy1457uuu"]).forEach(function (key) {
-  btFilters.push(key);
-  // rows.push([values[0]["xy1457uuu"][key].map((e: { id_measure: any; date: string | number | Date; value: any; }) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: (key) }))])
-});
-rows = rows.flat(2);
-Object.keys(rows).forEach(function (key, value) {
-  // rows[key].id = key;
-});
-let rows_def = rows.sort(compare);
 function compare(a: { date_complete: number; }, b: { date_complete: number; }) {
   if (a.date_complete < b.date_complete) {
     return -1;
@@ -55,19 +46,56 @@ function compare(a: { date_complete: number; }, b: { date_complete: number; }) {
   return 0;
 }
 const PatientMeasurements = () => {
+  const [data, setData] = useState([]);
+
   const [type, setType] = React.useState(null);
-  console.log(type);
-  if (type != null) {
-    rows = rows_def.filter(function (el: { type: any; }) {
-      return el.type === type
+  const [loadComponent, setLoadComponent] = useState(0);
+  useEffect(() => {
+    DeafutlAllData.getToken().then((res) => {
+      console.log("response getToken");
+      console.log(res);
+      localStorage.setItem("Token", res)
+      let id_patient = 10;
+      DeafutlAllData.getPatientrecordsAllMeasurementById(id_patient).then((res) => {
+        console.log("response getPatientrecordsAllMeasurementById");
+        console.log(res);
+        setData(res);
+        setLoadComponent(1);
+      });
     });
-  } else {
-    rows = rows_def;
-  }
-  console.log(rows);
-  if (rows) {
-    // rows.sort(compare);
-  }
+  }, []);
+
+
+  let data_values: any = data;
+  console.log(data_values);
+  // Object.keys(data_values).forEach(function (key) {
+  //   console.log(key);
+  //   // let keyBt: any = data_values.recordType; 
+  //   // data_values.recordType.forEach(function (k: { measurementType: any; }) {
+  //   //   if (!btFilters.includes(k.measurementType)) {
+  //   //     btFilters.push(k.measurementType);
+  //   //   }
+  //   // });
+  //   // rows.push([data_values[key].map((e: any, i: number) => ({ id: "", id_measure: e.uom, date_complete: e.uom, date: e.uom, hour: e.uom, value: e.uom, misure: (key), type: e.uom }))])
+  // });
+  let rows: any[] = [];
+  Object.keys(data_values).forEach(function (key, i) {
+    console.log(data_values.recordType.measurementType);
+    if (!btFilters.includes(data_values.recordType.measurementType)) {
+      btFilters.push(data_values.recordType.measurementType);
+    }
+    console.log(data_values.value1);
+    rows.push({
+      id: i,
+      id_measure: data_values.value1,
+      date_complete: data_values.value1,
+      date: getDateLab(data_values.recordDate),
+      hour: getTimeLab(data_values.recordDate),
+      value: data_values.value1,
+      misure: data_values.value1,
+      type: data_values.value1
+    })
+  });
   let navigate = useNavigate();
   return (
     <Container

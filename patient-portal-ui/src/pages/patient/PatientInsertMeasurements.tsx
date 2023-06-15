@@ -364,10 +364,10 @@ const values = [
   },
 ];
 
-function PatientInsertMeasurements(props) {
+
+function PatientInsertMeasurements() {
 
   console.log("--- props --- PatientInsertMeasurements");
-  console.log(props);
   return (
     <Container
       maxWidth="lg"
@@ -380,7 +380,8 @@ function PatientInsertMeasurements(props) {
       }}
     >
       <PatientSmartNav page={'PatientInsertMeasurements'} />
-      {props.setType.type == 'weight' ? <Iweight dataDef={values[0].weight} dataSelected={props.setType.value} /> : null}
+
+      {/* {props.setType.type == 'weight' ? <Iweight dataDef={values[0].weight} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'height' ? <Iheight dataDef={values[0].height} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'temperature' ? <Itemperature dataDef={values[0].temperature} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null}
@@ -392,8 +393,9 @@ function PatientInsertMeasurements(props) {
       {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={values[0].diuresis_vol_24h} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'diuresis' ? <Idiuresis dataDef={values[0].diuresis} dataSelected={props.setType.value} /> : null}
       {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{min:props.setType.value, max:props.setType.value}} /> : null}
-      {props.setType.date && props.setType.hour ? <Idate_time dateSelected={props.setType.date + " " + props.setType.hour} /> : <Idate_time />}
+<<<<<<< HEAD
 
+      {props.setType.date && props.setType.hour ? <Idate_time dateSelected={props.setType.date + " " + props.setType.hour} /> : <Idate_time />} */}
       <Save />
     </Container>
 

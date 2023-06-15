@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
@@ -7,6 +8,8 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
 import Vaccinations from '../../datajs/Vaccinations';
+
+import { DeafutlAllData } from '../../datajs/DeafutlAllData';
 
 let rows: any[] = [];
 let data_json = Vaccinations;
@@ -37,6 +40,24 @@ let rows_def = rows;
 // let rows_def = rows.sort(compare(rows.date_complete));
 
 const PatientVaccinations = () => {
+  const [data, setData] = useState([]);
+  const [loadComponent, setLoadComponent] = useState(0);
+  let id_patient=11;
+  let type_code=4;
+  useEffect(() => {
+    DeafutlAllData.getToken().then((res) => {
+      console.log("response getToken");
+      console.log(res);
+      localStorage.setItem("Token", res)
+     
+      DeafutlAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+        console.log("response getHospitalEventByPatientIdByTypeCode");
+        console.log(res);
+        setData(res);
+        setLoadComponent(1);
+      });
+    });
+  }, []);
   const [type, setType] = React.useState(null);
   console.log(type);
   if (type != null) {

@@ -22,6 +22,8 @@ import Otax_number from "../utility/user/output_data/Otax_number";
 import Logout from "../common/buttons/Logout";
 import ChangePalette from "../common/buttons/ChangePalette";
 
+
+
 interface PatientNavProps {
     page?: string;
 }
@@ -39,6 +41,11 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
         this.state = {
             setThemeUser: 'theme1'
         };
+<<<<<<< HEAD
+=======
+        console.log("props in nav");
+        console.log(props);
+>>>>>>> 7fdeebf (second api)
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -79,7 +86,7 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
                             </div>
                             <div style={{ "width": "60%" }}>
                                 <Typography variant="h6">
-                                    Mario Rossi
+                                    {/* {this.props.data.firstName}  {this.props.data.secondName} */}
                                 </Typography>
                                 <Typography variant="button" >
                                     ID: xxxxxxx
@@ -102,14 +109,14 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
                             <ChangePalette />
                         </Box>
                         <List sx={{ p: 1 }}>
-                            <Oname />
+                            {/* <Oname data={this.props.data} />
                             <Divider />
-                            <Oage />
-                            <Osex />
+                            <Oage data={this.props.data.birthDate} />
+                            <Osex data={this.props.data.sex} />
                             <Divider />
-                            <Oadress />
-                            <Ocity />
-                            <Otelephone />
+                            <Oadress data={this.props.data.address} />
+                            <Ocity data={this.props.data.city} />
+                            <Otelephone data={this.props.data.telephone} /> */}
                             <Divider />
                             <Otax_number />
                             <Box sx={{
