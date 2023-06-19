@@ -28,7 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
+import org.isf.patientportal.security.UserDetailsServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -42,10 +42,13 @@ public class JWTFilter extends GenericFilterBean {
 
 	public static final String AUTHORIZATION_HEADER = "Authorization";
 
+	private UserDetailsServiceImpl userDetailsService;
+	
 	private final TokenProvider tokenProvider;
 
-	public JWTFilter(TokenProvider tokenProvider) {
+	public JWTFilter(TokenProvider tokenProvider, UserDetailsServiceImpl userDetailsService) {
 		this.tokenProvider = tokenProvider;
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
@@ -55,9 +58,23 @@ public class JWTFilter extends GenericFilterBean {
 		String jwt = resolveToken(httpServletRequest);
 
         if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt) && !this.tokenProvider.isTokenExpired(jwt)) {
-			Authentication authentication = this.tokenProvider.getAuthentication(jwt);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		}
+        	
+          /*String username = tokenProvider.getUsernameFromToken(jwt);
+
+          UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
+          System.out.println("Username: " + username);
+          System.out.println("User id: " + userDetails.getId());
+          UsernamePasswordAuthenticationToken authentication =
+              new UsernamePasswordAuthenticationToken(
+                  userDetails,
+                  null,
+                  userDetails.getAuthorities());
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+          */
+          Authentication authentication = this.tokenProvider.getAuthentication(jwt, userDetailsService);	
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+		}        	        
+        	        
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
@@ -68,4 +85,5 @@ public class JWTFilter extends GenericFilterBean {
 		}
 		return null;
 	}
+	
 }

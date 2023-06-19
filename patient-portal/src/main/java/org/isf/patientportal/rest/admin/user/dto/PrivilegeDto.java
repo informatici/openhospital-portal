@@ -1,6 +1,6 @@
 /*
  * Open Hospital (www.open-hospital.org)
- * Copyright © 2006-2022 Informatici Senza Frontiere (info@informaticisenzafrontiere.org)
+ * Copyright © 2006-2023 Informatici Senza Frontiere (info@informaticisenzafrontiere.org)
  *
  * Open Hospital is a free and open source software for healthcare data management.
  *
@@ -19,27 +19,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.model.user;
+package org.isf.patientportal.rest.admin.user.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Optional;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PrivilegeDto {
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.util.Streamable;
-import org.springframework.stereotype.Repository;
+    private Long id;
 
-
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-	
-	Optional<User> findById(Long id);
-	
-	
-    Optional<User> findByEmail(String email);
-
-    Optional<User> findByUsername(String username);
-	
-    Streamable<User> findAll();
-
+    private String name;
+    
 }
-

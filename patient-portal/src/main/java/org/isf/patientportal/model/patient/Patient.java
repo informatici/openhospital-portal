@@ -47,7 +47,7 @@ public class Patient {
     @OneToOne
     @NotNull
     @JoinColumn(name = "user_id")
-    private User patient;
+    private User user;
 
     @Id
     @GeneratedValue

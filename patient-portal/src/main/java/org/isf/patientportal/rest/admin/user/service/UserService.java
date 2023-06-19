@@ -19,42 +19,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.api.patient.service;
+package org.isf.patientportal.rest.admin.user.service;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.isf.patientportal.model.patient.PatientRepository;
-import org.isf.patientportal.rest.api.patient.dto.PatientDto;
+import org.isf.patientportal.model.user.UserRepository;
+import org.isf.patientportal.rest.admin.user.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("patientService")
-public class PatientService {
+
+@Service("userService")
+public class UserService {
+
+	@Autowired
+    private UserRepository userRepository;
 	
-    @Autowired
-    private final PatientRepository patientRepository;
+	
+	private final ModelMapper modelMapper = new ModelMapper();
 
-    private final ModelMapper modelMapper = new ModelMapper();
-
-    public PatientService(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Stream<PatientDto> findAll() {
-        return patientRepository.findAll()
-            .map(patient -> modelMapper.map(patient, PatientDto.class))
+    public Stream<UserDto> findAll() {
+        return userRepository.findAll()
+            .map(user -> modelMapper.map(user, UserDto.class))
             .get();
     }
 
-	public Optional<PatientDto> findById(Long id) {
-		return patientRepository.findById(id).map(patient -> modelMapper.map(patient, PatientDto.class));
+	public Optional<UserDto> findById(Long id) {
+		return userRepository.findById(id).map(user -> modelMapper.map(user, UserDto.class));
 	}
-
 	
-	public Optional<PatientDto> findByUserId(Long userId) {
-		return patientRepository.findByUserId(userId).map(patient -> modelMapper.map(patient, PatientDto.class));
-	}
+    public Optional<UserDto> findByEmail(String email) {
+    	return userRepository.findByEmail(email).map(user -> modelMapper.map(user, UserDto.class));
+    }
+
+    public Optional<UserDto> findByUsername(String username) {
+    	return userRepository.findByUsername(username).map(user -> modelMapper.map(user, UserDto.class));	
+    }
 
 }

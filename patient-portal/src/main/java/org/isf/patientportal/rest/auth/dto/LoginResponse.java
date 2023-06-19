@@ -37,8 +37,16 @@ public class LoginResponse {
     private String token;
     private String displayName;
 
-
+    private Long userId;
+    private Long patientId;
     private String username;
-
     private List<String> roles;
+    
+    public LoginResponse(String token, String displayName, String username, List<String> roles) {
+    	this.token = token;
+    	this.displayName = displayName;
+    	this.username = username;
+    	this.roles = roles;
+    }
+    
 }
