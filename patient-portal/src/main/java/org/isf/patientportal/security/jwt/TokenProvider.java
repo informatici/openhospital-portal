@@ -20,6 +20,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package org.isf.patientportal.security.jwt;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import org.isf.patientportal.security.UserDetailsImpl;
+import org.isf.patientportal.security.UserDetailsServiceImpl;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
@@ -48,7 +51,9 @@ import org.isf.patientportal.constant.JWTConstants;
 @Component
 public class TokenProvider implements Serializable, InitializingBean {
 
-    @Value("${jwt.header.string}")
+	private static final long serialVersionUID = 1L;
+
+	@Value("${jwt.header.string}")
     public static String HEADER_STRING;
 
     @Value("${jwt.token.prefix}")
@@ -69,7 +74,7 @@ public class TokenProvider implements Serializable, InitializingBean {
     }
 
     public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+    	return getClaimFromToken(token, Claims::getSubject);
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -95,6 +100,9 @@ public class TokenProvider implements Serializable, InitializingBean {
     }
 
     public String createToken(Authentication authentication, boolean rememberMe) {
+    	
+    	UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+
         final String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -108,7 +116,7 @@ public class TokenProvider implements Serializable, InitializingBean {
         }
         
         return Jwts.builder()
-                .setSubject(authentication.getName())
+                .setSubject(userPrincipal.getUsername())
                 .claim(JWTConstants.AUTHORITIES_KEY, authorities)
                 .signWith(this.key)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -132,7 +140,7 @@ public class TokenProvider implements Serializable, InitializingBean {
         return false;
     }
 
-    UsernamePasswordAuthenticationToken getAuthentication(final String token) {
+    /*UsernamePasswordAuthenticationToken getAuthentication(final String token) {
 
         final Claims claims = getAllClaimsFromToken(token);
 
@@ -144,6 +152,20 @@ public class TokenProvider implements Serializable, InitializingBean {
         User principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }*/
+    
+    UsernamePasswordAuthenticationToken getAuthentication(final String token, UserDetailsServiceImpl userDetailsService) {
+
+        final Claims claims = getAllClaimsFromToken(token);
+
+        final Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(JWTConstants.AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+        
+        return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
     }
 
 }

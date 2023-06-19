@@ -22,6 +22,9 @@
 package org.isf.patientportal.model.patient;
 
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
@@ -30,5 +33,11 @@ import org.springframework.stereotype.Repository;
 public interface PatientRepository extends CrudRepository<Patient, Long> {
 
 	Streamable<Patient> findAll();
+	
+	@Query("select p from Patient p where p.user.id = ?1")
+	Optional<Patient> findByUserId(Long userId);
+	
+	@Query("select p from Patient p where p.user.id in (select u.id from User u where u.username = ?1)")
+	Optional<Patient> findByUsername(String username);
 
 }
