@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.isf.patientportal.rest.auth.util.OHSimpleUrlAuthenticationSuccessHandler;
 import org.isf.patientportal.security.RestAuthenticationEntryPoint;
+import org.isf.patientportal.security.UserDetailsServiceImpl;
 import org.isf.patientportal.security.jwt.JWTConfigurer;
 import org.isf.patientportal.security.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandl
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -56,7 +58,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.FilterInvocation;
@@ -75,7 +76,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserDetailsServiceImpl userDetailsService;
 
 	@Autowired
 	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -109,6 +110,12 @@ public class SecurityConfig {
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	/*@Bean
+	public boolean checkUserId(Object principal, Long id) {
+		UserDetailsExt userDetailsImpl = (UserDetailsExt) principal;
+		return userDetailsImpl.getId() == id;
+	}*/
 
 	@Bean
 	public CorsFilter corsFilter() {
@@ -130,37 +137,41 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+       
 		http.sessionManagement()
-						.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-						.cors().and().csrf().disable()
-						.authorizeRequests()
-						.expressionHandler(webExpressionHandler())
-						.and()
-						.exceptionHandling()
-						// .accessDeniedHandler(accessDeniedHandler)
-						.authenticationEntryPoint(restAuthenticationEntryPoint)
-						.and()
-						.authorizeRequests()
-						.antMatchers("/api/auth/**").permitAll()
-						// .and()
-						// .formLogin()
-						// .loginPage("/api/auth/login").permitAll()
-						// .successHandler(successHandler())
-						// .failureHandler(failureHandler())
-						.and()
-						.apply(securityConfigurerAdapter())
-						.and()
-						.httpBasic()
-						.and()
-						.logout()
-						.logoutUrl("/api/auth/logout")
-						.permitAll();
-
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.cors().and().csrf().disable()
+				.authorizeRequests()
+				//.regexMatchers(HttpMethod.GET, "/api/admin/users/\\d+").access("hasAuthority('ROLE_PATIENT') and #id == principal.id")
+				//.regexMatchers(HttpMethod.GET, "/api/admin/users/{id}").access("hasRole('ROLE_PATIENT') and @webSecurity.checkUserId(authentication,#id)")
+				.expressionHandler(webExpressionHandler())
+				.and()
+				.exceptionHandling()
+				// .accessDeniedHandler(accessDeniedHandler)
+				.authenticationEntryPoint(restAuthenticationEntryPoint)
+				.and()
+				.authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll()
+				// .and()
+				// .formLogin()
+				// .loginPage("/api/auth/login").permitAll()
+				// .successHandler(successHandler())
+				// .failureHandler(failureHandler())
+				.and()
+				.apply(securityConfigurerAdapter())
+				.and()
+				.httpBasic()
+				.and()
+				.logout()
+				.logoutUrl("/api/auth/logout")
+				.permitAll();
+		
+		http.authenticationProvider(authenticationProvider());
 		return http.build();
 	}
 
 	private JWTConfigurer securityConfigurerAdapter() {
-		return new JWTConfigurer(tokenProvider);
+		return new JWTConfigurer(tokenProvider, userDetailsService);
 	}
 
 	@Bean

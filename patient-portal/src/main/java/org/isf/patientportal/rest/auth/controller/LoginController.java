@@ -22,13 +22,19 @@
 package org.isf.patientportal.rest.auth.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.isf.patientportal.rest.admin.user.dto.UserDto;
+import org.isf.patientportal.rest.admin.user.service.UserService;
+import org.isf.patientportal.rest.api.patient.dto.PatientDto;
+import org.isf.patientportal.rest.api.patient.service.PatientService;
 import org.isf.patientportal.rest.auth.dto.LoginRequest;
 import org.isf.patientportal.rest.auth.dto.LoginResponse;
 import org.isf.patientportal.rest.auth.dto.MessageResponse;
+import org.isf.patientportal.security.UserDetailsImpl;
 import org.isf.patientportal.security.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,7 +48,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import io.swagger.annotations.Api;
@@ -67,6 +72,12 @@ public class LoginController {
 
 	@Autowired
 	TokenProvider tokenProvider;
+	
+	@Autowired
+	PatientService patientService;
+	
+	@Autowired
+	UserService userService;
 
 	
 	@ApiOperation(value = "Login", notes = "Login with the given credentials.",
@@ -83,22 +94,30 @@ public class LoginController {
     @ApiModelProperty
 	public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
 		
-		System.out.println(loginRequest.getUsername());
-		System.out.println(loginRequest.getPassword());
-		
 		Authentication authentication = authenticationManager
 						.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String token = tokenProvider.createToken(authentication, true); 
+		String token = tokenProvider.createToken(authentication, true);
 		
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 	
 		List<String> roles = userDetails.getAuthorities().stream()
 						.map(item -> item.getAuthority())
 						.collect(Collectors.toList());
+		
+		LoginResponse loginResponse = new LoginResponse(token, authentication.getName(), userDetails.getUsername(), roles);
+		
+		Optional<UserDto> user = userService.findByUsername(userDetails.getUsername());
+		if(user.isPresent()) {
+			loginResponse.setUserId(user.get().getId());
+			
+			Optional<PatientDto> patient = patientService.findByUserId(user.get().getId());
+			if(patient.isPresent())
+				loginResponse.setPatientId(patient.get().getId());
+		}
 
-		return ResponseEntity.ok().body(new LoginResponse(token, authentication.getName(), userDetails.getUsername(), roles));
+		return ResponseEntity.ok().body(loginResponse);
     }
 	
 	

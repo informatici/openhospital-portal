@@ -31,6 +31,8 @@ import java.time.LocalDate;
 public class PatientDto {
 
 	private Long id;
+	
+	private Long userId;
 
 	private String firstName;
 
