@@ -37,8 +37,7 @@ function DoctorHome() {
       DeafutlAllData.getPatients().then((res) => {
         console.log("response getPatients");
         console.log(res);
-<<<<<<< HEAD
-=======
+
         setData(res);
         DeafutlAllData.getHospitalevents().then((res) => {
           console.log("response getHospitalevents");
@@ -48,16 +47,13 @@ function DoctorHome() {
           console.log("response getPatientrecords");
           console.log(res);
         });
->>>>>>> 7fdeebf (second api)
+
       });
     });
   }, []);
 
-<<<<<<< HEAD
-  let data_json: any = ListDoctorPatients[0]['doctor111aaa'];
-=======
+
   let data_json: any = data;
->>>>>>> 7fdeebf (second api)
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   console.log(matches);
@@ -91,16 +87,6 @@ function DoctorHome() {
             </Box>
             <Grid container spacing={2}>
               <Grid item xs={12} md={3}>
-<<<<<<< HEAD
-                {data_json.patient.map((button: any) => (
-                  <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
-                    <CardContent>
-                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Id: {button.id_patient}
-                      </Typography>
-                      <Typography variant="h5" component="div">
-                        {button.surname_patient} {button.name_patient}
-=======
                 {data_json.map((button: any) => (
                   <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
                     <CardContent>
@@ -109,7 +95,7 @@ function DoctorHome() {
                       </Typography>
                       <Typography variant="h5" component="div">
                         {button.firstName} {button.secondName}
->>>>>>> 7fdeebf (second api)
+
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -117,11 +103,9 @@ function DoctorHome() {
                         pathname: '/DoctorjReqAuth',
 
                       }}
-<<<<<<< HEAD
-                        state={"768445"}
-=======
+
                         state={button.id}
->>>>>>> 7fdeebf (second api)
+
                         fullWidth
                         color="primary"
                         aria-label="insert"
@@ -153,16 +137,7 @@ function DoctorHome() {
 
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
-<<<<<<< HEAD
-                {data_json.patient.map((button: any) => (
-                  <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
-                    <CardContent>
-                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Id: {button.id_patient}
-                      </Typography>
-                      <Typography variant="h5" component="div">
-                        {button.surname_patient} {button.name_patient}
-=======
+
                 {data_json.map((button: any) => (
                   <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
                     <CardContent>
@@ -171,18 +146,15 @@ function DoctorHome() {
                       </Typography>
                       <Typography variant="h5" component="div">
                       {button.firstName} {button.secondName}
->>>>>>> 7fdeebf (second api)
+
                       </Typography>
                     </CardContent>
                     <CardActions>
                       <Button variant="outlined" component={Link} to={{
                         pathname: '/DoctorjReqAuth',
                       }}
-<<<<<<< HEAD
-                        state={"768445"}
-=======
+
                         state={button.id}
->>>>>>> 7fdeebf (second api)
                         fullWidth
                         color="primary"
                         aria-label="insert"

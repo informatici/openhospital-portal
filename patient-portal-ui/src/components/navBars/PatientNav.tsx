@@ -22,30 +22,28 @@ import Otax_number from "../utility/user/output_data/Otax_number";
 import Logout from "../common/buttons/Logout";
 import ChangePalette from "../common/buttons/ChangePalette";
 
-
-
-interface PatientNavProps {
-    page?: string;
+interface Items {
+    firstName?: string;
+    secondName?: string;
+    birthDate?: string;
+    sex?: string;
+    address?: string;
+    city?: string;
+    telephone?: string;
 }
-
-interface PatientNavState {
-    setThemeUser?: string;
-    main?: boolean
+interface IPatientProps {
+    data_r?: Items;
 }
-
-class PatientNav extends Component<PatientNavProps, PatientNavState> {
+class PatientNav extends Component<any> {
     wrapperRef: any;
-    constructor(props: any | Readonly<{}>) {
+    constructor(props: Items) {
         super(props);
         this.state = { main: true };
         this.state = {
-            setThemeUser: 'theme1'
+            setThemeUser: 'theme1',
         };
-<<<<<<< HEAD
-=======
         console.log("props in nav");
         console.log(props);
->>>>>>> 7fdeebf (second api)
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -86,10 +84,11 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
                             </div>
                             <div style={{ "width": "60%" }}>
                                 <Typography variant="h6">
-                                    {/* {this.props.data.firstName}  {this.props.data.secondName} */}
+
+                                    {this.props.firstName} {this.props.secondName}
                                 </Typography>
                                 <Typography variant="button" >
-                                    ID: xxxxxxx
+                                    ID:   {this.props.id}
                                 </Typography>
                             </div>
                             <div style={{ "width": "10%", margin: "2%" }} >
@@ -109,16 +108,16 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
                             <ChangePalette />
                         </Box>
                         <List sx={{ p: 1 }}>
-                            {/* <Oname data={this.props.data} />
+                            <Oname firstName={this.props.firstName} secondName={this.props.secondName} />
                             <Divider />
-                            <Oage data={this.props.data.birthDate} />
-                            <Osex data={this.props.data.sex} />
+                            <Oage data={this.props.birthDate} />
+                            <Osex data={this.props.sex} />
                             <Divider />
-                            <Oadress data={this.props.data.address} />
-                            <Ocity data={this.props.data.city} />
-                            <Otelephone data={this.props.data.telephone} /> */}
+                            <Oadress data={this.props.address} />
+                            <Ocity data={this.props.city} />
+                            <Otelephone data={this.props.telephone} />
                             <Divider />
-                            <Otax_number />
+                            {/* <Otax_number /> */}
                             <Box sx={{
 
                                 display: 'flex',
@@ -130,8 +129,6 @@ class PatientNav extends Component<PatientNavProps, PatientNavState> {
                                 <Logout />
                             </Box>
                         </List>
-
-
                     </Box>
                 </AccordionDetails>
             </Accordion >

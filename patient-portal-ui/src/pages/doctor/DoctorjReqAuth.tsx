@@ -39,7 +39,7 @@ function DoctorjReqAuth(data: { idUser: any; }) {
       <DoctorSmartNav />
       <IReqAut
 
-        parentToChild={data}
+        // parentToChild={data}
       />
     </Container>
   );

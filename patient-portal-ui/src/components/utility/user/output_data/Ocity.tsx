@@ -2,7 +2,7 @@ import React from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function Ocity(city) {
+export default function Ocity(city: any) {
     return (
         <div>
             <Box>

@@ -2,9 +2,7 @@ import React from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function Osex(sex) {
-   console.log("sex");
-   console.log(sex);
+export default function Osex(sex: any) {
    return (
       <div >
          <Box>

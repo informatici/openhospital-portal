@@ -6,8 +6,16 @@ import Grid from '@mui/material/Grid';
 
 
 
-function PatientPaymentDetails(props: { setType: { date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }; }) {
-
+function PatientPaymentDetails(props: {
+  setType: {
+    date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    value: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+  };
+}) {
   console.log("--- props --- PatientPaymentDetails");
   console.log(props);
   return (
@@ -52,7 +60,7 @@ function PatientPaymentDetails(props: { setType: { date: boolean | React.ReactCh
             Category
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.setType.category}
+          {props.setType.value}
           </Typography>
         </Grid>
         <Grid xs={12}>

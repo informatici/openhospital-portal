@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Container } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -10,80 +10,38 @@ import { Link } from "react-router-dom";
 import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
 
 import Agenda from '../../datajs/Agenda'
+import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
+import { DeafutlAllData } from '../../datajs/DeafutlAllData'
 
-const Root = styled('div')(({ theme }) => ({
-  width: '100%',
-  ...theme.typography.body2,
-  '& > :not(style) + :not(style)': {
-    marginTop: theme.spacing(2),
-  },
-}));
-let data_json=Agenda;
-let arrDateTime = [];
-let arrDate = [];
-let arrDateYear = [];
-let arrDateMonth = [];
-let arrDateDay = [];
-let data_values = data_json[0]["xy1457uuu"];
-const arrKeys = Object.keys(data_values);
-// --- get all Date Time from Object
-arrKeys.forEach(element => {
-  data_values[element].map((d, i) => (
-    arrDateTime.push(d.date_time),
-    arrDate.push(d.date_time.substring(0, 10)),
-    arrDateYear.push(d.date_time.substring(0, 4)),
-    arrDateMonth.push(d.date_time.substring(5, 7)),
-    arrDateDay.push(d.date_time.substring(8, 10))
-  ));
-});
-// --- remove duplicate
-arrDateTime = arrDateTime.filter((x, i) => arrDateTime.indexOf(x) === i);
-arrDate = arrDate.filter((x, i) => arrDate.indexOf(x) === i);
-arrDateYear = arrDateYear.filter((x, i) => arrDateYear.indexOf(x) === i);
-arrDateMonth = arrDateMonth.filter((x, i) => arrDateMonth.indexOf(x) === i);
-arrDateDay = arrDateDay.filter((x, i) => arrDateDay.indexOf(x) === i);
-// --- sorting
-let arrDateTimeSorted = arrDateTime.sort();
-let arrDateSorted = arrDate.sort();
-let arrDateYearSorted = arrDateYear.sort();
-let arrDateMonthSorted = arrDateMonth.sort();
-let arrDateDaySorted = arrDateDay.sort();
-// arrDateSorted= arrDateSorted.reverse();
-// console.log(arrDateTimeSorted);
-// console.log(arrDateYearSorted);-----
-// const myObject = sortedAsc(values[0]["xy1457uuu"].filter(e => e.hasOwnProperty(date_time)));
-var date_obj = arrDateTime.reduce((acc, elem) => {
-  const [year, month, day, hour] = [new Date(elem).getFullYear(), new Date(elem).getMonth() + 1, new Date(elem).getDate(), new Date(elem).getHours()];
-  acc[year] = acc[year] || {};
-  acc[year][month] = [...(acc[year][month] || []), day];
-  return acc;
-}, {});
-console.log(date_obj);
+var date_obj = [];
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-const d = new Date();
-const getDateLab = (date_to_c) => {
-  const t = new Date(date_to_c);
-  let y = t.getFullYear();
-  let m = t.getMonth() + 1; // Months start at 0!
-  let d = t.getDate();
-  if (d < 10) d = '0' + d;
-  if (m < 10) m = '0' + m;
-  let res = d + m + y;
-  return res;
-};
-const getTimeLab = (date_to_c) => {
-  let res = new Date(date_to_c);
-  res = res.getHours() + ':' + res.getMinutes();
-  return res;
-};
-function getDayName(dateStr, locale) {
-  var date = new Date(dateStr);
-  return date.toLocaleDateString(locale, { weekday: 'long' });
-}
 const PatientAgenda = ({ setAuth }) => {
-  // console.log(loopData);
+  const [dataa, setData] = useState([]);
+  const [loadComponent, setLoadComponent] = useState(0);
+  useEffect(() => {
+    let id_patient = localStorage.getItem("IdPatient");
+    DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((res) => {
+      res = res.sort((a, b) => (a.date > b.date ? 1 : -1)); // --- sort by date
+      // --- get all Date Time from Object
+      let arrDateTimeAll = [];
+      res.forEach(element => {
+        let dateToInsert = element.date.split(" ");;
+        arrDateTimeAll.push(dateToInsert[0])
+
+      });
+      arrDateTimeAll = [...new Set(arrDateTimeAll)];
+      date_obj = arrDateTimeAll.reduce((acc, elem) => {
+        const [year, month, day, hour] = [new Date(elem).getFullYear(), new Date(elem).getMonth() + 1, new Date(elem).getDate(), new Date(elem).getHours()];
+        acc[year] = acc[year] || {};
+        acc[year][month] = [...(acc[year][month] || []), day];
+        return acc;
+      }, {});
+      setData(res);
+      setLoadComponent(1);
+    });
+  }, []);
   return (
     <Container
       maxWidth="lg"
@@ -95,103 +53,76 @@ const PatientAgenda = ({ setAuth }) => {
       }}
     >
       <PatientSmartNav page={'PatientAgenda'} />
-      <div style={{ width: '100%' }}>
-        {Object.keys(date_obj).map((ky, iy) => (
-          <div key={iy}>
-            <Divider textAlign="left" sx={{
-              fontWeight: 'bold',
-              fontSize: "1.4em"
-            }}>{ky}</Divider>
-            {Object.keys(date_obj[ky]).map((km, im) => (
-              <div km={im}>
-                <Divider textAlign="left" sx={{
-                }}><Typography variant="h5" component="h2" display="inline" sx={{ width: 0.6 }}>{monthNames[km - 1]}</Typography></Divider>
-                {date_obj[ky][km].map((kd, id) => (
-                  <Card sx={{ mt: 1, width: 1 }}>
-                    <CardContent>
-                      <div kd={id}>
-                        {getDayName(ky + "/" + km + "/" + kd, "en-EN")}<br></br>
-                        <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{kd}</Typography>
-                        {kd != 0 ? (
-                          <>
-                            {data_values.payment.map((data, idx) => (
-                              getDateLab(data.date_time) == getDateLab(ky + "/" + km + "/" + kd) ? (
-                                <Button component={Link} to="/PatientPaymentDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
-                                  <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date_time)}</Typography>
-                                  <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.category} </Typography>
-                                </Button>
-                              ) : (
-                                null
-                              )
-                            ))}
-                            {data_values.visit.map((data, idx) => (
-                              getDateLab(data.date_time) == getDateLab(ky + "/" + km + "/" + kd) ? (
-                                // data.date_time == data.date_time ? (
-                                <Button component={Link} to="/PatientVisitDetails" sx={{ width: 1, mt: 1, color: "blue" }} variant="outlined" color="primary">
-                                  <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date_time)}</Typography>
-                                  <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.category} </Typography>
-                                </Button>
-                              ) : (
-                                null
-                              )
-                            ))}
+      {loadComponent ? <>
+        <div style={{ width: '100%' }}>
+          {Object.keys(date_obj).map((ky, iy) => (
+            <div key={iy}>
+              <Divider textAlign="left" sx={{
+                fontWeight: 'bold',
+                fontSize: "1.4em"
+              }}>{ky}</Divider>
+              {Object.keys(date_obj[ky]).map((km, im) => (
+                <div km={im}>
+                  <Divider textAlign="left" sx={{
+                  }}><Typography variant="h5" component="h2" display="inline" sx={{ width: 0.6 }}>{monthNames[km - 1]}</Typography></Divider>
+                  {date_obj[ky][km].map((kd, id) => (
+                    <Card sx={{ mt: 1, width: 1 }}>
+                      <CardContent>
+                        <div kd={id}>
+                          {getDayName(ky + "/" + km + "/" + kd, "en-EN")}<br></br>
+                          <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{kd}</Typography>
+                          {kd != 0 ? (
+                            <>
+                              {dataa.map((data, idx) => (
 
-                            {data_values.recovery.map((data, idx) => (
-                              getDateLab(data.date_time) == getDateLab(ky + "/" + km + "/" + kd) ? (
-                                // data.date_time == data.date_time ? (
-                                <Button component={Link} to="/PatientHospitalizationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
-                                  <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date_time)}</Typography>
-                                  <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.category} </Typography>
-                                </Button>
-                              ) : (
-                                null
-                              )
-                            ))}
-                            {data_values.therapie.map((data, idx) => (
-                              getDateLab(data.date_time) == getDateLab(ky + "/" + km + "/" + kd) ? (
-                                // data.date_time == data.date_time ? (
-                                <Button component={Link} to="/PatientTherapieDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
-                                  <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date_time)}</Typography>
-                                  <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.category} </Typography>
-                                </Button>
-                              ) : (
-                                null
-                              )
-                            ))}
-                            {data_values.vaccination.map((data, idx) => (
-                              getDateLab(data.date_time) == getDateLab(ky + "/" + km + "/" + kd) ? (
-                                // data.date_time == data.date_time ? (
-                                <Button component={Link} to="/PatientVaccinationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
-                                  <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date_time)}</Typography>
-                                  <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.category} </Typography>
-                                </Button>
-                              ) : (
-                                null
-                              )
-                            ))}
-                          </>
-                        ) : (
-                          null
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+                                getDateLab(data.date) == getDateLab(ky + "/" + km + "/" + kd) ? (
+
+                                  data.eventType.code == "E" ? (
+                                    <Button key={data.id} component={Link} state={data} to="/PatientExamDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
+                                      <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
+                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                    </Button>
+                                  ) : data.eventType.code == "O" ? (
+                                    <Button key={data.id} component={Link} state={data} to="/PatientVisitDetails" sx={{ width: 1, mt: 1, color: "blue" }} variant="outlined" color="primary">
+                                      <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
+                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                    </Button>
+                                  ) : data.eventType.code == "A" ? (
+                                    <Button key={data.id} component={Link} state={data} to="/PatientHospitalizationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
+                                      <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
+                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                    </Button>
+                                  ) : data.eventType.code == "T" ? (
+                                    <Button key={data.id} component={Link} state={data} to="/PatientTherapieDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
+                                      <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
+                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                    </Button>
+                                  ) : data.eventType.code == "V" ? (
+                                    <Button key={data.id} component={Link} state={data} to="/PatientVaccinationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
+                                      <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
+                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                    </Button>
+                                  ) : null
+                                ) : (
+                                  null
+                                )
+                              ))}
+
+                            </>
+                          ) : (
+                            null
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </> : null}
     </Container>
   );
 };
 export default PatientAgenda;
-function sortedAsc(obj) {
-  let sortedAsc = obj.sort(function (a, b) {
-    var c = new Date(a.date_time);
-    var d = new Date(b.date_time);
-    if (c > d) return -1;
-    if (c < d) return 1;
-  });
-  return sortedAsc;
-}

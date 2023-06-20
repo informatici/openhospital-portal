@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
+import { DeafutlAllData } from '../datajs/DeafutlAllData'
 
 import {
   Box,
@@ -28,12 +29,51 @@ const animate = {
   },
 };
 
-const LoginForm = ({ setAuth, setProfile }) => {
+const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
+  const [dataUP, setDataUP] = useState([]);
+  const [loadComponent, setLoadComponent] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [data, setData] = useState()
+
+  // useEffect(() => {
+
+  //   console.log("dataUP");
+  //   console.log(dataUP);
+  //   DeafutlAllData.getToken().then((res) => {
+  //     console.log("response getToken");
+  //     console.log(res);
+  //     localStorage.setItem("Token", res)
+
+  //     // DeafutlAllData.getPatientrecords_patient().then((res) => {
+  //     //   console.log("response getPatients");
+  //     //   console.log(res);
+  //     //   setData(res);
+  //     //   setLoadComponent(1);
+  //     // });
+  //     DeafutlAllData.getPatientsById(11).then((res) => {
+  //       console.log("-----response getPatientsById");
+  //       console.log(res);
+  //       setData(res);
+  //       setLoadComponent(1);
+  //     });
+
+  //   });
+  //   // --- end gestione profilo TODO ---
+  //   setTimeout(() => {
+  //     console.log("submited!!");
+  //     console.log(from);
+  //     setAuth(true);
+  //     setProfile(amb);
+  //     navigate(from, { replace: true });
+  //   }, 5000);
+
+  // }, []);
+
+
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -55,16 +95,55 @@ const LoginForm = ({ setAuth, setProfile }) => {
       console.log(values.email);
       if (values.email == "a@a.com") {
         amb = "Admin";
+
       } else if (values.email == "as@a.com") {
         amb = "Administration";
+
       } else if (values.email == "d@a.com") {
         amb = "Doctor";
+
       } else if (values.email == "p@a.com") {
         amb = "Patient";
+
       } else {
-        amb = "Patient";
+        console.log("Login Utente");
+        const data = [
+          {
+            username: values.email,
+            password: values.password,
+          },
+        ];
+        DeafutlAllData.postLogin(values.email, values.password).then((res) => {
+          console.log("response getToken ------------");
+          console.log(res);
+          localStorage.setItem("Token", res);
+          console.log(res.roles);
+          if (res.roles[0] == "ROLE_PATIENT") {
+            setProfile(amb);
+          }
+          // --- TO DO recupero user id e chiamata per recupero patient id
+          // let id_user = "";
+          // if (values.email == "hospital.admin@ermail.com") {
+          //   id_user = 2;
+          //   DeafutlAllData.postLogin(values.email, values.password).then((res) => {
+          //     localStorage.setItem("IdPatient", );
+          //   });
+           
+          // }
+          // if (values.email == "doctor@email.com") { localStorage.setItem("IdPatient", 3); }
+          if (values.email == "justin.frederick@email.com") { localStorage.setItem("IdPatient", 1); }
+          if (values.email == "anthon.geremy@email.com") { localStorage.setItem("IdPatient", 2); }
+          if (values.email == "veronique.fountain@email.com") { localStorage.setItem("IdPatient", 3); }
+          if (values.email == "cypher.marica@email.com") { localStorage.setItem("IdPatient", 4); }
+          if (values.email == "serena.levinson@email.com") { localStorage.setItem("IdPatient", 5); }
+          if (values.email == "bardsley.zenaida@email.com") { localStorage.setItem("IdPatient", 6); }
+          if (values.email == "graney.almedan@email.com") { localStorage.setItem("IdPatient", 7); }
+          if (values.email == "ackman.sammy@email.com") { localStorage.setItem("IdPatient", 8); }
+          if (values.email == "pohlman.margot@email.com") { localStorage.setItem("IdPatient", 9); }
+          if (values.email == "jeana.bennett@email.com") { localStorage.setItem("IdPatient", 10); }
+          if (values.email == "abramo.oliver@email.com") { localStorage.setItem("IdPatient", 11); }
+        });
       }
-      // --- end gestione profilo TODO ---
       setTimeout(() => {
         console.log("submited!!");
         console.log(from);
@@ -138,7 +217,7 @@ const LoginForm = ({ setAuth, setProfile }) => {
           </Box>
 
           <Box
-           sx={{ mt: 1 }}
+            sx={{ mt: 1 }}
             component={motion.div}
             initial={{ opacity: 0, y: 20 }}
             animate={animate}

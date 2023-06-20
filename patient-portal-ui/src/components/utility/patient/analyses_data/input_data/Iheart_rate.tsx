@@ -1,108 +1,128 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { InputAdornment } from "@mui/material";
+import dayjs from 'dayjs'
+
+import Idate_time from "../../../../../components/utility/common/input_data/Idate_time";
+import { capitalizeOnlyFirstLetter } from '../../../../../utils/ManageDate';
+
 interface Iheart_rateProps {
-    dataSelected?: string;
-    dataDef?: any[];
+  code?: string;
+  defaultOptionValue?: string | null;
+  defaultValue1?: number;
+  defaultValue2?: number;
+  id?: number;
+  maxValue: number | string;
+  measurementType: string;
+  measurementValueType?: string;
+  minValue: number | string;
+  uom?: string;
+  date?: string;
+  hour?: string;
+  date_complete: string;
 }
-
-interface Iheart_rateState {
-    io_vis?: string;
-    getvalue?: string;
-    disAddIcon?: boolean;
-
+interface $d {
+  $d?: string;
 }
+export default function Iheart_rate(props: {
+  dataDef: Iheart_rateProps;
+}) {
+  const [data, setData] = React.useState<string | number | Date>(Date.now());
+  const [dataDate, setDataDate] = React.useState<string | number | Date>(Date.now());
+  const [newDateTime, setNewDateTime] = React.useState<number | string | Date | null | { $d: string } | any>("");
+  const [dataError, setDataError] = useState(false);
+  const [dataErrorMessage, setDataErrorMessage] = useState("");
 
-class Iheart_rate extends Component<Iheart_rateProps, Iheart_rateState> {
-    constructor(props: any | Readonly<{}>) {
-        super(props)
-        // Set initial state
-        if (props.dataSelected) {
-            this.state = { io_vis: "output", getvalue: props.dataSelected, disAddIcon: false }
-        } else {
-            this.state = { io_vis: "input", getvalue: "", disAddIcon: true }
-        }
-        this.ioDataOut = this.ioDataOut.bind(this);
-        this.ioDataIn = this.ioDataIn.bind(this);
-        this.ioDataDel = this.ioDataDel.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+  let rif = props.dataDef;
+  let now = Date.now();
+  let date_rif: Date | string | number = Date.now();
+
+  useEffect(() => {
+    if (rif.date_complete) {
+      // --- TODO 
+      let arr_1 = rif.date_complete.split(" ");
+      let arr_2 = arr_1[0].split("-");
+      let date: string | number | Date = arr_2[0] + "-" + arr_2[1] + "-" + arr_2[2] + "T" + arr_1[1];
+      date = new Date(date);
+      date_rif = date;
+      setDataDate(date);
+    } else {
+      // console.log(now);
+      setDataDate(now);
+    }
+  });
+  const handleSubmit = (event: {
+    [x: string]: any; preventDefault: () => void;
+  }) => {
+    event.preventDefault();
+    let dateValue = date_rif;
+    let inputValue = event.target.heart_rate.value;
+    if (inputValue == null) {
+      setDataError(true);
+      setDataErrorMessage("Il valore non può essere vuoto")
+    } else if (inputValue <= rif.minValue) {
+      setDataError(true);
+      setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
+    }
+    else if (inputValue >= rif.maxValue) {
+      setDataError(true);
+      setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
+    } else {
+      setDataError(false);
+      setDataErrorMessage("");
+
+      if (newDateTime) {
+        console.log(newDateTime);
+        dateValue = newDateTime?.$d.toISOString()
+      }
+      console.log(dateValue);
+      console.log(inputValue);
+      // --- TODO insert/update and changePage
 
     }
-    ioDataOut() {
-        this.setState({ io_vis: "input" });
+    // alert("Form Submitted");
+  }
 
-    }
-    ioDataIn() {
-        this.setState({ io_vis: "output" });
-    }
-    ioDataDel() {
-        this.setState({ getvalue: "" });
-        this.setState({ io_vis: "input", disAddIcon: true });
-    }
-    handleChange(e: { target: { name: any; value: any; }; }) {
-        let { name, value } = e.target;
-        this.setState({ getvalue: value });
-        if (value == '') {
-            this.setState({ disAddIcon: true });
-        } else {
-            this.setState({ disAddIcon: false });
-        }
-        this.setState({ io_vis: "output" });
-    }
-    render() {
-        console.log(this.props);
-        if (this.state.io_vis == "input") {
-            return (
-                <Box sx={{ width: 1, mt: 1.5 }}>
-                    <TextField
-                        label="Heart rate"
-                        id="Iheart_rate"
-                        value={this.state.getvalue}
-                        select
-                        name="heart_rate"
-                        onChange={this.handleChange}
-                        defaultValue=""
-                        sx={{ width: 1 }}
-                        helperText=""
-                    >
-                        {this.props.dataDef?.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Box>
-            );
-        }
-        if (this.state.io_vis == "output") {
-            return (
-                <Box sx={{ width: 1, mt: 1.5 }}
-                    component="span"
-                    display="flex"
-                    justifyContent="space-between"
-                // alignItems="center"
-                >
-                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Heart rate: </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalue}</Typography>
-                    <Typography variant="body1" align="right" display="inline" sx={{}}>
-                        <IconButton onClick={this.ioDataOut} sx={{}} color="primary" aria-label="insert" size="large">
-                            <EditIcon fontSize="inherit" />
-                        </IconButton>
-                    </Typography>
-                    <Typography variant="body1" align="right" display="inline" sx={{}}>
-                        <IconButton onClick={this.ioDataDel} sx={{}} color="primary" aria-label="insert" size="large">
-                            <DeleteIcon fontSize="inherit" />
-                        </IconButton>
-                    </Typography>
-                </Box>
-            )
-        }
-    }
-}
-export default Iheart_rate;
+  return (
+    <>
+      <form onSubmit={handleSubmit} id='my-form'>
+        <Box sx={{ width: 1, mt: 1.5 }}>
+          <TextField
+            type="number"
+            onChange={e => setData(e.target.value)}
+            required
+            name="heart_rate"
+            label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            id="outlined-start-adornment"
+            sx={{ width: 1 }}
+            InputProps={{
+              startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
+            }}
+            error={dataError}
+            helperText={dataErrorMessage}
+            defaultValue={rif.defaultValue1} />
+        </Box>
+        <Box sx={{ width: 1, mt: 1.5 }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker']}>
+              <MobileDateTimePicker
+                onChange={(newValue) => {
+                  setNewDateTime(newValue);
+                }} sx={{ width: 1 }} defaultValue={dayjs(dataDate)} />
+            </DemoContainer>
+          </LocalizationProvider>
+        </Box>
+        {/* {rif.date && rif.hour ?
+          <Idate_time dateSelected={rif.date + " " + rif.hour} />
+          :
+          <Idate_time />
+        } */}
+      </form>
+    </>
+  );
+};

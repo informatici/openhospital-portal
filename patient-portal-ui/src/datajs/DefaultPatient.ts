@@ -20,7 +20,7 @@ const DefaultPatient = [
           id: 3,
           label: "Ads/Deadliness",
           to: '/PatientAdsDeadlines',
-          locked: false,
+          locked: true,
           order: 3,
         },
         {
@@ -41,7 +41,7 @@ const DefaultPatient = [
           id: 6,
           label: "Payments",
           to: '/PatientPayments',
-          locked: false,
+          locked: true,
           order: 6,
         },
         {
@@ -76,13 +76,13 @@ const DefaultPatient = [
           locked: false,
           order: 2,
         },
-        {
-          id: 3,
-          label: "Ads/Deadliness",
-          to: '/PatientAdsDeadlines',
-          locked: false,
-          order: 3,
-        },
+        // {
+        //   id: 3,
+        //   label: "Ads/Deadliness",
+        //   to: '/PatientAdsDeadlines',
+        //   locked: true,
+        //   order: 3,
+        // },
         {
           id: 4,
           label: "Exams",
@@ -97,13 +97,13 @@ const DefaultPatient = [
           locked: false,
           order: 5,
         },
-        {
-          id: 6,
-          label: "Payments",
-          to: '/PatientPayments',
-          locked: false,
-          order: 6,
-        },
+        // {
+        //   id: 6,
+        //   label: "Payments",
+        //   to: '/PatientPayments s',
+        //   locked: true,
+        //   order: 6,
+        // },
         {
           id: 7,
           label: "Therapies",

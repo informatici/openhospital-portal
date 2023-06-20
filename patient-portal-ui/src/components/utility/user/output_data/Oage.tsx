@@ -2,11 +2,13 @@ import React from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function Oage(age) {
-   console.log(age);
-   let ageR=getAge(age.data);
-   let ageB = age.data.slice(-5);
-   console.log(ageR);
+export default function Oage(age: any) {
+   let ageR: string | number = "...";
+   let ageB: string | number = "...";
+   if (age.data != undefined) {
+      ageR = getAge(age.data);
+      ageB = age.data.slice(-5);
+   }
    return (
       <div>
          <Box>

@@ -6,11 +6,30 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Misure from '../../datajs/Misure'
 
+import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
 import { DeafutlAllData } from '../../datajs/DeafutlAllData'
 
 let btFilters: string[] = [];
 const values = Misure;
-
+interface Items {
+  id?: string;
+  id_measure?: string;
+  date_complete?: string;
+  date?: string;
+  hour?: string;
+  value?: string;
+  misure?: string;
+  type?: string;
+  code?: string;
+  defaultOptionValue?: string | null;
+  defaultValue1?: number;
+  defaultValue2?: number;
+  maxValue: number | string;
+  measurementType?: string;
+  measurementValueType?: string;
+  minValue: number | string;
+  uom?: string;
+}
 const columns = [
   { field: 'id', headerName: 'ID', width: 0, hide: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
@@ -19,85 +38,57 @@ const columns = [
   { field: 'value', headerName: 'Value', width: 70 },
   { field: 'misure', headerName: 'Misure', width: 180 },
   { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'type', headerName: 'Type', width: 180 },
 ];
 
-const getTimeLab = (date_to_c: string | number | Date) => {
-  let res: string | number | Date = new Date(date_to_c);
-  res = res.getHours() + ':' + res.getMinutes();
-  return res;
-};
-const getDateLab = (date_to_c: string | number | Date) => {
-  const t = new Date(date_to_c);
-  let y: string | number | Date = t.getFullYear();
-  let m: string | number | Date = t.getMonth() + 1; // Months start at 0!
-  let d: string | number | Date = t.getDate();
-  if (d < 10) d = '0' + d;
-  if (m < 10) m = '0' + m;
-  let res = d + '/' + m + '/' + y;
-  return res;
-};
-function compare(a: { date_complete: number; }, b: { date_complete: number; }) {
-  if (a.date_complete < b.date_complete) {
-    return -1;
-  }
-  if (a.date_complete > b.date_complete) {
-    return 1;
-  }
-  return 0;
-}
 const PatientMeasurements = () => {
-  const [data, setData] = useState([]);
-
+  let rows: Items[] = [];
+  const [rowdata, setRowdata] = useState(rows);
   const [type, setType] = React.useState(null);
   const [loadComponent, setLoadComponent] = useState(0);
+
   useEffect(() => {
-    DeafutlAllData.getToken().then((res) => {
-      console.log("response getToken");
-      console.log(res);
-      localStorage.setItem("Token", res)
-      let id_patient = 10;
-      DeafutlAllData.getPatientrecordsAllMeasurementById(id_patient).then((res) => {
-        console.log("response getPatientrecordsAllMeasurementById");
-        console.log(res);
-        setData(res);
-        setLoadComponent(1);
+    let id_patient = 1;
+    // let arr_v = ["AUSCULTATION", "BLOOD_PRESSURE", "BOWEL", "DIURESIS", "DIURESIS_VOL", "HEIGHT", "HGT", "HR", "RR", "SATURATION", "TEMPERATURE", "WEIGHT"];
+    let arr_v = ["WEIGHT"];
+    let arr_f: any[] = [];
+    let type_mis = "WEIGHT"
+    DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
+      // console.log("--------------------------response getPatientrecordsAllMeasurementById");
+      // console.log(res);
+      res.forEach(function (k: any) {
+        // console.log(k.id);
+        rows.push({
+          id: k.id,
+          id_measure: k.recordType.measurementType,
+          date_complete: k.recordDate,
+          date: getDateLab(k.recordDate),
+          hour: getTimeLab(k.recordDate),
+          value: k.value1,
+          misure: k.recordType.misure,
+          type: k.recordType.measurementType.toLowerCase(),
+          code: k.recordType.code,
+          defaultOptionValue: k.recordType.defaultOptionValue,
+          defaultValue1: k.value1,// ---set the Default Value
+          defaultValue2: k.recordType.defaultValue2,
+          maxValue: k.recordType.maxValue,
+          measurementType: k.recordType.measurementType,
+          measurementValueType: k.recordType.measurementValueType,
+          minValue: k.recordType.minValue,
+          uom: k.recordType.uom,
+        });
       });
+      setRowdata(rows);
+      setLoadComponent(1);
     });
-  }, []);
 
 
-  let data_values: any = data;
-  console.log(data_values);
-  // Object.keys(data_values).forEach(function (key) {
-  //   console.log(key);
-  //   // let keyBt: any = data_values.recordType; 
-  //   // data_values.recordType.forEach(function (k: { measurementType: any; }) {
-  //   //   if (!btFilters.includes(k.measurementType)) {
-  //   //     btFilters.push(k.measurementType);
-  //   //   }
-  //   // });
-  //   // rows.push([data_values[key].map((e: any, i: number) => ({ id: "", id_measure: e.uom, date_complete: e.uom, date: e.uom, hour: e.uom, value: e.uom, misure: (key), type: e.uom }))])
-  // });
-  let rows: any[] = [];
-  Object.keys(data_values).forEach(function (key, i) {
-    console.log(data_values.recordType.measurementType);
-    if (!btFilters.includes(data_values.recordType.measurementType)) {
-      btFilters.push(data_values.recordType.measurementType);
-    }
-    console.log(data_values.value1);
-    rows.push({
-      id: i,
-      id_measure: data_values.value1,
-      date_complete: data_values.value1,
-      date: getDateLab(data_values.recordDate),
-      hour: getTimeLab(data_values.recordDate),
-      value: data_values.value1,
-      misure: data_values.value1,
-      type: data_values.value1
-    })
   });
   let navigate = useNavigate();
   return (
+
     <Container
       maxWidth="lg"
       sx={{
@@ -107,47 +98,51 @@ const PatientMeasurements = () => {
         flexDirection: "column",
       }}
     >
-      <PatientSmartNav page={'PatientMeasurements'} />
-      <div style={{ width: '100%', height: '600px' }}>
-        <Box
-          sx={{
-            overflowX: "scroll",
-            width: 1,
-            // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
-          }}
-        >
-          <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-            <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
-            {btFilters.map((bt_el) => (
-              //  <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
-              <Button key={bt_el} color="primary" >{bt_el}</Button>
-            ))}
-          </ButtonGroup>
-        </Box>
-        <DataGrid
-          onCellClick={(params, event) => {
-            if (!event.ctrlKey) {
-              navigate("/PatientInsertMeasurements", {
-                state: params.row,
-              })
-            }
-          }}
-          initialState={{
-            columns: {
-              columnVisibilityModel: {
-                id: false,
-                date_complete: false,
-                id_measure: false,
-                value: false,
-                type: false,
-              },
-            },
-          }}
 
-          rows={rows}
-          columns={columns}
-        />
-      </div>
+      <PatientSmartNav page={'PatientMeasurements'} />
+      {loadComponent ? <>
+        <div style={{ width: '100%', height: '600px' }}>
+          <Box
+            sx={{
+              overflowX: "scroll",
+              width: 1,
+              // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
+            }}
+          >
+            <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+              <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
+              {btFilters.map((bt_el) => (
+                //  <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
+                <Button key={bt_el} color="primary" >{bt_el}</Button>
+              ))}
+            </ButtonGroup>
+          </Box>
+          <DataGrid
+            onCellClick={(params, event) => {
+              if (!event.ctrlKey) {
+                navigate("/PatientInsertMeasurements", {
+                  state: params.row,
+
+                })
+              }
+            }}
+            initialState={{
+              columns: {
+                columnVisibilityModel: {
+                  id: false,
+                  date_complete: false,
+                  id_measure: false,
+                  type: false,
+                  value: false
+                },
+              },
+            }}
+
+            rows={rowdata}
+            columns={columns}
+          />
+        </div>
+      </> : null}
     </Container>
   );
 

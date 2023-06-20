@@ -14,30 +14,30 @@ const PatientHome = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const [data, setData] = useState([]);
+  interface Items {
+    firstName?: string;
+    secondName?: string;
+    birthDate?: string;
+    sex?: string;
+    address?: string;
+    city?: string;
+    telephone?: string;
+  }
+  interface dataa {
+    dataa?: Items;
+  }
+  const [dataa, setData] = useState([]);
+  const [idPatient, setIdPatient] = useState(0);
   const [loadComponent, setLoadComponent] = useState(0);
-
+  console.log(localStorage.getItem("IdPatient"));
   useEffect(() => {
-    DeafutlAllData.getToken().then((res) => {
-      console.log("response getToken");
-      console.log(res);
-      localStorage.setItem("Token", res)
-
-      // DeafutlAllData.getPatientrecords_patient().then((res) => {
-      //   console.log("response getPatients");
-      //   console.log(res);
-      //   setData(res);
-      //   setLoadComponent(1);
-      // });
-      DeafutlAllData.getPatientsById(11).then((res) => {
-        console.log("-----response getPatientsById");
-        console.log(res);
-        setData(res);
-        setLoadComponent(1);
-      });
-
+    let id_patient = localStorage.getItem("IdPatient");
+    DeafutlAllData.getPatientsById(id_patient).then((res) => {
+      setData(res);
+      setLoadComponent(1);
     });
   }, []);
+  let data: dataa = {};
   return (
 
     <Container
@@ -50,7 +50,7 @@ const PatientHome = () => {
       }}
     >
       {matches ? <><p>Only Smart Phone</p></> : <>
-        {loadComponent ? <><PatientNav data={data} /></> : null}
+        {loadComponent ? <><PatientNav {...dataa} /></> : null}
 
         < Box sx={{ mt: 14, width: 1 }}>
           <PatientSmartNav page={'PatientHome'} />
