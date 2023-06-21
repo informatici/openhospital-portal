@@ -21,27 +21,22 @@
  */
 package org.isf.patientportal.rest.api.recordtype.controller;
 
-import java.net.URI;
 import java.util.Optional;
 
 import org.isf.patientportal.rest.api.recordtype.service.RecordTypeService;
 import org.isf.patientportal.rest.api.recordtype.dto.RecordTypeDto;
-
-import org.isf.patientportal.model.recordtype.RecordType;
+import org.isf.patientportal.model.recordtype.AuscultationOption;
+import org.isf.patientportal.model.recordtype.BowelOption;
+import org.isf.patientportal.model.recordtype.DiuresisOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
@@ -172,4 +167,52 @@ public class RecordTypeController {
     }
 
     
+    @ApiOperation(value = "Diuresis options list", response = RecordTypeDto.class, responseContainer = "List", 
+    				notes = "Retrieve the list of diuresis options.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = RecordTypeDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+    
+    @GetMapping(value = "/recordtypes/diuresisoptions", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDiuresisOptions() {
+    	return ResponseEntity.of(Optional.of(DiuresisOption.values()));
+    }
+    
+    
+    @ApiOperation(value = "Bowel options list", response = RecordTypeDto.class, responseContainer = "List", 
+    				notes = "Retrieve the list of bowel options.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = RecordTypeDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+    
+    @GetMapping(value = "/recordtypes/boweloptions", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getBowelOptions() {
+    	return ResponseEntity.of(Optional.of(BowelOption.values()));
+    }
+    
+    @ApiOperation(value = "Auscultation options list", response = RecordTypeDto.class, responseContainer = "List", 
+    				notes = "Retrieve the list of auscultation options.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = RecordTypeDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+    
+    @GetMapping(value = "/recordtypes/auscultationoptions", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAuscultationOptions() {
+    	return ResponseEntity.of(Optional.of(AuscultationOption.values()));
+    }
 }
