@@ -6,6 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
+
 import dayjs from 'dayjs'
 
 import Idate_time from "../../../../../components/utility/common/input_data/Idate_time";
@@ -31,29 +32,39 @@ interface $d {
 }
 export default function Iweight(props: {
   dataDef: IweightProps;
+  edit?: boolean
 }) {
   const [data, setData] = React.useState<string | number | Date>(Date.now());
   const [dataDate, setDataDate] = React.useState<string | number | Date>(Date.now());
   const [newDateTime, setNewDateTime] = React.useState<number | string | Date | null | { $d: string } | any>("");
   const [dataError, setDataError] = useState(false);
   const [dataErrorMessage, setDataErrorMessage] = useState("");
+  const [dataDisabled, setDataDisabled] = useState(false);
 
   let rif = props.dataDef;
   let now = Date.now();
   let date_rif: Date | string | number = Date.now();
-
+  console.log("edit");
+  console.log(props.edit);
+  // if (props.edit == true) {
+  //   setDataDisabled(false);
+  // }
   useEffect(() => {
     if (rif.date_complete) {
+
       // --- TODO 
       let arr_1 = rif.date_complete.split(" ");
       let arr_2 = arr_1[0].split("-");
       let date: string | number | Date = arr_2[0] + "-" + arr_2[1] + "-" + arr_2[2] + "T" + arr_1[1];
       date = new Date(date);
       date_rif = date;
+      setDataDisabled(true);
       setDataDate(date);
     } else {
+
       // console.log(now);
       setDataDate(now);
+      setDataDisabled(false);
     }
   });
   const handleSubmit = (event: {
@@ -96,6 +107,7 @@ export default function Iweight(props: {
             type="number"
             onChange={e => setData(e.target.value)}
             required
+            disabled={dataDisabled}
             name="weight"
             label={capitalizeOnlyFirstLetter(rif.measurementType)}
             id="outlined-start-adornment"

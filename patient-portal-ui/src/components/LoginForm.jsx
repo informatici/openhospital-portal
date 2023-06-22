@@ -39,39 +39,6 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
 
   const [data, setData] = useState()
 
-  // useEffect(() => {
-
-  //   console.log("dataUP");
-  //   console.log(dataUP);
-  //   DeafutlAllData.getToken().then((res) => {
-  //     console.log("response getToken");
-  //     console.log(res);
-  //     localStorage.setItem("Token", res)
-
-  //     // DeafutlAllData.getPatientrecords_patient().then((res) => {
-  //     //   console.log("response getPatients");
-  //     //   console.log(res);
-  //     //   setData(res);
-  //     //   setLoadComponent(1);
-  //     // });
-  //     DeafutlAllData.getPatientsById(11).then((res) => {
-  //       console.log("-----response getPatientsById");
-  //       console.log(res);
-  //       setData(res);
-  //       setLoadComponent(1);
-  //     });
-
-  //   });
-  //   // --- end gestione profilo TODO ---
-  //   setTimeout(() => {
-  //     console.log("submited!!");
-  //     console.log(from);
-  //     setAuth(true);
-  //     setProfile(amb);
-  //     navigate(from, { replace: true });
-  //   }, 5000);
-
-  // }, []);
 
 
 
@@ -93,61 +60,65 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
       console.log("submitting...");
       // --- start gestione profilo TODO ---
       console.log(values.email);
-      if (values.email == "a@a.com") {
-        amb = "Admin";
+      // if (values.email == "a@a.com") {
+      //   amb = "Admin";
 
-      } else if (values.email == "as@a.com") {
-        amb = "Administration";
+      // } else if (values.email == "as@a.com") {
+      //   amb = "Administration";
 
-      } else if (values.email == "d@a.com") {
-        amb = "Doctor";
+      // } else if (values.email == "d@a.com") {
+      //   amb = "Doctor";
 
-      } else if (values.email == "p@a.com") {
-        amb = "Patient";
+      // } else if (values.email == "p@a.com") {
+      //   amb = "Patient";
 
-      } else {
-        console.log("Login Utente");
-        const data = [
-          {
-            username: values.email,
-            password: values.password,
-          },
-        ];
-        DeafutlAllData.postLogin(values.email, values.password).then((res) => {
-          console.log("response getToken ------------");
-          console.log(res);
-          localStorage.setItem("Token", res);
-          console.log(res.roles);
+      // } else {
+      console.log("Login Utente");
+      const data = [
+        {
+          username: values.email,
+          password: values.password,
+        },
+      ];
+      DeafutlAllData.postLogin(values.email, values.password).then((res) => {
+        console.log("response getToken ------------");
+        console.log(res);
+        localStorage.setItem("Token", res);
+        console.log(res.roles);
+        if (res.error == "Unauthorized") {
+          setProfile("Unauthorized");
+          amb = "Unauthorized";
+          setAuth(false);
+        } else {
           if (res.roles[0] == "ROLE_PATIENT") {
-            setProfile(amb);
+            setProfile("Patient");
+            amb = "Patient";
+            setAuth(true);
           }
-          // --- TO DO recupero user id e chiamata per recupero patient id
-          // let id_user = "";
-          // if (values.email == "hospital.admin@ermail.com") {
-          //   id_user = 2;
-          //   DeafutlAllData.postLogin(values.email, values.password).then((res) => {
-          //     localStorage.setItem("IdPatient", );
-          //   });
-           
-          // }
-          // if (values.email == "doctor@email.com") { localStorage.setItem("IdPatient", 3); }
-          if (values.email == "justin.frederick@email.com") { localStorage.setItem("IdPatient", 1); }
-          if (values.email == "anthon.geremy@email.com") { localStorage.setItem("IdPatient", 2); }
-          if (values.email == "veronique.fountain@email.com") { localStorage.setItem("IdPatient", 3); }
-          if (values.email == "cypher.marica@email.com") { localStorage.setItem("IdPatient", 4); }
-          if (values.email == "serena.levinson@email.com") { localStorage.setItem("IdPatient", 5); }
-          if (values.email == "bardsley.zenaida@email.com") { localStorage.setItem("IdPatient", 6); }
-          if (values.email == "graney.almedan@email.com") { localStorage.setItem("IdPatient", 7); }
-          if (values.email == "ackman.sammy@email.com") { localStorage.setItem("IdPatient", 8); }
-          if (values.email == "pohlman.margot@email.com") { localStorage.setItem("IdPatient", 9); }
-          if (values.email == "jeana.bennett@email.com") { localStorage.setItem("IdPatient", 10); }
-          if (values.email == "abramo.oliver@email.com") { localStorage.setItem("IdPatient", 11); }
-        });
-      }
+          if (res.roles[0] == "ROLE_DOCTOR") {
+            setProfile("Doctor");
+            amb = "Doctor";
+            setAuth(true);
+          }
+        }
+        // --- TO DO recupero user id e chiamata per recupero patient id
+        // let id_user = "";
+        // if (values.email == "hospital.admin@ermail.com") {
+        //   id_user = 2;
+        //   DeafutlAllData.postLogin(values.email, values.password).then((res) => {
+        //     localStorage.setItem("IdPatient", );
+        //   });
+
+        // }
+        // if (values.email == "doctor@email.com") { localStorage.setItem("IdPatient", 3); }
+
+        localStorage.setItem("IdPatient", res.patientId);
+      });
+      // }
       setTimeout(() => {
         console.log("submited!!");
         console.log(from);
-        setAuth(true);
+        // setAuth(true);
         setProfile(amb);
         navigate(from, { replace: true });
       }, 2000);
@@ -161,7 +132,6 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Box
-          // spacing={1}
           sx={{ mt: 3 }}
           component={motion.div}
           animate={{
@@ -222,34 +192,8 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={animate}
           >
-            {/* <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ my: 2 }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...getFieldProps("remember")}
-                    checked={values.remember}
-                  />
-                }
-                label="Remember me"
-              />
-
-              <Link
-                component={RouterLink}
-                variant="subtitle2"
-                to="#"
-                underline="hover"
-              >
-                Forgot password?
-              </Link>
-            </Stack> */}
 
             <LoadingButton
-              // sx={{ mt:2 }}
               fullWidth
               size="large"
               type="submit"

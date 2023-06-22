@@ -46,23 +46,30 @@ function PatientInsertMeasurements(props: {
 }) {
 
   const [data, setData] = React.useState<Items | null | [] | Items[]>(null);
-  const [type, setType] = React.useState<string | null>(null);
+  const [type, setType] = React.useState<string>("");
   const [loadComponent, setLoadComponent] = useState(0);
 
   useEffect(() => {
     DeafutlAllData.getRecordTypes().then((res) => {
-      console.log(res);
+      // console.log(res);
       if (props.setType.id == null) {
         setData(res);
+        setType("");
       } else {
         let arr: Items[] = [props.setType];
         setData(arr);
+        setType("edit/delete");
       }
       console.log(data);
       setLoadComponent(1);
     });
   }, []);
-
+  const [message, setMessage] = React.useState("Hello --- World");
+  const [editTF, setEditTF] = React.useState(false);
+  const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
+    console.log(editTF);
+    setEditTF(editTF);
+  };
   return (
     <Container
       maxWidth="lg"
@@ -74,13 +81,14 @@ function PatientInsertMeasurements(props: {
 
       }}
     >
-      <PatientSmartNav page={'PatientInsertMeasurements'} />
+
       {loadComponent ? <>
-        {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} /> : null}
+        <PatientSmartNav page={'PatientInsertMeasurements'} type={type} editBtClk={editBtClk} /><h1>{message}</h1>
+        {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} edit={editTF} /> : null}
         {props.setType.type == 'height' ? <Iheight dataDef={filterRecordTypesByValueRet(data, "H")} /> : null}
         {props.setType.type == 'temperature' ? <Itemperature dataDef={filterRecordTypesByValueRet(data, "TEMP")} /> : null}
         {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}
-        {props.setType.type == 'heart_rate' ? <Iheart_rate dataDef={filterRecordTypesByValueRet(data, "HR")} /> : null}
+        {props.setType.type == 'heart_rate' || props.setType.type == 'hr' ? <Iheart_rate dataDef={filterRecordTypesByValueRet(data, "HR")} /> : null}
         {props.setType.type == 'saturation' ? <Isaturation dataDef={filterRecordTypesByValueRet(data, "SAT")} /> : null}
         {props.setType.type == 'hgt' ? <Ihgt dataDef={filterRecordTypesByValueRet(data, "HGT")} /> : null}
         {/* {props.setType.type == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} dataSelected={props.setType.value} /> : null} */}

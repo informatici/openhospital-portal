@@ -46,28 +46,31 @@ const columns = [
 const PatientMeasurements = () => {
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
-  const [type, setType] = React.useState(null);
+  const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
-
+  let rows_def: any[] = [];
   useEffect(() => {
-    let id_patient = 1;
-    // let arr_v = ["AUSCULTATION", "BLOOD_PRESSURE", "BOWEL", "DIURESIS", "DIURESIS_VOL", "HEIGHT", "HGT", "HR", "RR", "SATURATION", "TEMPERATURE", "WEIGHT"];
-    let arr_v = ["WEIGHT"];
-    let arr_f: any[] = [];
-    let type_mis = "WEIGHT"
-    DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
+    let id_patient = localStorage.getItem("IdPatient");
+
+
+    // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
+    DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
+
       // console.log("--------------------------response getPatientrecordsAllMeasurementById");
       // console.log(res);
       res.forEach(function (k: any) {
         // console.log(k.id);
-        rows.push({
+        if (!btFilters.includes(k.recordType.measurementType)) {
+          btFilters.push(k.recordType.measurementType);
+        }
+        rows_def.push({
           id: k.id,
           id_measure: k.recordType.measurementType,
           date_complete: k.recordDate,
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),
           value: k.value1,
-          misure: k.recordType.misure,
+          misure: k.recordType.measurementType,
           type: k.recordType.measurementType.toLowerCase(),
           code: k.recordType.code,
           defaultOptionValue: k.recordType.defaultOptionValue,
@@ -80,12 +83,22 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
-      setRowdata(rows);
+      // setRowdata(rows_def);
+      if (type != null) {
+        rows = rows_def.filter(function (el) {
+          return el.misure == type
+        });
+        setRowdata(rows);
+      } else {
+        rows = rows_def;
+        setRowdata(rows);
+      }
       setLoadComponent(1);
     });
 
 
   });
+
   let navigate = useNavigate();
   return (
 
@@ -112,8 +125,7 @@ const PatientMeasurements = () => {
             <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
               <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
-                //  <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
-                <Button key={bt_el} color="primary" >{bt_el}</Button>
+                <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
               ))}
             </ButtonGroup>
           </Box>

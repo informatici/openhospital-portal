@@ -37,23 +37,62 @@ export default function HelpDevLogin() {
               Inserendo una delle seguenti email si accede direttamente all'ambiente di riferimento.
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              Admin: a@a.com
+              admin@patientportal.isf.org		admin				
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              Administration: as@a.com
+              hospital.admin@ermail.com		hospadmin2023			
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              Doctor: d@a.com
+              doctor@email.com			doctor2023			
+            </Typography>
+
+            <Typography variant="subtitle2" gutterBottom>
+              justin.frederick@email.com		justin2023			
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              Patient: p@a.com
+              anthon.geremy@email.com			anthon2023			
             </Typography>
-            <Typography variant="caption" display="block">
-              La password può essere qualsiasi cosa tranne una stringa vuota
+            <Typography variant="subtitle2" gutterBottom>
+              veronique.fountain@email.com		veronique2023			
             </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              cypher.marica@email.com			cypher2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              serena.levinson@email.com		serena2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              bardsley.zenaida@email.com		bardsley2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              graney.almedan@email.com		graney2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              ackman.sammy@email.com			ackman2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              pohlman.margot@email.com		pohlman2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              jeana.bennett@email.com			jeana2023			
+            </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              abramo.oliver@email.com			abramo2023			
+            </Typography>
+
           </div>
         </Box>
       </Modal>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
