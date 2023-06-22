@@ -80,10 +80,26 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
           password: values.password,
         },
       ];
+      // --- start test DB ---
+      DeafutlAllData.getEventTypes().then((res) => {
+        console.log(res);
+
+      });
+      // --- end test DB ---
+
       DeafutlAllData.postLogin(values.email, values.password).then((res) => {
         console.log("response getToken ------------");
         console.log(res);
         localStorage.setItem("Token", res);
+
+        // --- start TODO Eliminare
+        // amb = "Patient";
+        // setProfile("Patient");
+        // localStorage.setItem("IdPatient", 1);
+        // setAuth(true);
+        // --- end TODO Eliminare
+
+        // --- start TODO Decommentare
         console.log(res.roles);
         if (res.error == "Unauthorized") {
           setProfile("Unauthorized");
@@ -101,18 +117,10 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             setAuth(true);
           }
         }
-        // --- TO DO recupero user id e chiamata per recupero patient id
-        // let id_user = "";
-        // if (values.email == "hospital.admin@ermail.com") {
-        //   id_user = 2;
-        //   DeafutlAllData.postLogin(values.email, values.password).then((res) => {
-        //     localStorage.setItem("IdPatient", );
-        //   });
-
-        // }
-        // if (values.email == "doctor@email.com") { localStorage.setItem("IdPatient", 3); }
-
         localStorage.setItem("IdPatient", res.patientId);
+        // --- end TODO Decommentare
+
+
       });
       // }
       setTimeout(() => {

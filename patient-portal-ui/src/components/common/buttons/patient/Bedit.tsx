@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Link } from "react-router-dom";
 
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 
-const Bedit = ({ editBtClk }) => {
+const Bedit = ({ editBtClk }: { editBtClk: any; }) => {
   let valBtClk = true;
   return (
     <Fab

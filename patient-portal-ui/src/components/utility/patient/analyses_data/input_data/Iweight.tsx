@@ -33,6 +33,7 @@ interface $d {
 export default function Iweight(props: {
   dataDef: IweightProps;
   edit?: boolean
+  delete?: boolean
 }) {
   const [data, setData] = React.useState<string | number | Date>(Date.now());
   const [dataDate, setDataDate] = React.useState<string | number | Date>(Date.now());
@@ -40,15 +41,16 @@ export default function Iweight(props: {
   const [dataError, setDataError] = useState(false);
   const [dataErrorMessage, setDataErrorMessage] = useState("");
   const [dataDisabled, setDataDisabled] = useState(false);
+  const [dataDelete, setDataDelete] = useState(false);
 
   let rif = props.dataDef;
   let now = Date.now();
   let date_rif: Date | string | number = Date.now();
-  console.log("edit");
-  console.log(props.edit);
-  // if (props.edit == true) {
-  //   setDataDisabled(false);
-  // }
+  // console.log("edit");
+  // console.log(props.edit);
+  // console.log("delete");
+  // console.log(props.delete);
+  let aa = props.delete;
   useEffect(() => {
     if (rif.date_complete) {
 
@@ -66,6 +68,18 @@ export default function Iweight(props: {
       setDataDate(now);
       setDataDisabled(false);
     }
+    if (props.edit == true) {
+      // console.log("in");
+      setDataDisabled(false);
+    }
+    if (aa == true) {
+      setDataDelete(true);
+      // alert("testtt");
+      aa = false;
+    }
+    // if(dataDelete=true){
+
+    // }
   });
   const handleSubmit = (event: {
     [x: string]: any; preventDefault: () => void;
@@ -88,11 +102,12 @@ export default function Iweight(props: {
       setDataErrorMessage("");
 
       if (newDateTime) {
-        console.log(newDateTime);
+        // console.log(newDateTime);
         dateValue = newDateTime?.$d.toISOString()
       }
-      console.log(dateValue);
-      console.log(inputValue);
+      // console.log(dateValue);
+      // console.log(inputValue);
+
       // --- TODO insert/update and changePage
 
     }

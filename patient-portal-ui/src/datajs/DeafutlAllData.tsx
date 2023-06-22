@@ -12,20 +12,20 @@ export const DeafutlAllData = {
     return data;
   },
   // --- AUTH_API
-  // getToken: async function () {
-  //   let response = await fetch(url_0 +'api/auth/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       "password": "admin",
-  //       "username": "admin@patientportal.isf.org"
-  //     }),
-  //   });
-  //   const data = await response.json();
-  //   return data;
-  // },
+  getToken: async function () {
+    let response = await fetch(url_0 +'api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "password": "admin",
+        "username": "admin@patientportal.isf.org"
+      }),
+    });
+    const data = await response.json();
+    return data;
+  },
   postLogin: async function (user: any, pass: any) {
     let response = await fetch(url_0 + 'auth/login', {
       method: 'POST',
@@ -120,6 +120,11 @@ export const DeafutlAllData = {
   },
   getRecordTypes: async function () {
     let response = await fetch(url_0 + 'public/recordtypes');
+    const data = await response.json();
+    return data;
+  },
+  getEventTypes: async function () {
+    let response = await fetch(url_0 + 'public/eventtypes');
     const data = await response.json();
     return data;
   },

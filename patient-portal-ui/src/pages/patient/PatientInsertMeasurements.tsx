@@ -64,11 +64,16 @@ function PatientInsertMeasurements(props: {
       setLoadComponent(1);
     });
   }, []);
-  const [message, setMessage] = React.useState("Hello --- World");
+  const [message, setMessage] = React.useState("");
   const [editTF, setEditTF] = React.useState(false);
+  const [deleteTF, setDeleteTF] = React.useState(false);
   const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
     console.log(editTF);
     setEditTF(editTF);
+  };
+  const deleteBtClk = (deleteTF: boolean | ((prevState: boolean) => boolean)) => {
+    console.log(deleteTF);
+    setDeleteTF(deleteTF);
   };
   return (
     <Container
@@ -83,8 +88,8 @@ function PatientInsertMeasurements(props: {
     >
 
       {loadComponent ? <>
-        <PatientSmartNav page={'PatientInsertMeasurements'} type={type} editBtClk={editBtClk} /><h1>{message}</h1>
-        {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} edit={editTF} /> : null}
+        <PatientSmartNav page={'PatientInsertMeasurements'} type={type} editBtClk={editBtClk} deleteBtClk={deleteBtClk} /><h1>{message}</h1>
+        {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} edit={editTF} delete={deleteTF} /> : null}
         {props.setType.type == 'height' ? <Iheight dataDef={filterRecordTypesByValueRet(data, "H")} /> : null}
         {props.setType.type == 'temperature' ? <Itemperature dataDef={filterRecordTypesByValueRet(data, "TEMP")} /> : null}
         {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}

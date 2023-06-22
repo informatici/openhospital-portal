@@ -13,9 +13,10 @@ export default function PatientSmartNav(props: {
     page?: string;
     type?: string;
     editBtClk?: any;
+    deleteBtClk?: any;
 }) {
-    console.log("PatientSmartNav");
-    console.log(props);
+    // console.log("PatientSmartNav");
+    // console.log(props);
 
     return (
         <Box sx={{ width: 1, mt: 1 }}>
@@ -30,10 +31,11 @@ export default function PatientSmartNav(props: {
                 </Grid>
                 <Grid container justifyContent="flex-end" item xs={2}>
                     {props.page == 'PatientHome' ? <BchooseInsert /> : null}
-                    {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bdelete /> : null}
+                    {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bdelete deleteBtClk={props.deleteBtClk} /> : null}
                 </Grid>
                 <Grid container justifyContent="flex-end" item xs={2}>
                     {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit editBtClk={props.editBtClk} /> : null}
+                    {/* {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit /> : null} */}
                     {props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
                     {props.page == 'PatientHome' ? <Bagenda /> : null}
                     {props.page == 'PatientAgenda' ? <Bhome /> : null}
