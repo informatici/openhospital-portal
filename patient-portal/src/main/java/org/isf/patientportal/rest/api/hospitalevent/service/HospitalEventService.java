@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.isf.patientportal.model.hospitalevent.EventType;
 import org.isf.patientportal.model.hospitalevent.HospitalEvent;
 import org.isf.patientportal.model.hospitalevent.HospitalEventRepository;
 import org.isf.patientportal.rest.api.hospitalevent.dto.HospitalEventDto;
@@ -106,4 +105,14 @@ public class HospitalEventService {
 			.get();
 	}
 	
+    
+    public Long countByPatientId(Long patientId) {
+		return hospitalEventRepository.countByPatientId(patientId);
+	}
+    
+    
+    public Long countByPatientIdEventTypeCode(Long patientId, String eventTypeCode) {
+		return hospitalEventRepository.countByPatientIdEventTypeCode(patientId, eventTypeCode);
+	}
+    
 }

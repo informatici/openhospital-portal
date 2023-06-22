@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package org.isf.patientportal.rest.api.hospitalevent.dto;
+package org.isf.patientportal.rest.api.eventtype.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -25,7 +25,7 @@ import java.net.URI;
 import java.util.Optional;
 
 import org.isf.patientportal.rest.api.hospitalevent.service.HospitalEventService;
-import org.isf.patientportal.model.hospitalevent.EventType;
+import org.isf.patientportal.rest.api.patientrecord.dto.PatientRecordDto;
 import org.isf.patientportal.model.hospitalevent.HospitalEvent;
 import org.isf.patientportal.rest.api.hospitalevent.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,4 +192,37 @@ public class HospitalEventController {
     ResponseEntity<?> all(@PathVariable Long patientId, @RequestParam("eventTypeCode") String eventTypeCode) {
         return ResponseEntity.of(Optional.of(service.findByPatientIdEventTypeCode(patientId, eventTypeCode)));
     }
+    
+    
+    @ApiOperation(value = "Hospital events count", response = PatientRecordDto.class, responseContainer = "List", 
+    				notes = "Numeber of hospital events of a specific patient.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = PatientRecordDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+	@GetMapping(value = "/hospitalevents/count/{patientId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> countByPatientId(@PathVariable Long patientId) {
+        return ResponseEntity.of(Optional.of(service.countByPatientId(patientId)));
+    }
+    
+    
+    @ApiOperation(value = "Hospital events count of a specific event type", response = PatientRecordDto.class, responseContainer = "List", 
+    				notes = "Numeber of hospital events of a specific patient and event type.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = PatientRecordDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+	@GetMapping(value = "/hospitalevents/counttype/{patientId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> countByPatientId(@PathVariable Long patientId, @RequestParam("eventTypeCode") String eventTypeCode) {
+        return ResponseEntity.of(Optional.of(service.countByPatientIdEventTypeCode(patientId, eventTypeCode)));
+    }
+    
 }

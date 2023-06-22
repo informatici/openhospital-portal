@@ -26,8 +26,13 @@ import java.util.Optional;
 
 import org.isf.patientportal.model.patientrecord.PatientRecord;
 import org.isf.patientportal.model.recordtype.RecordType.MeasurementType;
+import org.isf.patientportal.rest.api.patient.dto.PatientDto;
+import org.isf.patientportal.rest.api.patient.service.PatientService;
 import org.isf.patientportal.rest.api.patientrecord.dto.PatientRecordDto;
+import org.isf.patientportal.rest.api.patientrecord.dto.PatientRecordWriteDto;
 import org.isf.patientportal.rest.api.patientrecord.service.PatientRecordService;
+import org.isf.patientportal.rest.api.recordtype.dto.RecordTypeDto;
+import org.isf.patientportal.rest.api.recordtype.service.RecordTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,13 +66,24 @@ public class PatientRecordController {
 
 	@Autowired
 	private final PatientRecordService service;
+	
+	@Autowired
+	private final PatientService patientService;
+	
+	@Autowired
+	private final RecordTypeService recordTypeService;
+	
 
 	public PatientRecordController() {
-       service = null;
+		service = null;
+		patientService = null;
+		recordTypeService = null;
     }
 	
-    public PatientRecordController(PatientRecordService service) {
+    public PatientRecordController(PatientRecordService service, PatientService patientService, RecordTypeService recordTypeService) {
         this.service = service;
+        this.patientService = patientService;
+        this.recordTypeService = recordTypeService;
     }
     
     
@@ -82,7 +98,23 @@ public class PatientRecordController {
             @ApiResponse(code = 405, message = "Service not supported"),
             @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
     @PostMapping(value="/patientrecords", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createRecordPatient(@RequestBody PatientRecordDto patientRecordDto){
+    public ResponseEntity<?> createRecordPatient(@RequestBody PatientRecordWriteDto patientRecordWriteDto){
+    	
+    	Optional<PatientDto> patientDto = patientService.findById(patientRecordWriteDto.getPatientId());
+    	Optional<RecordTypeDto> recordTypeDto = recordTypeService.findByCode(patientRecordWriteDto.getRecordTypeCode());
+    	
+    	if(!patientDto.isPresent() || !recordTypeDto.isPresent() )
+    		return ResponseEntity.notFound().build();
+    	
+    	PatientRecordDto patientRecordDto = new PatientRecordDto(
+    					patientRecordWriteDto.getRecordDate(), 
+    					patientDto.get(), 
+    					recordTypeDto.get(), 
+    					patientRecordWriteDto.getValue1(), 
+    					patientRecordWriteDto.getValue2(), 
+    					patientRecordWriteDto.getOptionValue(), 
+    					patientRecordWriteDto.getNote());
+    		
     	PatientRecord savedRecordPatient = service.create(patientRecordDto);
     	URI location = ServletUriComponentsBuilder.fromCurrentRequest()
     	                .path("/{id}")
@@ -170,8 +202,23 @@ public class PatientRecordController {
             @ApiResponse(code = 405, message = "Service not supported"),
             @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
 	@GetMapping(value = "/patientrecords/patient/{patientId}", produces=MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> all(@PathVariable Long patientId) {
+    ResponseEntity<?> findByPatientId(@PathVariable Long patientId) {
         return ResponseEntity.of(Optional.of(service.findByPatientId(patientId)));
+    }
+    
+    @ApiOperation(value = "Patient records count", response = PatientRecordDto.class, responseContainer = "List", 
+    				notes = "Number of patient records of a specific patient.",
+    				tags = "PUBLIC_API")
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "OK", response = PatientRecordDto.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid parameters supplied"),
+            @ApiResponse(code = 403, message = "Request not authorized"),
+            @ApiResponse(code = 404, message = "Resource not found"),
+            @ApiResponse(code = 405, message = "Service not supported"),
+            @ApiResponse(code = 500, message = "Internal server error", response = ResponseStatusException.class)})
+	@GetMapping(value = "/patientrecords/count/{patientId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> countByPatientId(@PathVariable Long patientId) {
+        return ResponseEntity.of(Optional.of(service.countByPatientId(patientId)));
     }
     	
     
