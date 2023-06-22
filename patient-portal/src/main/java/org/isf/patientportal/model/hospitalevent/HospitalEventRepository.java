@@ -36,4 +36,9 @@ public interface HospitalEventRepository extends CrudRepository<HospitalEvent, L
 	@Query("select r from HospitalEvent r where r.patient.id = ?1 and r.eventType.code = ?2")
 	Streamable<HospitalEvent> findByPatientIdEventTypeCode(Long patientId, String eventTypeCode);
 
+	@Query("select count(*) from HospitalEvent r where r.patient.id = ?1")
+	Long countByPatientId(Long patientId);
+	
+	@Query("select count(*) from HospitalEvent r where r.patient.id = ?1 and r.eventType.code = ?2")
+	Long countByPatientIdEventTypeCode(Long patientId, String eventTypeCode);
 }

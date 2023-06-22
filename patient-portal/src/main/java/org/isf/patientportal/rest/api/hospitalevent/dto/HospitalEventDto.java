@@ -23,6 +23,7 @@ package org.isf.patientportal.rest.api.hospitalevent.dto;
 
 import java.time.LocalDateTime;
 
+import org.isf.patientportal.rest.api.eventtype.dto.EventTypeDto;
 import org.isf.patientportal.rest.api.patient.dto.PatientDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

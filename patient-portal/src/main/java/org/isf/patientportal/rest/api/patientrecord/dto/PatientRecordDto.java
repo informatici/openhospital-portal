@@ -58,4 +58,16 @@ public class PatientRecordDto {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private LocalDateTime created;
+	
+	public PatientRecordDto(LocalDateTime recordDate, PatientDto patient, RecordTypeDto recordType,
+					float value1, float value2, String optionValue, String note) {
+		this.recordDate = recordDate;
+		this.patient = patient;
+		this.recordType = recordType;
+		this.value1 = value1;
+		this.value2 = value2;
+		this.optionValue = optionValue;
+		this.note = note;
+		this.created = LocalDateTime.now();
+	}
 }

@@ -37,4 +37,6 @@ public interface PatientRecordRepository extends CrudRepository<PatientRecord, L
 	@Query("select r from PatientRecord r where r.patient.id = ?1 and r.recordType.measurementType = ?2")
 	Streamable<PatientRecord> findByPatientIdMeasurementType(Long patientId, MeasurementType measurementType);
 
+	@Query("select count(*) from PatientRecord r where r.patient.id = ?1")
+	Long countByPatientId(Long patientId);
 }

@@ -99,6 +99,11 @@ public class PatientRecordService {
 	}
     
     
+    public Long countByPatientId(Long patientId) {
+		return patientRecordRepository.countByPatientId(patientId);
+	}
+    
+    
     public Stream<PatientRecordDto> findByPatientIdMeasurementType(Long patientId, MeasurementType measurementType) {
 		return patientRecordRepository.findByPatientIdMeasurementType(patientId, measurementType)
 			.map(patientRecord -> modelMapper.map(patientRecord, PatientRecordDto.class))
