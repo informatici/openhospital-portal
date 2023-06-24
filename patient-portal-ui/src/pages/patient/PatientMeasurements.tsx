@@ -46,6 +46,7 @@ const columns = [
 const PatientMeasurements = () => {
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
+  const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
@@ -55,11 +56,7 @@ const PatientMeasurements = () => {
 
     // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
-
-      // console.log("--------------------------response getPatientrecordsAllMeasurementById");
-      // console.log(res);
       res.forEach(function (k: any) {
-        // console.log(k.id);
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);
         }
@@ -83,21 +80,21 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
-      // setRowdata(rows_def);
-      if (type != null) {
-        rows = rows_def.filter(function (el) {
-          return el.misure == type
-        });
-        setRowdata(rows);
-      } else {
-        rows = rows_def;
-        setRowdata(rows);
-      }
-      setLoadComponent(1);
+      setRowdata(rows_def);
     });
-
-
-  });
+  }, []);
+  useEffect(() => {
+    if (type != null) {
+      rows = rowdata.filter(function (el) {
+        return el.misure == type
+      });
+      setRowdataDef(rows);
+    } else {
+      rows = rowdata;
+      setRowdataDef(rows);
+    }
+    setLoadComponent(1);
+  }, [rowdata, type]);
 
   let navigate = useNavigate();
   return (
@@ -150,7 +147,7 @@ const PatientMeasurements = () => {
               },
             }}
 
-            rows={rowdata}
+            rows={rowdataDef}
             columns={columns}
           />
         </div>

@@ -26,7 +26,7 @@ const animate = {
     duration: 0.6,
     ease: easing,
     delay: 0.16,
-  },
+  }, 
 };
 
 const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
@@ -43,15 +43,15 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
 
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Provide a valid email address")
-      .required("Email is required"),
+    username: Yup.string()
+      // .username("Provide a valid email address")
+      .required("User is required"),
     password: Yup.string().required("Password is required"),
   });
   let amb = "";
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
       remember: true,
     },
@@ -59,8 +59,8 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
     onSubmit: () => {
       console.log("submitting...");
       // --- start gestione profilo TODO ---
-      console.log(values.email);
-      // if (values.email == "a@a.com") {
+      console.log(values.username);
+      // if (values.username == "a@a.com") {
       //   amb = "Admin";
 
       // } else if (values.email == "as@a.com") {
@@ -76,7 +76,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
       console.log("Login Utente");
       const data = [
         {
-          username: values.email,
+          username: values.username,
           password: values.password,
         },
       ];
@@ -87,7 +87,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
       });
       // --- end test DB ---
 
-      DeafutlAllData.postLogin(values.email, values.password).then((res) => {
+      DeafutlAllData.postLogin(values.username, values.password).then((res) => {
         console.log("response getToken ------------");
         console.log(res);
         localStorage.setItem("Token", res);
@@ -161,11 +161,11 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email Address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="text"
+              label="Username"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField

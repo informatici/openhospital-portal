@@ -60,7 +60,7 @@ function PatientInsertMeasurements(props: {
         setData(arr);
         setType("edit/delete");
       }
-      console.log(data);
+      // console.log(data);
       setLoadComponent(1);
     });
   }, []);
@@ -68,11 +68,11 @@ function PatientInsertMeasurements(props: {
   const [editTF, setEditTF] = React.useState(false);
   const [deleteTF, setDeleteTF] = React.useState(false);
   const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
-    console.log(editTF);
+    // console.log(editTF);
     setEditTF(editTF);
   };
   const deleteBtClk = (deleteTF: boolean | ((prevState: boolean) => boolean)) => {
-    console.log(deleteTF);
+    // console.log(deleteTF);
     setDeleteTF(deleteTF);
   };
   return (

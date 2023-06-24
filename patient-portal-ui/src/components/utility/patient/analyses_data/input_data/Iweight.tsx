@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import { Button } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 import dayjs from 'dayjs'
 
@@ -42,6 +45,7 @@ export default function Iweight(props: {
   const [dataErrorMessage, setDataErrorMessage] = useState("");
   const [dataDisabled, setDataDisabled] = useState(false);
   const [dataDelete, setDataDelete] = useState(false);
+  const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
   let now = Date.now();
@@ -50,10 +54,23 @@ export default function Iweight(props: {
   // console.log(props.edit);
   // console.log("delete");
   // console.log(props.delete);
-  let aa = props.delete;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   useEffect(() => {
     if (rif.date_complete) {
-
       // --- TODO 
       let arr_1 = rif.date_complete.split(" ");
       let arr_2 = arr_1[0].split("-");
@@ -63,24 +80,34 @@ export default function Iweight(props: {
       setDataDisabled(true);
       setDataDate(date);
     } else {
-
-      // console.log(now);
       setDataDate(now);
       setDataDisabled(false);
     }
+  }, []);
+  useEffect(() => {
     if (props.edit == true) {
-      // console.log("in");
       setDataDisabled(false);
     }
-    if (aa == true) {
+  }, [props.edit]);
+  useEffect(() => {
+    if (dataDelete == true) {
+      setOpen(true);
+      // window.location.reload();
+    } else {
       setDataDelete(true);
-      // alert("testtt");
-      aa = false;
     }
-    // if(dataDelete=true){
-
-    // }
-  });
+  }, [props.delete]);
+  useEffect(() => {
+    if (deleteMeasure == "y") {
+      setOpen(false)
+    }
+    if (deleteMeasure == "n") {
+      setOpen(false)
+      window.location.reload();
+    } else {
+      // console.log("nothing");
+    }
+  }, [deleteMeasure]);
   const handleSubmit = (event: {
     [x: string]: any; preventDefault: () => void;
   }) => {
@@ -102,20 +129,32 @@ export default function Iweight(props: {
       setDataErrorMessage("");
 
       if (newDateTime) {
-        // console.log(newDateTime);
         dateValue = newDateTime?.$d.toISOString()
       }
-      // console.log(dateValue);
-      // console.log(inputValue);
-
       // --- TODO insert/update and changePage
 
     }
-    // alert("Form Submitted");
   }
 
   return (
     <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div>
+            <Typography variant="subtitle1" gutterBottom>
+              Do you want to remove this measure?
+            </Typography>
+
+            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
+            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+          </div>
+        </Box>
+      </Modal>
       <form onSubmit={handleSubmit} id='my-form'>
         <Box sx={{ width: 1, mt: 1.5 }}>
           <TextField

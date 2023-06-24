@@ -63,13 +63,10 @@ export function filterRecordTypesByValue(object: any, value: any) {
     const results = object.filter((obj: { code: any; }) => {
         return obj.code === value;
     });
-    console.log("innnnn");
-    console.log(results);
+   
     let res = results[0];
     let max = res.maxValue;
     let min = res.minValue;
-    console.log(max);
-    console.log(min);
     let arr = [];
 
     for (let i = min; i <= max; i++) {
@@ -86,15 +83,12 @@ export function filterRecordTypesByValueRet(object: any, value: any) {
     const results = object.filter((obj: { code: any; }) => {
         return obj.code === value;
     });
-    console.log(results[0]);
     return results[0];
 }
 export function arrOfOption(object: any, value: any) {
     let res = object;
     let max = res.maxValue;
     let min = res.minValue;
-    console.log(max);
-    console.log(min);
     let arr = [];
 
     for (let i = min; i <= max; i++) {
@@ -112,7 +106,6 @@ export function filterRecordTypesByValueDef(object: any, value: any) {
         return obj.code === value;
     });
     let res = results[0];
-    console.log(res);
     let selected = res.defaultValue1;
     let measurementType = res.measurementType;
     let uom = res.uom;

@@ -63,14 +63,14 @@ const Login = ({ setAuth, setProfile }) => {
             align="center"
             sx={{ mt: 3 }}
           >
-            You don't remember the password? {" "}
+            {/* You don't remember the password? {" "} */}
             {/* Don’t have an account?{" "} */}
             {/* <Link variant="subtitle2" component={RouterLink} to="/signup">
               Sign up
             </Link> */}
-            <Link variant="subtitle2" component={RouterLink} to="/resetPassword">
+            {/* <Link variant="subtitle2" component={RouterLink} to="/resetPassword">
               Reset
-            </Link>
+            </Link> */}
           </Typography>
           <HelpDevLogin />
         </ContentStyle>

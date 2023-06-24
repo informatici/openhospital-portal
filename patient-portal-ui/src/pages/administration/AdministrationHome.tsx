@@ -18,8 +18,8 @@ const AdministrationHome = () => {
         height: "100vh",
       }}
     >
-
-      <AdministrationNav />
+      <p>Page under construction</p>
+      {/* <AdministrationNav />
       <Box sx={{
         mt: 14, width: 0.7,
         display: 'flex',
@@ -33,7 +33,7 @@ const AdministrationHome = () => {
         <ManageMisureAdministration />
         <ManageUsersAdministration />
         <OtherConfigurationAdministration />
-      </Box>
+      </Box> */}
     </Container>
   );
 };

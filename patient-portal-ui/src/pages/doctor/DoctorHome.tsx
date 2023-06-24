@@ -66,8 +66,8 @@ function DoctorHome() {
         flexDirection: "column",
         height: "100vh",
       }}
-    >
-      {matches ?
+    ><p>Page under construction</p>
+      {/* {matches ?
         <Grid container sx={{ mt: 1 }} spacing={2}>
           <Grid item xs={12} md={3}>
             <DoctorLeftNav />
@@ -166,12 +166,12 @@ function DoctorHome() {
                 ))}
               </Grid>
             </Grid>
-          </Grid></>
-      }
+          </Grid></> 
+      }*/}
 
-      <Stack spacing={2}>
+      {/* <Stack spacing={2}>
         <Pagination count={10} variant="outlined" shape="rounded" />
-      </Stack>
+      </Stack> */}
     </Container >
   );
 };
