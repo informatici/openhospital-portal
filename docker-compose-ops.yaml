@@ -77,4 +77,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-    device: ${ROOT}/patient-portal/sql
+      device: ${ROOT}/patient-portal/sql
