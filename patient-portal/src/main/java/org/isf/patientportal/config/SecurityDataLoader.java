@@ -108,14 +108,14 @@ public class SecurityDataLoader implements
 		createRoleIfNotFound("ROLE_DOCTOR", doctorPrivileges);
 		createRoleIfNotFound("ROLE_PATIENT", patientPrivileges);
 
-		if (userRepository.findByEmail("admin@patientportal.isf.org") == null) {
+		if (userRepository.findByEmail("admin@patientportal.isf.org").isEmpty()) {
 
 			Role adminRole = roleRepository.findByName("ROLE_ADMIN");
 
 			User user = new User();
 			user.setPassword(passwordEncoder.encode("admin"));
 			user.setEmail("admin@patientportal.isf.org");
-			user.setUsername("admin@patientportal.isf.org");
+			user.setUsername("admin");
 			Set<Role> roles = new HashSet<Role>();
 			roles.add(adminRole);
 			user.setRoles(roles);

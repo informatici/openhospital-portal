@@ -101,22 +101,22 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-d
 Demo users
 
 ```
-USERNAME				PASSWORD			ROLE
-admin@patientportal.isf.org		admin				ADMIN
-hospital.admin@ermail.com		hospadmin2023			ADMIN	
-doctor@email.com			doctor2023			DOCTOR
-justin.frederick@email.com		justin2023			PATIENT
-anthon.geremy@email.com			anthon2023			PATIENT
-veronique.fountain@email.com		veronique2023			PATIENT
-cypher.marica@email.com			cypher2023			PATIENT
-serena.levinson@email.com		serena2023			PATIENT
-bardsley.zenaida@email.com		bardsley2023			PATIENT
-graney.almedan@email.com		graney2023			PATIENT
-ackman.sammy@email.com			ackman2023			PATIENT
-pohlman.margot@email.com		pohlman2023			PATIENT
-jeana.bennett@email.com			jeana2023			PATIENT
-abramo.oliver@email.com			abramo2023			PATIENT
-
+USER                USERNAME          PASSWORD           ROLE
+------------------------------------------------------------------
+admin               admin             admin              ADMIN
+hospital admin      admin@email.com   hospadmin2023      ADMIN
+doctor              doctor@email.com  doctor2023         DOCTOR
+Justin Frederick    701010            justin2023         PATIENT
+Anthon Geremy       701011            anthon2023         PATIENT
+Veronique Fountain  701012            veronique2023      PATIENT
+Cypher Marica       701013            cypher2023         PATIENT
+Serena Levinson     701014            serena2023         PATIENT
+Bardsley Zenaida    701015            bardsley2023       PATIENT
+Graney Almedan      701016            graney2023         PATIENT
+Ackman Sammy        701017            ackman2023         PATIENT
+Pohlman Margot      701018            pohlman2023        PATIENT
+Jeana Bennett       701019            jeana2023          PATIENT
+Abramo Oliver       701020            abramo2023         PATIENT
 ```
 
 
