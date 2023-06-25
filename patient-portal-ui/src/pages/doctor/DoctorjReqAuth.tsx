@@ -22,10 +22,9 @@ const styles = {
     padding: "0 2em"
   }
 };
-function DoctorjReqAuth(props: { setType: any; }) {
 
-  console.log("--- props --- DoctorjReqAuth");
-  console.log(props);
+function DoctorjReqAuth(data: { idUser: any; }) {
+  const [idUser, setData] = useState([]);
 
   return (
     <Container
@@ -39,7 +38,8 @@ function DoctorjReqAuth(props: { setType: any; }) {
     >
       <DoctorSmartNav />
       <IReqAut
-      // idUser={props.setType}
+
+        // parentToChild={data}
       />
     </Container>
   );

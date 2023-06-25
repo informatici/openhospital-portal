@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
+import { DeafutlAllData } from '../datajs/DeafutlAllData'
 
 import {
   Box,
@@ -25,26 +26,32 @@ const animate = {
     duration: 0.6,
     ease: easing,
     delay: 0.16,
-  },
+  }, 
 };
 
-const LoginForm = ({ setAuth, setProfile }) => {
+const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
+  const [dataUP, setDataUP] = useState([]);
+  const [loadComponent, setLoadComponent] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [data, setData] = useState()
+
+
+
+
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Provide a valid email address")
-      .required("Email is required"),
+    username: Yup.string()
+      // .username("Provide a valid email address")
+      .required("User is required"),
     password: Yup.string().required("Password is required"),
   });
   let amb = "";
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
       remember: true,
     },
@@ -52,23 +59,74 @@ const LoginForm = ({ setAuth, setProfile }) => {
     onSubmit: () => {
       console.log("submitting...");
       // --- start gestione profilo TODO ---
-      console.log(values.email);
-      if (values.email == "a@a.com") {
-        amb = "Admin";
-      } else if (values.email == "as@a.com") {
-        amb = "Administration";
-      } else if (values.email == "d@a.com") {
-        amb = "Doctor";
-      } else if (values.email == "p@a.com") {
-        amb = "Patient";
-      } else {
-        amb = "Patient";
-      }
-      // --- end gestione profilo TODO ---
+      console.log(values.username);
+      // if (values.username == "a@a.com") {
+      //   amb = "Admin";
+
+      // } else if (values.email == "as@a.com") {
+      //   amb = "Administration";
+
+      // } else if (values.email == "d@a.com") {
+      //   amb = "Doctor";
+
+      // } else if (values.email == "p@a.com") {
+      //   amb = "Patient";
+
+      // } else {
+      console.log("Login Utente");
+      const data = [
+        {
+          username: values.username,
+          password: values.password,
+        },
+      ];
+      // --- start test DB ---
+      DeafutlAllData.getEventTypes().then((res) => {
+        console.log(res);
+
+      });
+      // --- end test DB ---
+
+      DeafutlAllData.postLogin(values.username, values.password).then((res) => {
+        console.log("response getToken ------------");
+        console.log(res);
+        localStorage.setItem("Token", res);
+
+        // --- start TODO Eliminare
+        // amb = "Patient";
+        // setProfile("Patient");
+        // localStorage.setItem("IdPatient", 1);
+        // setAuth(true);
+        // --- end TODO Eliminare
+
+        // --- start TODO Decommentare
+        console.log(res.roles);
+        if (res.error == "Unauthorized") {
+          setProfile("Unauthorized");
+          amb = "Unauthorized";
+          setAuth(false);
+        } else {
+          if (res.roles[0] == "ROLE_PATIENT") {
+            setProfile("Patient");
+            amb = "Patient";
+            setAuth(true);
+          }
+          if (res.roles[0] == "ROLE_DOCTOR") {
+            setProfile("Doctor");
+            amb = "Doctor";
+            setAuth(true);
+          }
+        }
+        localStorage.setItem("IdPatient", res.patientId);
+        // --- end TODO Decommentare
+
+
+      });
+      // }
       setTimeout(() => {
         console.log("submited!!");
         console.log(from);
-        setAuth(true);
+        // setAuth(true);
         setProfile(amb);
         navigate(from, { replace: true });
       }, 2000);
@@ -82,7 +140,6 @@ const LoginForm = ({ setAuth, setProfile }) => {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Box
-          // spacing={1}
           sx={{ mt: 3 }}
           component={motion.div}
           animate={{
@@ -104,11 +161,11 @@ const LoginForm = ({ setAuth, setProfile }) => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email Address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="text"
+              label="Username"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField
@@ -138,39 +195,13 @@ const LoginForm = ({ setAuth, setProfile }) => {
           </Box>
 
           <Box
-           sx={{ mt: 1 }}
+            sx={{ mt: 1 }}
             component={motion.div}
             initial={{ opacity: 0, y: 20 }}
             animate={animate}
           >
-            {/* <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ my: 2 }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    {...getFieldProps("remember")}
-                    checked={values.remember}
-                  />
-                }
-                label="Remember me"
-              />
-
-              <Link
-                component={RouterLink}
-                variant="subtitle2"
-                to="#"
-                underline="hover"
-              >
-                Forgot password?
-              </Link>
-            </Stack> */}
 
             <LoadingButton
-              // sx={{ mt:2 }}
               fullWidth
               size="large"
               type="submit"

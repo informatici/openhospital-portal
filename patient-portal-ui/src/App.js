@@ -103,6 +103,24 @@ function App(props) {
           <Route path="/SelectLanguage" element={<SelectLanguage setAuth={setAuth} />} />
           <Route
             path="/"
+            // element={
+            //   auth ? (
+            //     profile == "Admin" ? (
+            //       <AdminHome setAuth={setAuth} />
+            //     ) : profile == "Administration" ? (
+            //       <AdministrationHome setAuth={setAuth} />
+            //     ) : profile == "Doctor" ? (
+            //       <DoctorHome setAuth={setAuth} />
+            //     ) : profile == "Patient" ? (
+            //       <PatientHome theme={theme_2} setAuth={setAuth} />
+            //     ) : profile == "Unauthorized" ? (
+            //       <Navigate to="/login" state={{ from: location }} replace />
+            //     ) :
+            //       <Navigate to="/login" state={{ from: location }} replace />
+            //   ) : (
+            //     <Navigate to="/login" state={{ from: location }} replace />
+            //   )
+            // }
             element={
               auth ? (
                 profile == "Admin" ? (

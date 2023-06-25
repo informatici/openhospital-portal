@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Container } from "@mui/material";
 import Bheight from "../../components/common/buttons/patient/Bheight";
 import Bweight from "../../components/common/buttons/patient/Bweight";
@@ -18,13 +18,6 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-// const Root = styled('div')(({ theme }) => ({
-//   width: '100%',
-//   ...theme.typography.body2,
-//   '& > :not(style) + :not(style)': {
-//     marginTop: theme.spacing(2),
-//   },
-// }));
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -33,6 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 const PatientChooseMeasurements = () => {
+
 
   return (
     <Container

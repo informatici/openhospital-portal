@@ -7,7 +7,7 @@ export default function Otax_number() {
         <div>
             <Box>
                 <Typography variant="body1" display="inline">Tax Number:</Typography>
-                <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">231122-OO-333</Typography>
+                <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">...</Typography>
             </Box>
         </div>
     );

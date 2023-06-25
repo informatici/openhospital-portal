@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 
 const Save = () => {
-  const Alert = React.forwardRef(function Alert(props, ref) {
+  const Alert: any = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6}
       // ref={ref}
       variant="filled" {...props} />;
@@ -22,19 +22,20 @@ const Save = () => {
   };
   const clickSave = (event: any) => {
     console.log("clickSave");
-    setOpen(true);
-    setTimeout(() => navigate(-1), 1500);
+    // setOpen(true);
+    // setTimeout(() => navigate(-1), 1500);
+    console.log(event.target.weight.value)
 
   };
   return (
 
-    <><Button onClick={clickSave} startIcon={<SaveIcon />} sx={{ mt: 1 }} style={{ justifyContent: "flex-start" }} variant="outlined" size="large" color="primary">
+    <><Button type="submit" form='my-form' startIcon={<SaveIcon />} sx={{ mt: 1 }} style={{ justifyContent: "flex-start" }} variant="outlined" size="large" color="primary">
       Save
     </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        {/* <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}> */}
-        <p>This is a success message!</p>
-        {/* </Alert> */}
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          <p>This is a success message!</p>
+        </Alert>
       </Snackbar>
     </>
   );

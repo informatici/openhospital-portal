@@ -13,10 +13,11 @@ export default function AdminHome() {
         height: "100vh",
       }}
     >
-      <AdminNav />
+      <p>Page under construction</p>
+      {/* <AdminNav />
       <Typography sx={{ mt: 14, width: 1 }} variant="h1" >
         ???
-      </Typography>
+      </Typography> */}
     </Container>
   );
 };

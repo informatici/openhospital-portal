@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
@@ -6,10 +7,9 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
-import Vaccinations from '../../datajs/Vaccinations';
+import { DeafutlAllData } from '../../datajs/DeafutlAllData';
 
-let rows: any[] = [];
-let data_json = Vaccinations;
+let btFilters: string[] = [];
 const columns = [
   { field: 'id', headerName: 'ID', width: 0, hide: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
@@ -19,26 +19,40 @@ const columns = [
   { field: 'misure', headerName: 'Misure', width: 180 },
   { field: 'type', headerName: 'Type', width: 180 },
 ];
-let btFilters: any[] = [];
-let data_values: any = data_json[0]["xy1457uuu"];
-Object.keys(data_values).forEach(function (key) {
-  data_values[key].forEach(function (k: { type: any; }) {
-    if (!btFilters.includes(k.type)) {
-      btFilters.push(k.type);
-    }
-  });
-  rows.push([data_values[key].map((e: any, i: number) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: e.type }))])
-});
-rows = rows.flat(2);
-Object.keys(rows).forEach(function (key: any, value) {
-  rows[key].id = key;
-});
-let rows_def = rows;
-// let rows_def = rows.sort(compare(rows.date_complete));
-
 const PatientVaccinations = () => {
-  const [type, setType] = React.useState(null);
-  console.log(type);
+  const [data, setData] = useState([]);
+  const [type, setType] = React.useState<string | null>(null);
+  const [loadComponent, setLoadComponent] = useState(0);
+  let id_patient = localStorage.getItem("IdPatient");
+  let type_code = "V";
+  useEffect(() => {
+    DeafutlAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+      console.log("response getHospitalEventByPatientIdByTypeCode");
+      console.log(res);
+      setData(res);
+      setLoadComponent(1);
+    });
+  }, []);
+
+
+  let data_values: any = data;
+  let rows_def: any[] = [];
+  let rows: any[] = [];
+  Object.keys(data_values).forEach(function (key, i) {
+    if (!btFilters.includes(data_values[key].payload)) {
+      btFilters.push(data_values[key].payload);
+    }
+    rows_def.push({
+      id: i,
+      id_measure: data_values[key].value1,
+      date_complete: data_values[key].value1,
+      date: getDateLab(data_values[key].date),
+      hour: getTimeLab(data_values[key].date),
+      value: data_values[key].payload,
+      misure: data_values[key].payload,
+      type: data_values[key].payload
+    })
+  });
   if (type != null) {
     rows = rows_def.filter(function (el) {
       return el.type == type
@@ -46,9 +60,7 @@ const PatientVaccinations = () => {
   } else {
     rows = rows_def;
   }
-  if (rows) {
-    // rows.sort(compare);
-  }
+
   let navigate = useNavigate();
   return (
     <Container
@@ -66,13 +78,12 @@ const PatientVaccinations = () => {
           sx={{
             overflowX: "scroll",
             width: 1,
-            // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
           }}
         >
-          <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+         <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
             <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
-            {btFilters.map((button) => (
-              <Button key={button} color="primary" onClick={() => setType(button)}>{button}</Button>
+            {btFilters.map((bt_el) => (
+              <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
             ))}
           </ButtonGroup>
         </Box>

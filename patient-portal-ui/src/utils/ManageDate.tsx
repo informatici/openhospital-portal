@@ -17,7 +17,10 @@
 
 export function getTimeLab(date_to_c: string | number | Date) {
     let res: Date = new Date(date_to_c);
-    let ret: string = res.getHours() + ':' + res.getMinutes();
+    let hh = res.getHours();
+    let mm = res.getMinutes();
+
+    let ret: string = ("0" + hh).slice(-2) + ':' + ("0" + mm).slice(-2);
     return ret;
 }
 export function getDateLab(date_to_c: string | number | Date) {
@@ -40,3 +43,74 @@ export function compare(a: string | number | Date, b: string | number | Date) {
     }
     return 0;
 };
+
+export function getDayName(dateStr: string | number | Date, locale: any) {
+    let date = new Date(dateStr);
+    let date_e = date.toLocaleDateString(locale, { weekday: 'long' });
+    return date_e;
+}
+export function capitalizeOnlyFirstLetter(dateStr: string) {
+    let capitalized = "";
+    if (dateStr) {
+        dateStr = dateStr.toLocaleLowerCase();
+        capitalized =
+            dateStr.charAt(0).toUpperCase()
+            + dateStr.slice(1);
+    }
+    return capitalized;
+}
+export function filterRecordTypesByValue(object: any, value: any) {
+    const results = object.filter((obj: { code: any; }) => {
+        return obj.code === value;
+    });
+   
+    let res = results[0];
+    let max = res.maxValue;
+    let min = res.minValue;
+    let arr = [];
+
+    for (let i = min; i <= max; i++) {
+
+        let obj = {
+            label: i,
+            value: i
+        };
+        arr.push(obj)
+    }
+    return arr;
+}
+export function filterRecordTypesByValueRet(object: any, value: any) {
+    const results = object.filter((obj: { code: any; }) => {
+        return obj.code === value;
+    });
+    return results[0];
+}
+export function arrOfOption(object: any, value: any) {
+    let res = object;
+    let max = res.maxValue;
+    let min = res.minValue;
+    let arr = [];
+
+    for (let i = min; i <= max; i++) {
+
+        let obj = {
+            label: i,
+            value: i
+        };
+        arr.push(obj)
+    }
+    return arr;
+}
+export function filterRecordTypesByValueDef(object: any, value: any) {
+    const results = object.filter((obj: { code: any; }) => {
+        return obj.code === value;
+    });
+    let res = results[0];
+    let selected = res.defaultValue1;
+    let measurementType = res.measurementType;
+    let uom = res.uom;
+    let max = res.maxValue;
+    let min = res.minValue;
+    return [selected, measurementType, uom];
+}
+

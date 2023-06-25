@@ -8,8 +8,10 @@ class IReqAut extends Component {
         super(props)
         console.log("in button");
         console.log(props);
-        // if (props.idUser) {
-        //     this.state = { idUser: props.idUser }
+
+        // if (props.parentToChild.setType) {
+        //     this.state = { idUser: props.parentToChild.setType }
+
         // } else {
         //     this.state = { idUser: null }
         // }

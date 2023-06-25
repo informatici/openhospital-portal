@@ -1,68 +1,46 @@
-import React, { Component } from "react";
-import AppBar from '@mui/material/AppBar';
-import Box, { BoxProps } from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import React, { useState, useEffect } from "react";
+import Box from '@mui/material/Box';
 import GoBack from "../common/buttons/GoBack";
-import GoHomePatient from "../common/buttons/GoHomePatient";
 import Bagenda from "../common/buttons/patient/Bagenda";
 import Bhome from "../common/buttons/patient/Bhome";
+import Bdelete from "../common/buttons/patient/Bdelete";
+import Bedit from "../common/buttons/patient/Bedit";
 
 import BchooseInsert from "../common/buttons/patient/BchooseInsert";
 import Grid from '@mui/material/Grid';
 
-interface PatientSmartNavProps {
+export default function PatientSmartNav(props: {
     page?: string;
-}
+    type?: string;
+    editBtClk?: any;
+    deleteBtClk?: any;
+}) {
+    // console.log("PatientSmartNav");
+    // console.log(props);
 
-interface PatientSmartNavState {
-    main?: boolean;
-}
-
-class PatientSmartNav extends Component<PatientSmartNavProps, PatientSmartNavState> {
-    constructor(props: any | Readonly<{}>) {
-        super(props);
-        // Set initial state
-        console.log("inizial");
-        console.log(props);
-        this.state = { main: true };
-    }
-
-    render() {
-        // const main = this.state.main;
-        let button;
-        console.log("state:" + this.state.main);
-
-        // console.log("state:" + this.state.main);
-        return (
-            <Box sx={{ width: 1, mt: 1 }}>
-                {/* <AppBar position="static" > */}
-                {/* <Toolbar sx={{
-                    width: 1,
-                }}> */}
-                <Grid container sx={{ width: 1 }} >
-                    <Grid container justifyContent="flex-start" item xs={2}>
-                        {this.props.page != 'PatientHome' ? <GoBack /> : null}
-                    </Grid>
-                    <Grid container justifyContent="flex-start" item xs={2}>
-                        {/* {this.props.page != 'PatientHome' ? <GoHomePatient /> : null} */}
-                    </Grid>
-                    <Grid container justifyContent="flex-start" item xs={4}>
-
-                    </Grid>
-                    <Grid container justifyContent="flex-end" item xs={2}>
-                        {this.props.page == 'PatientHome' ? <BchooseInsert /> : null}
-                    </Grid>
-                    <Grid container justifyContent="flex-end" item xs={2}>
-                        {this.props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
-                        {this.props.page == 'PatientHome' ? <Bagenda /> : null}
-                        {this.props.page == 'PatientAgenda' ? <Bhome /> : null}
-                    </Grid>
+    return (
+        <Box sx={{ width: 1, mt: 1 }}>
+            <Grid container sx={{ width: 1 }} >
+                <Grid container justifyContent="flex-start" item xs={2}>
+                    {props.page != 'PatientHome' ? <GoBack /> : null}
                 </Grid>
-                {/* </Toolbar> */}
-                {/* </AppBar> */}
-            </Box>
-        );
+                <Grid container justifyContent="flex-start" item xs={2}>
+                </Grid>
+                <Grid container justifyContent="flex-start" item xs={4}>
 
-    }
+                </Grid>
+                <Grid container justifyContent="flex-end" item xs={2}>
+                    {props.page == 'PatientHome' ? <BchooseInsert /> : null}
+                    {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bdelete deleteBtClk={props.deleteBtClk} /> : null}
+                </Grid>
+                <Grid container justifyContent="flex-end" item xs={2}>
+                    {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit editBtClk={props.editBtClk} /> : null}
+                    {/* {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit /> : null} */}
+                    {props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
+                    {props.page == 'PatientHome' ? <Bagenda /> : null}
+                    {props.page == 'PatientAgenda' ? <Bhome /> : null}
+                </Grid>
+            </Grid>
+        </Box>
+    );
 }
-export default PatientSmartNav;

@@ -19,6 +19,7 @@ interface Imin_max {
 interface Iarterial_pressureProps {
     dataSelected?: string;
     dataDef?: Imin_max[];
+    dataDefSta?: any;
 
 }
 

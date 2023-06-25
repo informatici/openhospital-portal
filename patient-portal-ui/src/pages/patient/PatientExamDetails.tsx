@@ -6,8 +6,17 @@ import Grid from '@mui/material/Grid';
 
 
 
-function PatientExamDetails(props: { setType: { date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }; }) {
-  console.log("--- props --- PatientExamDetails");
+function PatientExamDetails(props: {
+
+  setType: {
+    date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    value: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+  };
+}) {
   console.log(props);
   return (
     <Container
@@ -24,7 +33,7 @@ function PatientExamDetails(props: { setType: { date: boolean | React.ReactChild
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Date Esame
+            Date vaccianzione
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.date}
@@ -51,7 +60,7 @@ function PatientExamDetails(props: { setType: { date: boolean | React.ReactChild
             Category
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.setType.category}
+            {props.setType.value}
           </Typography>
         </Grid>
         <Grid xs={12}>
@@ -77,5 +86,4 @@ function PatientExamDetails(props: { setType: { date: boolean | React.ReactChild
   );
 
 };
-
 export default PatientExamDetails;

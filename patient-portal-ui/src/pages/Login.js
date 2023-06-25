@@ -3,11 +3,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { Container, Typography, Link, Box, Divider } from "@mui/material";
 import styled from "@emotion/styled";
 import LoginForm from "../components/LoginForm";
-import SocialAuth from "../components/SocialAuth";
 import Logo from "../components/Logo";
 import { motion } from "framer-motion";
 import HelpDevLogin from "../components/modals/HelpDevLogin";
-//////////////////////////////////
+
 const RootStyle = styled("div")({
   background: "rgb(249, 250, 251)",
   height: "100vh",
@@ -49,44 +48,14 @@ const fadeInUp = {
 const Login = ({ setAuth, setProfile }) => {
   console.log("Login");
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    fetch('http://api.plos.org/search?q=title:DNA')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("test out");
-        console.log(data);
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
-
-
   return (
     <RootStyle>
       <Container maxWidth="sm">
         <ContentStyle>
           <HeadingStyle component={motion.div} {...fadeInUp}>
             <Logo />
-            {/* <Typography sx={{ color: "text.secondary", mb: 5 }}>
-              Login to your account
-            </Typography> */}
           </HeadingStyle>
-
-          {/* <Box component={motion.div} {...fadeInUp}>
-            <SocialAuth />
-          </Box> */}
-
-          {/* <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
-            </Typography>
-          </Divider> */}
-
-          <LoginForm  setAuth={setAuth} setProfile={setProfile} />
-
+          <LoginForm setAuth={setAuth} setProfile={setProfile} />
           <Typography
             component={motion.p}
             {...fadeInUp}
@@ -94,14 +63,14 @@ const Login = ({ setAuth, setProfile }) => {
             align="center"
             sx={{ mt: 3 }}
           >
-            You don't remember the password? {" "}
+            {/* You don't remember the password? {" "} */}
             {/* Don’t have an account?{" "} */}
             {/* <Link variant="subtitle2" component={RouterLink} to="/signup">
               Sign up
             </Link> */}
-            <Link variant="subtitle2" component={RouterLink} to="/resetPassword">
+            {/* <Link variant="subtitle2" component={RouterLink} to="/resetPassword">
               Reset
-            </Link>
+            </Link> */}
           </Typography>
           <HelpDevLogin />
         </ContentStyle>

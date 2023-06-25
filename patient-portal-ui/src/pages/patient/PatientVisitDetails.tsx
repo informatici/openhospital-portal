@@ -1,12 +1,21 @@
 import * as React from 'react';
-import {  Typography, Container, Box } from "@mui/material";
+import { Typography, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 
 import Grid from '@mui/material/Grid';
 
 
 
-function PatientVisitDetails(props: { setType: { date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }; }) {
+function PatientVisitDetails(props: {
+  setType: {
+    date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    value: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+  };
+}) {
 
   console.log("--- props --- PatientVisitDetails");
   console.log(props);
@@ -52,7 +61,7 @@ function PatientVisitDetails(props: { setType: { date: boolean | React.ReactChil
             Category
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.setType.category}
+            {props.setType.value}
           </Typography>
         </Grid>
         <Grid xs={12}>

@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 interface IascultationProps {
     dataSelected?: string;
     dataDef?: any[];
+    dataDefSta?: any;
 }
 
 interface IascultationState {
@@ -88,7 +89,7 @@ class Iascultation extends Component<IascultationProps, IascultationState> {
                     justifyContent="space-between"
                 // alignItems="center"
                 >
-                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>Ascultation: </Typography>
+                    <Typography variant="body1" display="inline" sx={{ width: 0.3 }}>{this.props.dataDefSta[1]}: </Typography>
                     <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalue}</Typography>
                     <Typography variant="body1" align="right" display="inline" sx={{}}>
                         <IconButton onClick={this.ioDataOut} sx={{}} color="primary" aria-label="insert" size="large">
