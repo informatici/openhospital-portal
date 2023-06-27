@@ -1,21 +1,29 @@
 version: "3.8"
 services:
   loadbalancer:
-    image: ${IMAGES_REPO}/traefik:develop
-    build:
-      context: ./loadbalancer
-      dockerfile: Dockerfile
+    image: traefik:v2.9.1
     restart: unless-stopped
     volumes:
       - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    #labels:
     command:
       #comment/uncomment for production/test
-      - "--log.level=DEBUG"
+      - "--global.checkNewVersion=true"
+      - "--global.sendAnonymousUsage=false"
+      - "--log.level=INFO"
+      - "--accesslog=true"
       - "--api.insecure=true"
+      - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:${HTTP_PORT}"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entryPoint.permanent=true"
       - "--entrypoints.websecure.address=:${HTTPS_PORT}"
+      - "--entrypoints.ping.address=:8082"
+      - "--ping.entryPoint=ping"
       - "--certificatesresolvers.ohppresolver.acme.tlschallenge=true"
       #comment/uncommemt for production/staging
       - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
