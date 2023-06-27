@@ -9,7 +9,7 @@ export const DeafutlAllData = {
   getAllUsers: async function () {
     let response = await fetch('http://develop-api.ohpp.local:18080/api/admin/users');
     const data = await response.json();
-    return data; 
+    return data;  
   },
   // --- AUTH_API
   getToken: async function () {
