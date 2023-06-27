@@ -20,7 +20,7 @@ services:
       #comment/uncommemt for production/staging
       - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.ohppresolver.acme.email=${CERT_EMAIL}"
-      - "--certificatesresolvers.ohppresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.ohppresolver.acme.storage=letsencrypt/acme.json"
     hostname: loadbalancer
     healthcheck:
       test: ["CMD", "traefik", "healthcheck"]
