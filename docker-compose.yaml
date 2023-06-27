@@ -7,7 +7,20 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
+      - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      #comment/uncomment for production/test
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:${HTTPS_PORT}"
+      - "--certificatesresolvers.ohppresolver.acme.tlschallenge=true"
+      #comment/uncommemt for production/staging
+      - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.ohppresolver.acme.email=${CERT_EMAIL}"
+      - "--certificatesresolvers.ohppresolver.acme.storage=/letsencrypt/acme.json"
     hostname: loadbalancer
     healthcheck:
       test: ["CMD", "traefik", "healthcheck"]
@@ -83,6 +96,7 @@ services:
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}-api.${BASE_DOMAIN}`)
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls=true
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.service=patientportal-api-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-api-${ENVIRONMENT_NAME}.loadbalancer.server.port=8080
@@ -120,6 +134,7 @@ services:
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}`)
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80
