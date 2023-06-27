@@ -23,6 +23,8 @@ COPY docker/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY docker/react-static.conf.template /etc/nginx/templates/react-static.conf.template
 COPY docker/nginx-conf-template.sh /docker-entrypoint.d/90-nginx-conf-template.sh
 
+RUN rm /etc/nginx/conf.d/default.conf
+
 RUN sed -i 's/\r$//' /docker-entrypoint.d/90-nginx-conf-template.sh
 
 ENV WORKER_CONNECTIONS 1024
