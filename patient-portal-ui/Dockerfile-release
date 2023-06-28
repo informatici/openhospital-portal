@@ -14,8 +14,8 @@ RUN npm install
 
 COPY . ./
 
-RUN sed -Ri 's/develop.ohpp.local\:18080/${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g' patient-portal-ui/src/datajs/DeafutlAllData.tsx
-RUN sed -Ri 's/develop.ohpp.local/${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g' patient-portal-ui/public/index.html
+RUN sed -i 's/develop.ohpp.local\:18080/${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g' patient-portal-ui/src/datajs/DeafutlAllData.tsx
+RUN sed -i 's/develop.ohpp.local/${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g' patient-portal-ui/public/index.html
 
 RUN npm run build
 
