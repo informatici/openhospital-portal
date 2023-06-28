@@ -90,6 +90,7 @@ services:
   api:
     extends:
       service: api-base
+    restart: "unless-stopped"
     networks:
       - frontend-net
       - backend-net
@@ -99,7 +100,7 @@ services:
       - app.name=patientportal
       - traefik.enable=true
       - traefik.docker.network=ohpp-net-${ENVIRONMENT_NAME}
-      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}-api.${BASE_DOMAIN}`)
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}` && PathPrefix(`/api`)
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls=true
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver

@@ -44,7 +44,7 @@ Create the folder structure
 
 ```
 export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)
-mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations
+mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations data/$ENVIRONMENT_NAME/letsencrypt
 
 ```
 
@@ -80,9 +80,15 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-a
 
 Interrupt with CTRL-C after finish (don't mind the errors)
 
+### 3. build the ui
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-arg ENVIRONMENT_NAME --build-arg BASE_DOMAIN ui
+```
+
 ## Starting
 
-### 3. start the app mode with output in the terminal
+### 4. start the app mode with output in the terminal
 
 ```
 # matomo instance (optional, in background)
@@ -120,15 +126,15 @@ Abramo Oliver       701020            abramo2023         PATIENT
 ```
 
 
-### 4. available services
+### 5. available services
 
 - Patient Portal (ui) will be available at `https://develop.ohpp.local/` 
 
-- Api will be available at `https://develop-api.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
+- Api will be available at `https://develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
 
 - Loadbalancer dashboard (traefik) will be available at `http://localhost:8080`
 
-- Matomo will be available at `http://develop-matomo.ohpp.local/` and `http://localhost:28080/`
+- Matomo will be available at `http://develop.ohpp.local/matomo` and `http://localhost:28080/`
 
 - Instructions for Matomo (please read it carefully):
 
