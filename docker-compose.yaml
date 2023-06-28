@@ -4,11 +4,9 @@ services:
     image: traefik:v2.9.1
     restart: unless-stopped
     volumes:
-      - ./letsencrypt:/letsencrypt
+      - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
-    #labels:
     command:
-      #comment/uncomment for production/test
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"
       - "--log.level=INFO"
@@ -25,7 +23,7 @@ services:
       - "--entrypoints.ping.address=:8082"
       - "--ping.entryPoint=ping"
       - "--certificatesresolvers.ohppresolver.acme.tlschallenge=true"
-      #comment/uncommemt for production/staging
+      #comment for production
       - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.ohppresolver.acme.email=${CERT_EMAIL}"
       - "--certificatesresolvers.ohppresolver.acme.storage=letsencrypt/acme.json"
@@ -201,6 +199,13 @@ volumes:
       o: bind
       type: none
       device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/run
+      
+  letsencrypt:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/letsencrypt
 
 networks:
   frontend-net:
