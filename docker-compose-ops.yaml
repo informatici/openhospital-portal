@@ -77,4 +77,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-    device: ${ROOT}/patient-portal/sql
+      device: /home/s3r/htdocs/OH/OH_PP_SERDF3R/openhospital-portal/patient-portal/sql
