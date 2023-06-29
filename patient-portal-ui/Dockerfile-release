@@ -1,5 +1,8 @@
 FROM node:19-alpine as build
 
+ARG ENVIRONMENT_NAME
+ARG BASE_DOMAIN
+
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
@@ -10,6 +13,9 @@ COPY package-lock.json ./
 RUN npm install
 
 COPY . ./
+
+RUN sed -i "s/http\:\/\/develop-api.ohpp.local\:18080/https\:\/\/api.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" src/datajs/DeafutlAllData.tsx
+RUN sed -i "s/develop-matomo.ohpp.local/matomo.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" public/index.html
 
 RUN npm run build
 

@@ -9,7 +9,7 @@ services:
     command:
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"
-      - "--log.level=INFO"
+      - "--log.level=DEBUG"
       - "--accesslog=true"
       - "--api.insecure=true"
       - "--api.dashboard=true"
@@ -22,7 +22,7 @@ services:
       - "--entrypoints.websecure.address=:${HTTPS_PORT}"
       - "--entrypoints.ping.address=:8082"
       - "--ping.entryPoint=ping"
-      - "--certificatesresolvers.ohppresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.ohppresolver.acme.dnschallenge=true"
       #comment for production
       - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.ohppresolver.acme.email=${CERT_EMAIL}"
@@ -99,10 +99,12 @@ services:
       - app.name=patientportal
       - traefik.enable=true
       - traefik.docker.network=ohpp-net-${ENVIRONMENT_NAME}
-      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}-api.${BASE_DOMAIN}`)
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`api.${ENVIRONMENT_NAME}.${BASE_DOMAIN}`)
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls=true
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.domains[0].main=${ENVIRONMENT_NAME}.${BASE_DOMAIN}
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.domains[0].sans=*.${ENVIRONMENT_NAME}.${BASE_DOMAIN}
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.service=patientportal-api-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-api-${ENVIRONMENT_NAME}.loadbalancer.server.port=8080
@@ -141,6 +143,8 @@ services:
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls.domains[0].main=${ENVIRONMENT_NAME}.${BASE_DOMAIN}
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls.domains[0].sans=*.${ENVIRONMENT_NAME}.${BASE_DOMAIN}
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80

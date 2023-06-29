@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 const url_0 = 'http://develop-api.ohpp.local:18080/api/';
-const url_1 = 'http://localhost:18080/api/';
+const url_1 = 'http://develop-api.ohpp.local:18080/api/';
 // export const ListDoctorPatientsTest = async () => {
 export const DeafutlAllData = {
 
