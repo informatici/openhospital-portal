@@ -17,7 +17,7 @@ server {
         return 200 "ALIVE";
     }
 
-    #error_page  404              /404.html;
+    error_page  404 =200  /;
 
     # redirect server error pages to the static page /50x.html
     #

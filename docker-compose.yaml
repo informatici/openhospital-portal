@@ -1,13 +1,32 @@
 version: "3.8"
 services:
   loadbalancer:
-    image: ${IMAGES_REPO}/traefik:develop
-    build:
-      context: ./loadbalancer
-      dockerfile: Dockerfile
+    image: traefik:v2.9.1
     restart: unless-stopped
     volumes:
+      - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - "--global.checkNewVersion=true"
+      - "--global.sendAnonymousUsage=false"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:${HTTP_PORT}"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entryPoint.permanent=true"
+      - "--entrypoints.websecure.address=:${HTTPS_PORT}"
+      - "--entrypoints.ping.address=:8082"
+      - "--ping.entryPoint=ping"
+      - "--certificatesresolvers.ohppresolver.acme.tlschallenge=true"
+      #comment for production
+      - "--certificatesresolvers.ohppresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.ohppresolver.acme.email=${CERT_EMAIL}"
+      - "--certificatesresolvers.ohppresolver.acme.storage=letsencrypt/acme.json"
     hostname: loadbalancer
     healthcheck:
       test: ["CMD", "traefik", "healthcheck"]
@@ -83,6 +102,7 @@ services:
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}-api.${BASE_DOMAIN}`)
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls=true
+      - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-api-${ENVIRONMENT_NAME}.service=patientportal-api-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-api-${ENVIRONMENT_NAME}.loadbalancer.server.port=8080
@@ -120,6 +140,7 @@ services:
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.rule=Host(`${ENVIRONMENT_NAME}.${BASE_DOMAIN}`)
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.entrypoints=websecure
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls=true
+      - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.tls.certresolver=ohppresolver
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.priority=10
       - traefik.http.routers.patientportal-${ENVIRONMENT_NAME}.service=patientportal-${ENVIRONMENT_NAME}
       - traefik.http.services.patientportal-${ENVIRONMENT_NAME}.loadbalancer.server.port=80
@@ -178,6 +199,13 @@ volumes:
       o: bind
       type: none
       device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/run
+      
+  letsencrypt:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_SHARED}/${ENVIRONMENT_NAME}/letsencrypt
 
 networks:
   frontend-net:
