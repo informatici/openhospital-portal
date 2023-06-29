@@ -90,6 +90,7 @@ services:
   api:
     extends:
       service: api-base
+    restart: "unless-stopped"
     networks:
       - frontend-net
       - backend-net
