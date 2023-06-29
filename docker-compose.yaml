@@ -9,6 +9,7 @@ services:
     command:
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"
+      #change to INFO for production
       - "--log.level=DEBUG"
       - "--accesslog=true"
       - "--api.insecure=true"
