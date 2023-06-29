@@ -14,8 +14,8 @@ RUN npm install
 
 COPY . ./
 
-RUN sed -i "s/http\:\/\/develop-api.ohpp.local\:18080/https\:\/\/api.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" src/datajs/DeafutlAllData.tsx
-RUN sed -i "s/develop-matomo.ohpp.local/matomo.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" public/index.html
+RUN sed -i "s/http\:\/\/api.develop.ohpp.local\:18080/https\:\/\/api.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" src/datajs/DeafutlAllData.tsx
+RUN sed -i "s/matomo.develop.ohpp.local/matomo.${ENVIRONMENT_NAME}.${BASE_DOMAIN}/g" public/index.html
 
 RUN npm run build
 
