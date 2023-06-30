@@ -46,9 +46,10 @@ services:
       - app.name=patientportal
       - traefik.enable=true
       - traefik.docker.network=patientportal-matomo-net-${ENVIRONMENT_NAME}
-      - traefik.http.routers.matomo.rule=Host(`${ENVIRONMENT_NAME}-matomo.${BASE_DOMAIN}`)
+      - traefik.http.routers.matomo.rule=Host(`matomo-${ENVIRONMENT_NAME}.${BASE_DOMAIN}`)
       - traefik.http.routers.matomo.entrypoints=websecure
       - traefik.http.routers.matomo.tls=true
+      - traefik.http.routers.matomo.tls.certresolver=ohppresolver
       - traefik.http.routers.matomo.priority=10
       - traefik.http.routers.matomo.service=matomo
       - traefik.http.services.matomo.loadbalancer.server.port=80

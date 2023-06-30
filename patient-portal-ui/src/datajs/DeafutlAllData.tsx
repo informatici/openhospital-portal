@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-const url_0 = 'http://develop-api.ohpp.local:18080/api/';
-const url_1 = 'http://localhost:18080/api/';
+const url_0 = 'http://api-develop.ohpp.local:18080/api/';
+const url_1 = 'http://api-develop.ohpp.local:18080/api/';
 // export const ListDoctorPatientsTest = async () => {
 export const DeafutlAllData = {
 
 
   // --- ADMIN_API
   getAllUsers: async function () {
-    let response = await fetch('http://develop-api.ohpp.local:18080/api/admin/users');
+    let response = await fetch('http://api-develop.ohpp.local:18080/api/admin/users');
     const data = await response.json();
     return data;
   },
