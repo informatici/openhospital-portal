@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { dateIsoToString } from '../utils/ManageDate';
 const url_0 = 'http://develop-api.ohpp.local:18080/api/';
 const url_1 = 'http://localhost:18080/api/';
 // export const ListDoctorPatientsTest = async () => {
@@ -9,11 +10,11 @@ export const DeafutlAllData = {
   getAllUsers: async function () {
     let response = await fetch('http://develop-api.ohpp.local:18080/api/admin/users');
     const data = await response.json();
-    return data;  
+    return data;
   },
   // --- AUTH_API
   getToken: async function () {
-    let response = await fetch(url_0 +'api/auth/login', {
+    let response = await fetch(url_0 + 'api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,4 +129,59 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
+  postInsertMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any) {
+    console.log(dateIsoToString(recordDate));
+    let response = await fetch(url_0 + 'public/patientrecords', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "note": null, 
+        "optionValue": null,
+        "patientId": patientId,
+        "recordDate": dateIsoToString(recordDate),
+        "recordTypeCode": recordTypeCode,
+        "value1": value1,
+        "value2": -1
+      }),
+    });
+
+    const data = await response.json();
+    return data;
+  },
+  getMeasurementbyId: async function (ins_upd: any) {
+    let response = await fetch(url_0 + 'public/patientrecords/' + ins_upd);
+    const data = await response.json();
+    return data;
+
+  },
+  postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any) {
+    // console.log(res_all);
+    // res_all.value1 = value1;
+    // console.log(res_all);
+
+    // let response = await fetch(url_0 + 'public/patientrecords/' + patientId, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     res_all
+    //   }),
+    // });
+
+    // const data = await response.json();
+    // return data;
+  },
+  deleteMeasurement: async function (id_measure: number,) {
+    let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
+      method: 'DELETE',
+     
+    });
+    console.log(response);
+    return response;
+  },
+
+
 }
