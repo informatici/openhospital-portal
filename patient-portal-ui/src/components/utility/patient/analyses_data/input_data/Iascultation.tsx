@@ -67,6 +67,12 @@ export default function Iweight(props: {
     boxShadow: 24,
     p: 4,
   };
+  console.log("fff");
+  useEffect(() => {
+    DeafutlAllData.getAuscultationoptions().then((res) => {
+      console.log(res);
+    });
+  }, []);
   useEffect(() => {
     // --- manage default
     rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);

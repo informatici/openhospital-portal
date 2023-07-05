@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -38,6 +38,7 @@ export default function Idiuresis(props: {
   dataDef: IdiuresisProps;
   edit?: boolean
   delete?: boolean
+  option?: any
 }) {
   const [data, setData] = React.useState<string | number | Date>(Date.now());
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export default function Idiuresis(props: {
   console.log(rif);
   let date_rif: Date | string | number = Date.now();
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -67,6 +69,7 @@ export default function Idiuresis(props: {
     boxShadow: 24,
     p: 4,
   };
+
   useEffect(() => {
     // --- manage default
     rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
@@ -207,7 +210,7 @@ export default function Idiuresis(props: {
 
         <Box sx={{ width: 1, mt: 1.5 }}>
           <TextField
-            type="number"
+            select
             onChange={e => setData(e.target.value)}
             required
             disabled={dataDisabled}
@@ -215,9 +218,14 @@ export default function Idiuresis(props: {
             label={capitalizeOnlyFirstLetter(rif.measurementType)}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
-            InputProps={{
-              startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
-            }}
+            // InputProps={{
+            //   startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
+            // }}
+            // {...props.option.map((option: any) => (
+            //   <MenuItem key={option.value} value={option.value}>
+            //     {option.label}
+            //   </MenuItem>
+            // ))}
             error={dataError}
             helperText={dataErrorMessage}
             defaultValue={rif.defaultValue1} />

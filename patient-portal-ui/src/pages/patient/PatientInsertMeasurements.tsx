@@ -63,9 +63,52 @@ function PatientInsertMeasurements(props: {
       setLoadComponent(1);
     });
   }, []);
+  useEffect(() => {
+    DeafutlAllData.getAuscultationoptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      console.log(json_res);
+      setOptionAu(json_res);
+    });
+    DeafutlAllData.getBoweloptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      setOptionBo(json_res);
+    });
+    DeafutlAllData.getDiuresisoptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      console.log(json_res);
+      setOptionDi(json_res);
+    });
+  }, []);
   const [message, setMessage] = React.useState("");
   const [editTF, setEditTF] = React.useState(false);
   const [deleteTF, setDeleteTF] = React.useState(false);
+  const [optionAu, setOptionAu] = React.useState({});
+  const [optionBo, setOptionBo] = React.useState({});
+  const [optionDi, setOptionDi] = React.useState({});
+
   const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
     // console.log(editTF);
     setEditTF(editTF);
@@ -98,7 +141,7 @@ function PatientInsertMeasurements(props: {
         {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={filterRecordTypesByValueRet(data, "RR")} edit={editTF} delete={deleteTF} /> : null}
         {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={filterRecordTypesByValueRet(data, "DIUR_V")} edit={editTF} delete={deleteTF} /> : null}
 
-        {props.setType.type == 'diuresis' ? <Idiuresis dataDef={filterRecordTypesByValueRet(data, "DIUR")} edit={editTF} delete={deleteTF} /> : null}
+        {props.setType.type == 'diuresis' ? <Idiuresis dataDef={filterRecordTypesByValueRet(data, "DIUR")} edit={editTF} delete={deleteTF} option={optionDi} /> : null}
         {/* {props.setType.type == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} dataSelected={props.setType.value} /> : null} */}
         {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}
 
