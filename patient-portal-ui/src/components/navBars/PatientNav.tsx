@@ -88,7 +88,7 @@ class PatientNav extends Component<any> {
                                     {this.props.firstName} {this.props.secondName}
                                 </Typography>
                                 <Typography variant="button" >
-                                    ID:   {this.props.id}
+                                    ID:   {this.props.userId}
                                 </Typography>
                             </div>
                             <div style={{ "width": "10%", margin: "2%" }} >
