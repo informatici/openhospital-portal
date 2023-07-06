@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 
-import IT from 'country-flag-icons/react/3x2/IT'
+import Flags from 'country-flag-icons/react/3x2'
 
 import Oname from "../utility/user/output_data/Oname";
 import Oage from "../utility/user/output_data/Oage";
@@ -92,7 +92,7 @@ class PatientNav extends Component<any> {
                                 </Typography>
                             </div>
                             <div style={{ "width": "10%", margin: "2%" }} >
-                                <IT title="United States" />
+                                <Flags.GB title="United Kingdom" />
                             </div>
                         </Stack>
                     </Box>
