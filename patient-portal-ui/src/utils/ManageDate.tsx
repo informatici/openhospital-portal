@@ -23,6 +23,26 @@ export function getTimeLab(date_to_c: string | number | Date) {
     let ret: string = ("0" + hh).slice(-2) + ':' + ("0" + mm).slice(-2);
     return ret;
 }
+export function isIsoDate(str: any) {
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
+    const d = new Date(str);
+    return d instanceof Date && !isNaN(d.getTime()) && d.toISOString() === str; // valid date 
+}
+export function toIsoDate(str: any) {
+    let date_rec = str;
+    if (isIsoDate(str) == false) {
+        date_rec = str.toISOString()
+    }
+    return date_rec; // valid date 
+}
+export function dateIsoToString(str: any) {
+    let date_rec = str;
+    date_rec = date_rec.replace("T", " ");
+    date_rec = date_rec.replace("Z", "");
+    date_rec = date_rec.substr(0, 19)
+    return date_rec; // valid date 
+}
+
 export function getDateLab(date_to_c: string | number | Date) {
     const t = new Date(date_to_c);
     let y: number = t.getFullYear();
@@ -63,7 +83,7 @@ export function filterRecordTypesByValue(object: any, value: any) {
     const results = object.filter((obj: { code: any; }) => {
         return obj.code === value;
     });
-   
+
     let res = results[0];
     let max = res.maxValue;
     let min = res.minValue;

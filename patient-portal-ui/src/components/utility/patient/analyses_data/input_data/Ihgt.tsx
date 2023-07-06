@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import { Button } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
-import Idate_time from "../../../../../components/utility/common/input_data/Idate_time";
-import { capitalizeOnlyFirstLetter } from '../../../../../utils/ManageDate';
 
-interface IhgtProps {
+interface IweightProps {
   code?: string;
   defaultOptionValue?: string | null;
   defaultValue1?: number;
   defaultValue2?: number;
   id?: number;
+  id_measure?: number;
   maxValue: number | string;
   measurementType: string;
   measurementValueType?: string;
@@ -29,39 +34,96 @@ interface IhgtProps {
 interface $d {
   $d?: string;
 }
-export default function Ihgt(props: {
-  dataDef: IhgtProps;
+export default function Iweight(props: {
+  dataDef: IweightProps;
+  edit?: boolean
+  delete?: boolean
 }) {
   const [data, setData] = React.useState<string | number | Date>(Date.now());
-  const [dataDate, setDataDate] = React.useState<string | number | Date>(Date.now());
-  const [newDateTime, setNewDateTime] = React.useState<number | string | Date | null | { $d: string } | any>("");
+  const navigate = useNavigate();
+  const [dateTime, setDateTime] = React.useState<any>(Date.now());
+
   const [dataError, setDataError] = useState(false);
   const [dataErrorMessage, setDataErrorMessage] = useState("");
+  const [dataDisabled, setDataDisabled] = useState(false);
+  const [dataDelete, setDataDelete] = useState(false);
+  const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  let now = Date.now();
   let date_rif: Date | string | number = Date.now();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   useEffect(() => {
+    // --- manage default
+    rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
     if (rif.date_complete) {
-      // --- TODO 
-      let arr_1 = rif.date_complete.split(" ");
-      let arr_2 = arr_1[0].split("-");
-      let date: string | number | Date = arr_2[0] + "-" + arr_2[1] + "-" + arr_2[2] + "T" + arr_1[1];
-      date = new Date(date);
-      date_rif = date;
-      setDataDate(date);
+      let dateR = new Date(rif.date_complete).toISOString()
+      setDateTime(dateR);
     } else {
-      // console.log(now);
-      setDataDate(now);
+      setDateTime(new Date());
     }
-  });
+    console.log(dateTime);
+  }, []);
+  useEffect(() => {
+    // --- manage edit
+    if (props.edit == true) {
+      setDataDisabled(false);
+    }
+  }, [props.edit]);
+  useEffect(() => {
+    // --- manage delete
+    if (dataDelete == true) {
+      setOpen(true);
+      // window.location.reload();
+    } else {
+      setDataDelete(true);
+    }
+  }, [props.delete]);
+  useEffect(() => {
+    // --- manage delete choice
+    if (deleteMeasure == "y") {
+      setOpen(false);
+      let patientId = localStorage.getItem("IdPatient");
+      let id_measure: any = rif.id_measure;
+      DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
+        console.log(res);
+        console.log(res);
+        navigate('/PatientMeasurements',
+          {
+            state: {
+              res: res
+            }
+          });
+      });
+
+    }
+    if (deleteMeasure == "n") {
+      setOpen(false)
+      window.location.reload();
+    } else {
+      // console.log("nothing");
+    }
+  }, [deleteMeasure]);
+
   const handleSubmit = (event: {
     [x: string]: any; preventDefault: () => void;
   }) => {
     event.preventDefault();
     let dateValue = date_rif;
-    let inputValue = event.target.hgt.value;
+    let inputValue = event.target.weight.value;
     if (inputValue == null) {
       setDataError(true);
       setDataErrorMessage("Il valore non può essere vuoto")
@@ -75,28 +137,77 @@ export default function Ihgt(props: {
     } else {
       setDataError(false);
       setDataErrorMessage("");
-
-      if (newDateTime) {
-        console.log(newDateTime);
-        dateValue = newDateTime?.$d.toISOString()
+      if (dataDisabled == false) {
+        // --- manage update/insert
+        let ins_upd = rif.id_measure ? rif.id_measure : ""; // --- if exist update else new measure
+        let patientId = localStorage.getItem("IdPatient");
+        let value1 = event.target.weight.value;
+        let recordDate = toIsoDate(dateTime);
+        let recordTypeCode = rif.code;
+        console.log("patientId:" + patientId);
+        console.log("value1:" + value1);
+        console.log("recordDate:" + recordDate);
+        console.log("ins_upd:" + ins_upd);
+        console.log("recordTypeCode:" + recordTypeCode);
+        if (ins_upd == '') {
+          console.log("insert");
+          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+            console.log(res);
+            navigate('/PatientMeasurements',
+              {
+                state: {
+                  res: res
+                }
+              });
+          });
+        } else {
+          console.log("update");
+          // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          //   console.log(res);
+          //   navigate('/PatientMeasurements',
+          //     {
+          //       state: {
+          //         res: res
+          //       }
+          //     });
+          // });
+        }
+        // --- TODO insert/update and changePage
       }
-      console.log(dateValue);
-      console.log(inputValue);
-      // --- TODO insert/update and changePage
-
     }
-    // alert("Form Submitted");
   }
 
   return (
     <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div>
+            <Typography variant="subtitle1" gutterBottom>
+              Do you want to remove this measure?
+            </Typography>
+
+            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
+            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+          </div>
+        </Box>
+      </Modal>
       <form onSubmit={handleSubmit} id='my-form'>
+        <Box display="flex"
+          justifyContent="center"
+          alignItems="center"> <Box component="img" src="/static/measure_patient/Glicemy.png" alt="logo" /></Box>
+
         <Box sx={{ width: 1, mt: 1.5 }}>
           <TextField
             type="number"
             onChange={e => setData(e.target.value)}
             required
-            name="hgt"
+            disabled={dataDisabled}
+            name="weight"
             label={capitalizeOnlyFirstLetter(rif.measurementType)}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
@@ -111,9 +222,10 @@ export default function Ihgt(props: {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']}>
               <MobileDateTimePicker
+                disabled={dataDisabled}
                 onChange={(newValue) => {
-                  setNewDateTime(newValue);
-                }} sx={{ width: 1 }} defaultValue={dayjs(dataDate)} />
+                  setDateTime(newValue?.toISOString());
+                }} sx={{ width: 1 }} defaultValue={dayjs(rif.date_complete)} />
             </DemoContainer>
           </LocalizationProvider>
         </Box>

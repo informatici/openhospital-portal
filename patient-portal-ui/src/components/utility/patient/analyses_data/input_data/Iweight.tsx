@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
@@ -9,11 +10,10 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
-import Idate_time from "../../../../../components/utility/common/input_data/Idate_time";
-import { capitalizeOnlyFirstLetter } from '../../../../../utils/ManageDate';
 
 interface IweightProps {
   code?: string;
@@ -21,6 +21,7 @@ interface IweightProps {
   defaultValue1?: number;
   defaultValue2?: number;
   id?: number;
+  id_measure?: number;
   maxValue: number | string;
   measurementType: string;
   measurementValueType?: string;
@@ -39,8 +40,9 @@ export default function Iweight(props: {
   delete?: boolean
 }) {
   const [data, setData] = React.useState<string | number | Date>(Date.now());
-  const [dataDate, setDataDate] = React.useState<string | number | Date>(Date.now());
-  const [newDateTime, setNewDateTime] = React.useState<number | string | Date | null | { $d: string } | any>("");
+  const navigate = useNavigate();
+  const [dateTime, setDateTime] = React.useState<any>(Date.now());
+
   const [dataError, setDataError] = useState(false);
   const [dataErrorMessage, setDataErrorMessage] = useState("");
   const [dataDisabled, setDataDisabled] = useState(false);
@@ -48,12 +50,8 @@ export default function Iweight(props: {
   const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  let now = Date.now();
+  console.log(rif);
   let date_rif: Date | string | number = Date.now();
-  // console.log("edit");
-  // console.log(props.edit);
-  // console.log("delete");
-  // console.log(props.delete);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -70,26 +68,24 @@ export default function Iweight(props: {
     p: 4,
   };
   useEffect(() => {
+    // --- manage default
+    rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
     if (rif.date_complete) {
-      // --- TODO 
-      let arr_1 = rif.date_complete.split(" ");
-      let arr_2 = arr_1[0].split("-");
-      let date: string | number | Date = arr_2[0] + "-" + arr_2[1] + "-" + arr_2[2] + "T" + arr_1[1];
-      date = new Date(date);
-      date_rif = date;
-      setDataDisabled(true);
-      setDataDate(date);
+      let dateR = new Date(rif.date_complete).toISOString()
+      setDateTime(dateR);
     } else {
-      setDataDate(now);
-      setDataDisabled(false);
+      setDateTime(new Date());
     }
+    console.log(dateTime);
   }, []);
   useEffect(() => {
+    // --- manage edit
     if (props.edit == true) {
       setDataDisabled(false);
     }
   }, [props.edit]);
   useEffect(() => {
+    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
       // window.location.reload();
@@ -98,8 +94,22 @@ export default function Iweight(props: {
     }
   }, [props.delete]);
   useEffect(() => {
+    // --- manage delete choice
     if (deleteMeasure == "y") {
-      setOpen(false)
+      setOpen(false);
+      let patientId = localStorage.getItem("IdPatient");
+      let id_measure: any = rif.id_measure;
+      DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
+        console.log(res);
+        console.log(res);
+        navigate('/PatientMeasurements',
+          {
+            state: {
+              res: res
+            }
+          });
+      });
+
     }
     if (deleteMeasure == "n") {
       setOpen(false)
@@ -108,6 +118,7 @@ export default function Iweight(props: {
       // console.log("nothing");
     }
   }, [deleteMeasure]);
+
   const handleSubmit = (event: {
     [x: string]: any; preventDefault: () => void;
   }) => {
@@ -127,12 +138,47 @@ export default function Iweight(props: {
     } else {
       setDataError(false);
       setDataErrorMessage("");
-
-      if (newDateTime) {
-        dateValue = newDateTime?.$d.toISOString()
+      if (dataDisabled == false) {
+        // --- manage update/insert
+        let ins_upd = rif.id_measure ? rif.id_measure : ""; // --- if exist update else new measure
+        let patientId = localStorage.getItem("IdPatient");
+        let value1 = event.target.weight.value;
+        let recordDate = toIsoDate(dateTime);
+        let recordTypeCode = rif.code;
+        console.log("patientId:" + patientId);
+        console.log("value1:" + value1);
+        console.log("recordDate:" + recordDate);
+        console.log("ins_upd:" + ins_upd);
+        console.log("recordTypeCode:" + recordTypeCode);
+        if (ins_upd == '') {
+          console.log("insert");
+          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+            console.log(res);
+            navigate('/PatientMeasurements',
+              {
+                state: {
+                  res: res
+                }
+              });
+          });
+        } else {
+          console.log("update");
+          DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+            console.log(res_all);
+            DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+              console.log("in weight");
+              console.log(res);
+              // navigate('/PatientMeasurements',
+              //   {
+              //     state: {
+              //       res: res
+              //     }
+              //   });
+            });
+          });
+        }
+        // --- TODO insert/update and changePage
       }
-      // --- TODO insert/update and changePage
-
     }
   }
 
@@ -156,6 +202,10 @@ export default function Iweight(props: {
         </Box>
       </Modal>
       <form onSubmit={handleSubmit} id='my-form'>
+        <Box display="flex"
+          justifyContent="center"
+          alignItems="center"> <Box component="img" src="/static/measure_patient/Weight.png" alt="logo" /></Box>
+
         <Box sx={{ width: 1, mt: 1.5 }}>
           <TextField
             type="number"
@@ -177,9 +227,10 @@ export default function Iweight(props: {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']}>
               <MobileDateTimePicker
+                disabled={dataDisabled}
                 onChange={(newValue) => {
-                  setNewDateTime(newValue);
-                }} sx={{ width: 1 }} defaultValue={dayjs(dataDate)} />
+                  setDateTime(newValue?.toISOString());
+                }} sx={{ width: 1 }} defaultValue={dayjs(rif.date_complete)} />
             </DemoContainer>
           </LocalizationProvider>
         </Box>

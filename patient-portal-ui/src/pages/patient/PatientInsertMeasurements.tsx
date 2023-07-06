@@ -51,7 +51,7 @@ function PatientInsertMeasurements(props: {
 
   useEffect(() => {
     DeafutlAllData.getRecordTypes().then((res) => {
-      // console.log(res);
+
       if (props.setType.id == null) {
         setData(res);
         setType("");
@@ -60,13 +60,55 @@ function PatientInsertMeasurements(props: {
         setData(arr);
         setType("edit/delete");
       }
-      // console.log(data);
       setLoadComponent(1);
+    });
+  }, []);
+  useEffect(() => {
+    DeafutlAllData.getAuscultationoptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      console.log(json_res);
+      setOptionAu(json_res);
+    });
+    DeafutlAllData.getBoweloptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      setOptionBo(json_res);
+    });
+    DeafutlAllData.getDiuresisoptions().then((res) => {
+      let json_res = [{
+      }];
+      for (let i in res) {
+
+        json_res.push({
+          "label": res[i],
+          "value": i,
+        });
+      }
+      console.log(json_res);
+      setOptionDi(json_res);
     });
   }, []);
   const [message, setMessage] = React.useState("");
   const [editTF, setEditTF] = React.useState(false);
   const [deleteTF, setDeleteTF] = React.useState(false);
+  const [optionAu, setOptionAu] = React.useState({});
+  const [optionBo, setOptionBo] = React.useState({});
+  const [optionDi, setOptionDi] = React.useState({});
+
   const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
     // console.log(editTF);
     setEditTF(editTF);
@@ -90,25 +132,28 @@ function PatientInsertMeasurements(props: {
       {loadComponent ? <>
         <PatientSmartNav page={'PatientInsertMeasurements'} type={type} editBtClk={editBtClk} deleteBtClk={deleteBtClk} /><h1>{message}</h1>
         {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} edit={editTF} delete={deleteTF} /> : null}
-        {props.setType.type == 'height' ? <Iheight dataDef={filterRecordTypesByValueRet(data, "H")} /> : null}
-        {props.setType.type == 'temperature' ? <Itemperature dataDef={filterRecordTypesByValueRet(data, "TEMP")} /> : null}
-        {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}
-        {props.setType.type == 'heart_rate' || props.setType.type == 'hr' ? <Iheart_rate dataDef={filterRecordTypesByValueRet(data, "HR")} /> : null}
+        {props.setType.type == 'height' ? <Iheight dataDef={filterRecordTypesByValueRet(data, "H")} edit={editTF} delete={deleteTF} /> : null}
+        {props.setType.type == 'temperature' ? <Itemperature dataDef={filterRecordTypesByValueRet(data, "TEMP")} edit={editTF} delete={deleteTF} /> : null}
+        {props.setType.type == 'heart_rate' || props.setType.type == 'hr' ? <Iheart_rate dataDef={filterRecordTypesByValueRet(data, "HR")} edit={editTF} delete={deleteTF} /> : null}
         {props.setType.type == 'saturation' ? <Isaturation dataDef={filterRecordTypesByValueRet(data, "SAT")} /> : null}
-        {props.setType.type == 'hgt' ? <Ihgt dataDef={filterRecordTypesByValueRet(data, "HGT")} /> : null}
+        {props.setType.type == 'hgt' ? <Ihgt dataDef={filterRecordTypesByValueRet(data, "HGT")} edit={editTF} delete={deleteTF} /> : null}
+
+        {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={filterRecordTypesByValueRet(data, "RR")} edit={editTF} delete={deleteTF} /> : null}
+        {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={filterRecordTypesByValueRet(data, "DIUR_V")} edit={editTF} delete={deleteTF} /> : null}
+
+        {props.setType.type == 'diuresis' ? <Idiuresis dataDef={filterRecordTypesByValueRet(data, "DIUR")} edit={editTF} delete={deleteTF} option={optionDi} /> : null}
         {/* {props.setType.type == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} dataSelected={props.setType.value} /> : null} */}
-        {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={filterRecordTypesByValue(data, "RR")} dataSelected={props.setType.value} dataDefSta={filterRecordTypesByValueDef(data, "RR")} /> : null}
-        {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={filterRecordTypesByValueRet(data, "DIUR_V")} /> : null}
+        {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}
 
-        {/* {props.setType.type == 'diuresis' ? <Idiuresis dataDef={values[0].diuresis} dataSelected={props.setType.value} /> : null} */}
-
+        {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={filterRecordTypesByValueRet(data, "BP")} edit={editTF} delete={deleteTF} /> : null}
+        {/* {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{ min: props.setType.value, max: props.setType.value }} /> : null}*/}
+        <Save edit={editTF} type={type} />
       </> : null}
-      {/* {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{ min: props.setType.value, max: props.setType.value }} /> : null}*/}
 
 
 
 
-      <Save />
+
     </Container>
 
   );

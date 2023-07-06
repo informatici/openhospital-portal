@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 
-import HomeIcon from '@mui/icons-material/Home';
+import ViewDayIcon from '@mui/icons-material/ViewDay';
 import Fab from '@mui/material/Fab';
 
 const Bhome = () => {
@@ -14,7 +14,7 @@ const Bhome = () => {
         pathname: '/PatientHome',
       }}
     >
-      <HomeIcon color="inherit" />
+      <ViewDayIcon color="inherit" />
     </Fab>
   );
 };

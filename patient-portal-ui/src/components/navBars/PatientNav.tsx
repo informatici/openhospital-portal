@@ -80,7 +80,7 @@ class PatientNav extends Component<any> {
                             width: 1,
                         }}>
                             <div style={{ "width": "20%" }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpeg" />
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/0.jpeg" />
                             </div>
                             <div style={{ "width": "60%" }}>
                                 <Typography variant="h6">
