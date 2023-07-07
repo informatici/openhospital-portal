@@ -17,16 +17,16 @@ export default function PatientSmartNav(props: {
     editBtClk?: any;
     deleteBtClk?: any;
 }) {
-    // console.log("PatientSmartNav");
-    // console.log(props);
+    console.log("PatientSmartNav");
+    console.log(props);
 
     return (
-        <Box sx={{ width: 1, mt: 1 }}>
+        <Box sx={{ width: 1, mt: 1, minHeight: '70px' }}>
             <Grid container sx={{ width: 1 }} >
-                <Grid container justifyContent="flex-start" item xs={2}>
+                <Grid container justifyContent="flex-start" item xs={1.5}>
                     {props.page != 'PatientHome' ? <GoBack /> : null}
                 </Grid>
-                <Grid container justifyContent="flex-start" item xs={2}>
+                <Grid container justifyContent="flex-start" item xs={1.5}>
                     {props.page == 'PatientInsertMeasurements' ? <Bhome /> : null}
                     {props.page == 'PatientChooseMeasurements' ? <Bhome /> : null}
                     {props.page == 'PatientExamDetails' ? <Bhome /> : null}
@@ -36,14 +36,14 @@ export default function PatientSmartNav(props: {
                     {props.page == 'PatientHospitalizationDetails' ? <Bhome /> : null}
                     {props.page == 'PatientVisitDetails' ? <Bhome /> : null}
                 </Grid>
-                <Grid container justifyContent="flex-start" item xs={4}>
+                <Grid container justifyContent="flex-start" item xs={6}>
 
                 </Grid>
-                <Grid container justifyContent="flex-end" item xs={2}>
+                <Grid container justifyContent="flex-end" item xs={1.5}>
                     {props.page == 'PatientHome' ? <BchooseInsert /> : null}
                     {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bdelete deleteBtClk={props.deleteBtClk} /> : null}
                 </Grid>
-                <Grid container justifyContent="flex-end" item xs={2}>
+                <Grid container justifyContent="flex-end" item xs={1.5}>
                     {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit editBtClk={props.editBtClk} /> : null}
                     {/* {props.page == 'PatientInsertMeasurements' && props.type == 'edit/delete' ? <Bedit /> : null} */}
                     {props.page == 'PatientMeasurements' ? <BchooseInsert /> : null}
