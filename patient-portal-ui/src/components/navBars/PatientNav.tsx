@@ -73,25 +73,25 @@ class PatientNav extends Component<any> {
                     <Box
                         borderRadius={2} sx={{
                             p: 1,
+                            minHeight: '82px',
                             width: 1,
                             backgroundColor: 'primary.dark',
-                        }}>
+	                        }}>
                         <Stack direction="row" spacing={2} sx={{
                             width: 1,
                         }}>
-                            <div style={{ "width": "20%" }}>
-                                <Avatar alt={this.props.firstName} src="/static/images/avatar/1.jpeg" />
+                            <div style={{ "width": "20%", margin: "2%" }}>
+                                <Avatar sx={{ width: 50, height: 50 }} alt={this.props.firstName} src="/static/images/avatar/1.jpeg" />
                             </div>
-                            <div style={{ "width": "60%" }}>
+                            <div style={{ "width": "65%", margin: "2%" }}>
                                 <Typography variant="h6">
-
                                     {this.props.firstName} {this.props.secondName}
                                 </Typography>
                                 <Typography variant="button" >
                                     ID:   {this.props.userId}
                                 </Typography>
                             </div>
-                            <div style={{ "width": "10%", margin: "2%" }} >
+                            <div style={{ "width": "5%", margin: "0px 2px 0px 0px", }} >
                                 <Flags.GB title="United Kingdom" />
                             </div>
                         </Stack>

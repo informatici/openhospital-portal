@@ -47,17 +47,18 @@ const PatientHome = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+        
       }}
     >
       {matches ? <><p>Only Smart Phone</p></> : <>
         {loadComponent ? <><PatientNav {...dataa} /></> : null}
 
-        < Box sx={{ mt: 14, width: 1 }}>
+        <Box sx={{ mt: 14, width: 1 }}>
           <PatientSmartNav page={'PatientHome'} />
         </Box>
         {
           DefaultPatient[0]["xy1457uuu"].btHomePatient.map((d, i) => (
-            < Button key={d.id} component={Link} to={d.to} sx={{ minHeight: '100px', borderRadius: 5, width: 1, mt: 1 }} variant="contained" color="primary">
+            <Button key={d.id} component={Link} to={d.to} sx={{ margin: '8px', minHeight: '56px', borderRadius: '15px', width: 1, mt: 1, justifyContent: "flex-start" }} variant="contained" color="primary">
               {d.label} </Button>
           ))
         }
