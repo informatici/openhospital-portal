@@ -57,7 +57,7 @@ const PatientHome = () => {
         </Box>
         {
           DefaultPatient[0]["xy1457uuu"].btHomePatient.map((d, i) => (
-            < Button key={d.id} component={Link} to={d.to} sx={{ width: 1, mt: 1 }} variant="contained" color="primary">
+            < Button key={d.id} component={Link} to={d.to} sx={{ minHeight: '100px', borderRadius: 5, width: 1, mt: 1 }} variant="contained" color="primary">
               {d.label} </Button>
           ))
         }
