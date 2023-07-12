@@ -1,191 +1,304 @@
-import React, { Component } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
+import { Button } from "@mui/material";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
-import { ButtonBase } from '@mui/material';
-import { Button } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-interface Imin_max {
-    min: string;
-    max: string;
-
-}
+import Modal from '@mui/material/Modal';
+import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
+import dayjs from 'dayjs'
 
 interface Iarterial_pressureProps {
-    dataSelected?: string;
-    dataDef?: Imin_max[];
-    dataDefSta?: any;
-
+    code?: string;
+    defaultOptionValue?: string | null;
+    defaultValue1?: number;
+    defaultValue2?: number;
+    id?: number;
+    id_measure?: number;
+    maxValue: number | string;
+    measurementType: string;
+    measurementValueType?: string;
+    minValue: number | string;
+    uom?: string;
+    date?: string;
+    hour?: string;
+    date_complete: string;
+    value2?: number;
+    value1?: number;
 }
-
-interface Iarterial_pressureState {
-    io_vis_min?: string;
-    io_vis_max?: string;
-    getvalueMin?: string;
-    getvalueMax?: string;
-    getvalue?: string;
-    disAddIcon?: boolean;
-
+interface $d {
+    $d?: string;
 }
-class Iarterial_pressure extends Component<Iarterial_pressureProps, Iarterial_pressureState> {
-    constructor(props: any | Readonly<{}>) {
-        super(props)
-        // Set initial state
-        if (props.dataSelected.min) {
-            this.state = { io_vis_min: "output_min", io_vis_max: "output_max", getvalueMin: props.dataSelected.min, getvalueMax: props.dataSelected.max, disAddIcon: false }
+// interface Imin_max {
+//     min: string;
+//     max: string;
+
+// }
+
+// interface Iarterial_pressureProps {
+//     dataSelected?: string;
+//     dataDef?: Imin_max[];
+//     dataDefSta?: any;
+
+// }
+
+// interface Iarterial_pressureState {
+//     io_vis_min?: string;
+//     io_vis_max?: string;
+//     getvalueMin?: string;
+//     getvalueMax?: string;
+//     getvalue?: string;
+//     disAddIcon?: boolean;
+
+// }
+export default function Iarterial_pressure(props: {
+    dataDef: Iarterial_pressureProps;
+    edit?: boolean
+    delete?: boolean
+}) {
+    const [dataMin, setDataMin] = React.useState<any>(0);
+    const [dataMax, setDataMax] = React.useState<any>(0);
+    const navigate = useNavigate();
+    const [dateTime, setDateTime] = React.useState<any>(Date.now());
+
+
+    const [dataErrorMin, setDataErrorMin] = useState(false);
+    const [dataErrorMax, setDataErrorMax] = useState(false);
+    const [dataErrorMessageMin, setDataErrorMessageMin] = useState("");
+    const [dataErrorMessageMax, setDataErrorMessageMax] = useState("");
+    const [dataDisabled, setDataDisabled] = useState(false);
+    const [dataDelete, setDataDelete] = useState(false);
+    const [deleteMeasure, setDeleteMeasure] = useState("");
+
+    let rif = props.dataDef;
+
+    let date_rif: Date | string | number = Date.now();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+    useEffect(() => {
+
+        // --- manage default
+        rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
+        if (rif.date_complete) {
+            let dateR = new Date(rif.date_complete).toISOString()
+            setDateTime(dateR);
         } else {
-            this.state = { io_vis_min: "input_min", io_vis_max: "input_max", getvalueMin: "", getvalueMax: "", disAddIcon: true }
+            setDateTime(new Date());
         }
-        this.ioDataOutMin = this.ioDataOutMin.bind(this);
-        this.ioDataOutMax = this.ioDataOutMax.bind(this);
-        this.ioDataInMin = this.ioDataInMin.bind(this);
-        this.ioDataInMax = this.ioDataInMax.bind(this);
-        this.ioDataDelMin = this.ioDataDelMin.bind(this);
-        this.ioDataDelMax = this.ioDataDelMax.bind(this);
-        // this.handleChangeMin = this.valueDetectMin.bind(this);
-        // this.handleChangeMax = this.valueDetectMax.bind(this);
-
-    }
-    ioDataOutMin() {
-        this.setState({ io_vis_min: "input_min" });
-    }
-    ioDataOutMax() {
-        this.setState({ io_vis_max: "input_max" });
-    }
-    ioDataInMin() {
-        this.setState({ io_vis_min: "output_min" });
-    }
-    ioDataInMax() {
-        this.setState({ io_vis_max: "output_max" });
-    }
-    ioDataDelMin() {
-        this.setState({ getvalueMin: "" });
-        this.setState({ io_vis_min: "input_min", disAddIcon: true });
-    }
-    ioDataDelMax() {
-        this.setState({ getvalue: "" });
-        this.setState({ io_vis_max: "input_max", disAddIcon: true });
-    }
-    valueDetectMin(e: { target: { name: any; value: any; }; }) {
-
-        let { name, value } = e.target;
-        this.setState({ getvalueMin: value });
-        if (value == '') {
-            this.setState({ disAddIcon: true });
+        console.log(rif)
+        setDataMin(rif.value1 ? rif.value1 : rif.defaultValue1);
+        setDataMax(rif.value2 ? rif.value2 : rif.defaultValue2);
+    }, []);
+    useEffect(() => {
+        // --- manage edit
+        if (props.edit == true) {
+            setDataDisabled(false);
+        }
+    }, [props.edit]);
+    useEffect(() => {
+        // --- manage delete
+        if (dataDelete == true) {
+            setOpen(true);
+            // window.location.reload();
         } else {
-            this.setState({ disAddIcon: false });
+            setDataDelete(true);
         }
-        this.setState({ io_vis_min: "output_min" });
-    }
-    valueDetectMax(e: { target: { name: any; value: any; }; }) {
-        let { name, value } = e.target;
-        this.setState({ getvalueMax: value });
-        if (value == '') {
-            this.setState({ disAddIcon: true });
+    }, [props.delete]);
+    useEffect(() => {
+        // --- manage delete choice
+        if (deleteMeasure == "y") {
+            setOpen(false);
+            let patientId = localStorage.getItem("IdPatient");
+            let id_measure: any = rif.id_measure;
+            DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
+                console.log(res);
+                console.log(res);
+                navigate('/PatientMeasurements',
+                    {
+                        state: {
+                            res: res
+                        }
+                    });
+            });
+
+        }
+        if (deleteMeasure == "n") {
+            setOpen(false)
+            window.location.reload();
         } else {
-            this.setState({ disAddIcon: false });
+            // console.log("nothing");
         }
-        this.setState({ io_vis_max: "output_max" });
+    }, [deleteMeasure]);
+
+    const handleSubmit = (event: {
+        [x: string]: any; preventDefault: () => void;
+    }) => {
+        event.preventDefault();
+        setDataErrorMax(false);
+        setDataErrorMin(false);
+        if (dataMin == null) {
+            console.log("a");
+            setDataErrorMin(true);
+            setDataErrorMessageMin("Il valore non può essere vuoto")
+        } else if (dataMax == null) {
+            console.log("b");
+            setDataErrorMax(true);
+
+            setDataErrorMessageMax("Il valore non può essere vuoto")
+        } else if (dataMin <= rif.minValue) {
+            console.log("c");
+            setDataErrorMin(true);
+            setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
+        } else if (dataMax >= rif.maxValue) {
+            console.log("d");
+            console.log(dataMax);
+            console.log(rif.maxValue);
+            setDataErrorMax(true);
+            setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
+        } else if (dataMin > dataMax) {
+            console.log(dataMin);
+            console.log(dataMax);
+            console.log("e");
+            setDataErrorMax(true);
+            setDataErrorMin(true);
+            setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
+            setDataErrorMessageMin("Il valore deve essere minore di " + dataMax)
+        } else {
+            setDataErrorMax(false);
+            setDataErrorMin(false);
+            setDataErrorMessageMax("");
+            setDataErrorMessageMin("");
+            if (dataDisabled == false) {
+                // --- manage update/insert
+                let ins_upd = rif.id_measure ? rif.id_measure : ""; // --- if exist update else new measure
+                let patientId = localStorage.getItem("IdPatient");
+                let value1: any = dataMin;
+                let value2: any = dataMax;
+                let recordDate = toIsoDate(dateTime);
+                let recordTypeCode = rif.code;
+                console.log("patientId:" + patientId);
+
+                console.log("recordDate:" + recordDate);
+                console.log("ins_upd:" + ins_upd);
+                console.log("recordTypeCode:" + recordTypeCode);
+
+                if (ins_upd == '') {
+                    console.log("insert");
+                    DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+                        console.log(res);
+                        navigate('/PatientMeasurements',
+                            {
+                                state: {
+                                    res: res
+                                }
+                            });
+                    });
+                } else {
+                    console.log("update");
+                    DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+                        console.log(res_all);
+                        // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+                        //   console.log(res);
+                        //   // navigate('/PatientMeasurements',
+                        //   //   {
+                        //   //     state: {
+                        //   //       res: res
+                        //   //     }
+                        //   //   });
+                        // });
+                    });
+                }
+                // --- TODO insert/update and changePage
+            }
+        }
     }
 
-    render() {
-
-
-        return (
-            <Box sx={{ width: 1, mt: 1.5 }}>
-                {this.state.io_vis_min == "input_min" ? (
-                    <Box>
-                        <TextField
-                            label="Min - Arterial Pressure"
-                            id="min"
-                            value={this.state.getvalueMin}
-                            select
-                            name="Min - Arterial Pressure"
-                            // onChange={this.handleChangeMin}
-                            defaultValue=""
-                            sx={{ width: 1 }}
-                            helperText=""
-                        >
-                            {/* {this.props.dataDef?.min.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))} */}
-                        </TextField>
-                    </Box>
-                ) : (
-                    <Box
-                        component="span"
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        <Typography variant="body1" display="inline" sx={{ width: 0.4 }}>Min Pressure: </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalueMin} mmHg</Typography>
-                        <Typography variant="body1" align="right" display="inline" sx={{}}>
-                            <IconButton onClick={this.ioDataOutMin} sx={{}} color="primary" aria-label="insert" size="large">
-                                <EditIcon fontSize="inherit" />
-                            </IconButton>
-                            <IconButton onClick={this.ioDataDelMin} sx={{}} color="primary" aria-label="insert" size="large">
-                                <DeleteIcon fontSize="inherit" />
-                            </IconButton>
+    return (
+        <>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Do you want to remove this measure?
                         </Typography>
-                    </Box>
-                )}
 
-                {this.state.io_vis_max == "input_max" ? (
-                    <Box sx={{ mt: 1 }}>
-                        <TextField
-                            label="Max - Arterial Pressure"
-                            id="max"
-                            value={this.state.getvalue}
-                            select
-                            name="Max - Arterial Pressure"
-                            // onChange={this.handleChangeMax}
-                            defaultValue=""
-                            sx={{ width: 1, mt: 1 }}
-                            helperText=""
-                        >
-                            {/* {this.props.dataDef?.max?.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))} */}
-                        </TextField>
-                    </Box>
-                ) : (
-                    <Box sx={{ mt: 1 }}
-                        component="span"
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        <Typography variant="body1" display="inline" sx={{ width: 0.4 }}>Max Pressure: </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'bold', width: 0.3, }} display="inline">{this.state.getvalueMax} mmHg</Typography>
-                        <Typography variant="body1" align="right" display="inline" sx={{}}>
-                            <IconButton onClick={this.ioDataOutMax} sx={{}} color="primary" aria-label="insert" size="large">
-                                <EditIcon fontSize="inherit" />
-                            </IconButton>
-                            <IconButton onClick={this.ioDataDelMax} sx={{}} color="primary" aria-label="insert" size="large">
-                                <DeleteIcon fontSize="inherit" />
-                            </IconButton>
-                        </Typography>
-                    </Box>
-                )}
+                        <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
+                        <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+                    </div>
+                </Box>
+            </Modal>
+            <form onSubmit={handleSubmit} id='my-form'>
+                <Box display="flex"
+                    justifyContent="center"
+                    alignItems="center"> <Box component="img" src="/static/measure_patient/Blood Pressure.png" alt="logo" /></Box>
 
-            </Box>
-
-        );
-
-
-
-
-
-    }
-}
-export default Iarterial_pressure;
+                <Box sx={{ width: 1, mt: 1.5 }}>
+                    <TextField
+                        type="number"
+                        onChange={e => setDataMin(e.target.value)}
+                        required
+                        disabled={dataDisabled}
+                        name="arterial_pressure"
+                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Min"}
+                        id="outlined-start-adornment"
+                        sx={{ width: 1 }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
+                        }}
+                        error={dataErrorMin}
+                        helperText={dataErrorMessageMin}
+                        defaultValue={rif.value1 ? rif.value1 : rif.defaultValue1} />
+                    <TextField
+                        type="number"
+                        onChange={e => setDataMax(e.target.value)}
+                        required
+                        disabled={dataDisabled}
+                        name="arterial_pressure"
+                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
+                        id="outlined-start-adornment"
+                        sx={{ width: 1, mt: 1.5 }}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
+                        }}
+                        error={dataErrorMax}
+                        helperText={dataErrorMessageMax}
+                        defaultValue={rif.value2 ? rif.value2 : rif.defaultValue2} />
+                </Box>
+                <Box sx={{ width: 1, mt: 1.5 }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DatePicker']}>
+                            <MobileDateTimePicker
+                                disabled={dataDisabled}
+                                onChange={(newValue) => {
+                                    setDateTime(newValue?.toISOString());
+                                }} sx={{ width: 1 }} defaultValue={dayjs(rif.date_complete)} />
+                        </DemoContainer>
+                    </LocalizationProvider>
+                </Box>
+            </form>
+        </>
+    );
+};
