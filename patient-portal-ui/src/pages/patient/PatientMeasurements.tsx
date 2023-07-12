@@ -113,7 +113,7 @@ const PatientMeasurements = () => {
 
       <PatientSmartNav page={'PatientMeasurements'} />
       {loadComponent ? <>
-        <div style={{ width: '100%', height: '600px' }}>
+        <div style={{ width: '100%', height: '34em' }}>
           <Box
             sx={{
               overflowX: "scroll",
@@ -147,8 +147,9 @@ const PatientMeasurements = () => {
                   value: false
                 },
               },
+              pagination: { paginationModel: { pageSize: 8 } },
             }}
-
+            pageSizeOptions={[8, 16, 32]}
             rows={rowdataDef}
             columns={columns}
           />
