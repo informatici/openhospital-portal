@@ -68,6 +68,7 @@ const PatientMeasurements = () => {
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),
           value: k.value1,
+          value2: k.value2,
           misure: k.recordType.measurementType,
           type: k.recordType.measurementType.toLowerCase(),
           code: k.recordType.code,

@@ -29,6 +29,7 @@ interface Iarterial_pressureProps {
     date?: string;
     hour?: string;
     date_complete: string;
+    value2?: string;
 }
 interface $d {
     $d?: string;
@@ -60,12 +61,14 @@ export default function Iarterial_pressure(props: {
     edit?: boolean
     delete?: boolean
 }) {
-    const [data, setData] = React.useState<string | number | Date>(Date.now());
+    const [dataMin, setDataMin] = React.useState<string | number | Date>(Date.now());
+    const [dataMax, setDataMax] = React.useState<string | number | Date>(Date.now());
     const navigate = useNavigate();
     const [dateTime, setDateTime] = React.useState<any>(Date.now());
 
     const [dataError, setDataError] = useState(false);
-    const [dataErrorMessage, setDataErrorMessage] = useState("");
+    const [dataErrorMessageMin, setDataErrorMessageMin] = useState("");
+    const [dataErrorMessageMax, setDataErrorMessageMax] = useState("");
     const [dataDisabled, setDataDisabled] = useState(false);
     const [dataDelete, setDataDelete] = useState(false);
     const [deleteMeasure, setDeleteMeasure] = useState("");
@@ -144,36 +147,36 @@ export default function Iarterial_pressure(props: {
         [x: string]: any; preventDefault: () => void;
     }) => {
         event.preventDefault();
-        let dateValue = date_rif;
-        let inputValue = event.target.arterial_pressure.value;
-        if (inputValue == null) {
+
+        if (dataMin == null) {
             setDataError(true);
-            setDataErrorMessage("Il valore non può essere vuoto")
-        } else if (inputValue <= rif.minValue) {
+            setDataErrorMessageMin("Il valore non può essere vuoto")
+        } else if (dataMin <= rif.minValue) {
             setDataError(true);
-            setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
+            setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
         }
-        else if (inputValue >= rif.maxValue) {
+        else if (dataMax >= rif.maxValue) {
             setDataError(true);
-            setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
+            setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
         } else {
             setDataError(false);
-            setDataErrorMessage("");
+            setDataErrorMessageMax("");
             if (dataDisabled == false) {
                 // --- manage update/insert
                 let ins_upd = rif.id_measure ? rif.id_measure : ""; // --- if exist update else new measure
                 let patientId = localStorage.getItem("IdPatient");
-                let value1 = event.target.arterial_pressure.value;
+                let value1: any = dataMin;
                 let recordDate = toIsoDate(dateTime);
                 let recordTypeCode = rif.code;
                 console.log("patientId:" + patientId);
-                console.log("value1:" + value1);
+
                 console.log("recordDate:" + recordDate);
                 console.log("ins_upd:" + ins_upd);
                 console.log("recordTypeCode:" + recordTypeCode);
+                let value2: any = dataMax;
                 if (ins_upd == '') {
                     console.log("insert");
-                    DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+                    DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
                         console.log(res);
                         navigate('/PatientMeasurements',
                             {
@@ -229,7 +232,7 @@ export default function Iarterial_pressure(props: {
                 <Box sx={{ width: 1, mt: 1.5 }}>
                     <TextField
                         type="number"
-                        onChange={e => setData(e.target.value)}
+                        onChange={e => setDataMin(e.target.value)}
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
@@ -240,23 +243,23 @@ export default function Iarterial_pressure(props: {
                             startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
                         }}
                         error={dataError}
-                        helperText={dataErrorMessage}
+                        helperText={dataErrorMessageMin}
                         defaultValue={rif.defaultValue1} />
                     <TextField
                         type="number"
-                        onChange={e => setData(e.target.value)}
+                        onChange={e => setDataMax(e.target.value)}
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
-                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"} 
+                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
                         id="outlined-start-adornment"
                         sx={{ width: 1, mt: 1.5 }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
                         }}
                         error={dataError}
-                        helperText={dataErrorMessage}
-                        defaultValue={rif.defaultValue2} />
+                        helperText={dataErrorMessageMax}
+                        defaultValue={rif.value2 ? rif.value2 : rif.defaultValue2} />
                 </Box>
                 <Box sx={{ width: 1, mt: 1.5 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>

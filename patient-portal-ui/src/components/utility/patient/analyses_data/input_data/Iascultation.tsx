@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -15,7 +15,7 @@ import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../
 import dayjs from 'dayjs'
 
 
-interface IweightProps {
+interface IascultationProps {
   code?: string;
   defaultOptionValue?: string | null;
   defaultValue1?: number;
@@ -34,12 +34,13 @@ interface IweightProps {
 interface $d {
   $d?: string;
 }
-export default function Iweight(props: {
-  dataDef: IweightProps;
+export default function Iascultation(props: {
+  dataDef: IascultationProps;
   edit?: boolean
   delete?: boolean
+  option?: any
 }) {
-  const [data, setData] = React.useState<string | number | Date>(Date.now());
+  // const [data, setData] = React.useState<string | number | Date>(Date.now());
   const navigate = useNavigate();
   const [dateTime, setDateTime] = React.useState<any>(Date.now());
 
@@ -50,9 +51,10 @@ export default function Iweight(props: {
   const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  console.log(rif);
   let date_rif: Date | string | number = Date.now();
   const [open, setOpen] = React.useState(false);
+  const [option, setOption] = React.useState([{}]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -67,12 +69,8 @@ export default function Iweight(props: {
     boxShadow: 24,
     p: 4,
   };
-  console.log("fff");
-  useEffect(() => {
-    DeafutlAllData.getAuscultationoptions().then((res) => {
-      console.log(res);
-    });
-  }, []);
+  props.option[0] = { label: "", value: "" }
+  const optionSel = props.option;
   useEffect(() => {
     // --- manage default
     rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
@@ -82,7 +80,6 @@ export default function Iweight(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -106,8 +103,6 @@ export default function Iweight(props: {
       let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
       DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-        console.log(res);
-        console.log(res);
         navigate('/PatientMeasurements',
           {
             state: {
@@ -130,17 +125,10 @@ export default function Iweight(props: {
   }) => {
     event.preventDefault();
     let dateValue = date_rif;
-    let inputValue = event.target.weight.value;
+    let inputValue = event.target.ascultation.value;
     if (inputValue == null) {
       setDataError(true);
       setDataErrorMessage("Il valore non può essere vuoto")
-    } else if (inputValue <= rif.minValue) {
-      setDataError(true);
-      setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
-    }
-    else if (inputValue >= rif.maxValue) {
-      setDataError(true);
-      setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
     } else {
       setDataError(false);
       setDataErrorMessage("");
@@ -148,17 +136,13 @@ export default function Iweight(props: {
         // --- manage update/insert
         let ins_upd = rif.id_measure ? rif.id_measure : ""; // --- if exist update else new measure
         let patientId = localStorage.getItem("IdPatient");
-        let value1 = event.target.weight.value;
+        let value1 = event.target.ascultation.value;
         let recordDate = toIsoDate(dateTime);
         let recordTypeCode = rif.code;
-        console.log("patientId:" + patientId);
-        console.log("value1:" + value1);
-        console.log("recordDate:" + recordDate);
-        console.log("ins_upd:" + ins_upd);
-        console.log("recordTypeCode:" + recordTypeCode);
+        let value2 = -1;
         if (ins_upd == '') {
           console.log("insert");
-          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
             console.log(res);
             navigate('/PatientMeasurements',
               {
@@ -209,24 +193,25 @@ export default function Iweight(props: {
       <form onSubmit={handleSubmit} id='my-form'>
         <Box display="flex"
           justifyContent="center"
-          alignItems="center"> <Box component="img" src="/static/measure_patient/Weight.png" alt="logo" /></Box>
+          alignItems="center"> <Box component="img" src="/static/measure_patient/Diuresi.png" alt="logo" /></Box>
 
         <Box sx={{ width: 1, mt: 1.5 }}>
           <TextField
-            type="number"
-            onChange={e => setData(e.target.value)}
+            select
             required
             disabled={dataDisabled}
-            name="weight"
+            name="ascultation"
             label={capitalizeOnlyFirstLetter(rif.measurementType)}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
-            InputProps={{
-              startAdornment: <InputAdornment position="start">{rif.uom}:</InputAdornment>,
-            }}
-            error={dataError}
-            helperText={dataErrorMessage}
-            defaultValue={rif.defaultValue1} />
+            defaultValue={rif.defaultValue1 ? rif.defaultValue1 : ""}
+          >
+            {optionSel.map((option: any) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Box>
         <Box sx={{ width: 1, mt: 1.5 }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -239,11 +224,6 @@ export default function Iweight(props: {
             </DemoContainer>
           </LocalizationProvider>
         </Box>
-        {/* {rif.date && rif.hour ?
-          <Idate_time dateSelected={rif.date + " " + rif.hour} />
-          :
-          <Idate_time />
-        } */}
       </form>
     </>
   );
