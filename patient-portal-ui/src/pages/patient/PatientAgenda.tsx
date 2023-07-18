@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container } from "@mui/material";
+import { Button, Typography, Container, Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -7,9 +7,10 @@ import Divider from '@mui/material/Divider';
 
 import { Link } from "react-router-dom";
 
-import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
+import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 
 import Agenda from '../../datajs/Agenda'
+import PatientNav from "../../components/navBars/PatientNav";
 import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
 import { DeafutlAllData } from '../../datajs/DeafutlAllData'
 
@@ -17,6 +18,19 @@ var date_obj = [];
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+interface Items {
+  firstName?: string;
+  secondName?: string;
+  birthDate?: string;
+  sex?: string;
+  address?: string;
+  city?: string;
+  telephone?: string;
+}
+interface dataa {
+  dataa?: Items;
+}
+let data: dataa = {};
 const PatientAgenda = ({ setAuth }) => {
   const [dataa, setData] = useState([]);
   const [loadComponent, setLoadComponent] = useState(0);
@@ -52,7 +66,12 @@ const PatientAgenda = ({ setAuth }) => {
         flexDirection: "column",
       }}
     >
-      <PatientSmartNav page={'PatientAgenda'} />
+      {loadComponent ? <><PatientNav {...dataa} /></> : null}
+
+      < Box sx={{ mt: 14, width: 1 }}>
+
+        <PatientSmartNav page={'PatientAgenda'} />
+      </Box>
       {loadComponent ? <>
         <div style={{ width: '100%' }}>
           {Object.keys(date_obj).map((ky, iy) => (

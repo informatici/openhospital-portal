@@ -68,7 +68,7 @@ export const DeafutlAllData = {
   getPatients: async function () {
     let response = await fetch(url_0 + 'public/patients');
     const data = await response.json();
-   
+
     return data;
   },
   getHospitalevents: async function () {
@@ -145,7 +145,7 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  postInsertMeasurement: async function (patientId: any, value1: number, value2: number,recordDate: any, recordTypeCode: any) {
+  postInsertMeasurement: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any) {
     console.log(dateIsoToString(recordDate));
     let response = await fetch(url_0 + 'public/patientrecords', {
       method: 'POST',
@@ -174,7 +174,9 @@ export const DeafutlAllData = {
   },
   postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
     res_all.value1 = value1;
-    let response = await fetch(url_0 + 'public/patientrecords/' + res_all.recordType.id, {
+    console.log(res_all.id);
+    console.log(res_all);
+    let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
       method: 'PUT',
       body: JSON.stringify(
         res_all),
@@ -192,7 +194,7 @@ export const DeafutlAllData = {
       method: 'DELETE',
 
     });
-    const data = await response.json()
+
     return response;
   },
 
