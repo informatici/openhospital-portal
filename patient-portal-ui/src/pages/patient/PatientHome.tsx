@@ -23,21 +23,20 @@ const PatientHome = () => {
     city?: string;
     telephone?: string;
   }
-  interface dataa {
-    dataa?: Items;
+  interface datauser {
+    datauser?: Items;
   }
-  const [dataa, setData] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
   const [idPatient, setIdPatient] = useState(0);
   const [loadComponent, setLoadComponent] = useState(0);
   console.log(localStorage.getItem("IdPatient"));
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     DeafutlAllData.getPatientsById(id_patient).then((res) => {
-      setData(res);
+      setDataUser(res);
       setLoadComponent(1);
     });
   }, []);
-  let data: dataa = {};
   return (
 
     <Container
@@ -50,7 +49,7 @@ const PatientHome = () => {
       }}
     >
       {matches ? <><p>Only Smart Phone</p></> : <>
-        {loadComponent ? <><PatientNav {...dataa} /></> : null}
+        {loadComponent ? <><PatientNav {...dataUser} /></> : null}
 
         < Box sx={{ mt: 14, width: 1 }}>
           <PatientSmartNav page={'PatientHome'} />

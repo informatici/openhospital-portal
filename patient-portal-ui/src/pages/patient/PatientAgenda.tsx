@@ -1,44 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { Button, Typography, Container, Box } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-
 import { Link } from "react-router-dom";
 
-import PatientSmartNav from "./../../components/navBars/PatientSmartNav";
-
-import Agenda from '../../datajs/Agenda'
-import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
+import PatientSmartNav from "../../components/navBars/PatientSmartNav";
+import PatientNav from "../../components/navBars/PatientNav";
+import { getTimeLab, getDateLab, getDayName } from '../../utils/ManageDate';
 import { DeafutlAllData } from '../../datajs/DeafutlAllData'
 
-var date_obj = [];
+var date_obj: never[] = [];
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
-const PatientAgenda = ({ setAuth }) => {
-  const [dataa, setData] = useState([]);
+interface Items {
+  firstName?: string;
+  secondName?: string;
+  birthDate?: string;
+  sex?: string;
+  address?: string;
+  city?: string;
+  telephone?: string;
+}
+interface dataAgenda {
+  dataAgenda?: Items;
+}
+let data: dataAgenda = {};
+const PatientAgenda = () => {
+  const [dataAgenda, setDataAgenda] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
   const [loadComponent, setLoadComponent] = useState(0);
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
-    DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((res) => {
-      res = res.sort((a, b) => (a.date > b.date ? 1 : -1)); // --- sort by date
+    DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((resDataAgenda) => {
+      resDataAgenda = resDataAgenda.sort((a: { date: number; }, b: { date: number; }) => (a.date > b.date ? 1 : -1)); // --- sort by date
       // --- get all Date Time from Object
-      let arrDateTimeAll = [];
-      res.forEach(element => {
+      let arrDateTimeAll: any | null | undefined = [];
+      resDataAgenda.forEach((element: { date: string; }) => {
         let dateToInsert = element.date.split(" ");;
         arrDateTimeAll.push(dateToInsert[0])
 
       });
       arrDateTimeAll = [...new Set(arrDateTimeAll)];
-      date_obj = arrDateTimeAll.reduce((acc, elem) => {
+      date_obj = arrDateTimeAll.reduce((acc: any[][], elem: string | number | Date) => {
         const [year, month, day, hour] = [new Date(elem).getFullYear(), new Date(elem).getMonth() + 1, new Date(elem).getDate(), new Date(elem).getHours()];
         acc[year] = acc[year] || {};
         acc[year][month] = [...(acc[year][month] || []), day];
         return acc;
       }, {});
-      setData(res);
+      setDataAgenda(resDataAgenda);
+      let id_patient = localStorage.getItem("IdPatient");
+      DeafutlAllData.getPatientsById(id_patient).then((resDataUser) => {
+        setDataUser(resDataUser);
+      });
       setLoadComponent(1);
     });
   }, []);
@@ -52,7 +67,12 @@ const PatientAgenda = ({ setAuth }) => {
         flexDirection: "column",
       }}
     >
-      <PatientSmartNav page={'PatientAgenda'} />
+      {loadComponent ? <><PatientNav {...dataUser} /></> : null}
+
+      < Box sx={{ mt: 14, width: 1 }}>
+
+        <PatientSmartNav page={'PatientAgenda'} />
+      </Box>
       {loadComponent ? <>
         <div style={{ width: '100%' }}>
           {Object.keys(date_obj).map((ky, iy) => (
@@ -73,7 +93,7 @@ const PatientAgenda = ({ setAuth }) => {
                           <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{kd}</Typography>
                           {kd != 0 ? (
                             <>
-                              {dataa.map((data, idx) => (
+                              {dataAgenda.map((data, idx) => (
 
                                 getDateLab(data.date) == getDateLab(ky + "/" + km + "/" + kd) ? (
 

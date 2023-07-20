@@ -100,6 +100,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
         // --- end TODO Eliminare
 
         // --- start TODO Decommentare
+        
         console.log(res.roles);
         if (res.error == "Unauthorized") {
           setProfile("Unauthorized");
@@ -118,6 +119,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
           }
         }
         localStorage.setItem("IdPatient", res.patientId);
+       
         // --- end TODO Decommentare
 
 
