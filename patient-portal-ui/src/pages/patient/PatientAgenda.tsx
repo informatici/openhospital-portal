@@ -40,7 +40,6 @@ const PatientAgenda = () => {
       resDataAgenda.forEach((element: { date: string; }) => {
         let dateToInsert = element.date.split(" ");;
         arrDateTimeAll.push(dateToInsert[0])
-
       });
       arrDateTimeAll = [...new Set(arrDateTimeAll)];
       date_obj = arrDateTimeAll.reduce((acc: any[][], elem: string | number | Date) => {
