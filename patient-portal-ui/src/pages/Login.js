@@ -6,6 +6,7 @@ import LoginForm from "../components/LoginForm";
 import Logo from "../components/Logo";
 import { motion } from "framer-motion";
 import HelpDevLogin from "../components/modals/HelpDevLogin";
+import GraphicCredits from "../components/modals/GraphicCredits";
 
 const RootStyle = styled("div")({
   background: "rgb(249, 250, 251)",
@@ -15,6 +16,10 @@ const RootStyle = styled("div")({
 });
 
 const HeadingStyle = styled(Box)({
+  textAlign: "center",
+});
+
+const FooterStyle = styled(Box)({
   textAlign: "center",
 });
 
@@ -73,6 +78,9 @@ const Login = ({ setAuth, setProfile }) => {
             </Link> */}
           </Typography>
           <HelpDevLogin />
+          <FooterStyle>
+            <GraphicCredits />
+          </FooterStyle>
         </ContentStyle>
       </Container>
     </RootStyle>

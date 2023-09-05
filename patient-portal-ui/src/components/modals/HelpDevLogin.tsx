@@ -21,7 +21,10 @@ export default function HelpDevLogin() {
 
   return (
     <div>
-      <HelpIcon onClick={handleOpen} />
+      
+       <Typography gutterBottom>
+           Demo login <HelpIcon onClick={handleOpen} />
+       </Typography>
       <Modal
         open={open}
         onClose={handleClose}
@@ -31,7 +34,7 @@ export default function HelpDevLogin() {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-              Inserendo una delle seguenti credenziali si accede direttamente all'ambiente di riferimento.
+              By entering one of the following credentials, you can directly access the reference environment.
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
               Admin:    admin@patientportal.isf.org        admin
@@ -57,7 +60,6 @@ export default function HelpDevLogin() {
             <Typography variant="subtitle2" gutterBottom>
               Serena Levinson:     701014        serena2023
             </Typography>
-
           </div>
         </Box>
       </Modal>

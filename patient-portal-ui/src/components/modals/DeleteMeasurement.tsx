@@ -31,32 +31,9 @@ export default function HelpDevLogin() {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-              Inserendo una delle seguenti credenziali si accede direttamente all'ambiente di riferimento.
+              Vuoi eliminare questa misura
             </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Admin:    admin@patientportal.isf.org        admin
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Hospital Admin:    admin@ermail.com        hospadmin2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Doctor:    doctor@email.com            doctor2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Justin Frederick:    701010        justin2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Anthon Geremy:       701011        anthon2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Veronique Fountain:  701012        veronique2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Cypher Marica:       701013            cypher2023
-            </Typography>
-            <Typography variant="subtitle2" gutterBottom>
-              Serena Levinson:     701014        serena2023
-            </Typography>
+
 
           </div>
         </Box>

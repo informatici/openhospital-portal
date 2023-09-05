@@ -145,6 +145,20 @@ Abramo Oliver       701020            abramo2023         PATIENT
     - Website name: "Open Hospital Patient Portal"
     - Website URL: http://develop.ohpp.local
     - Untick "Enable Do Not Track support" or (after) in Administration > Privacy > Users opt-out, under “Support Do Not Track preference” disable
+    
+Patient Portal (ui) graphics:
+
+- Respiratory Rate: <a href="https://www.freepik.com/free-vector/breathing-exercise-concept-illustration_28205234.htm#&position=0&from_view=collections">Image by storyset</a> on Freepik
+- Heart Rate: <a href="https://www.freepik.com/free-vector/red-heartbeat-symbol-graphic-illustration_2631302.htm#&position=4&from_view=collections#position=4">Image by rawpixel.com</a> on Freepik
+- Glicemy: Image by <a href="https://www.freepik.com/free-vector/diabetes-blood-test-with-flat-design_2621079.htm#&position=9&from_view=collections">Freepik</a>
+- Weight: <a href="https://www.freepik.com/free-vector/mediterranean-diet-abstract-concept-illustration-healthy-diet-program-mediterranean-menu-nutrition-plan-home-cooking-organic-food-fresh-ingredient-shopping-list_12146004.htm#&position=5&from_view=collections">Image by vectorjuice</a> on Freepik
+- Height: <a href="https://www.freepik.com/free-vector/healthy-lifestyle-icons-collection_1006435.htm#query=lifestyle&position=49&from_view=author">Image by macrovector</a> on Freepik
+- Diuresis: <a href="https://www.freepik.com/free-vector/illustration-blood-donation_2606907.htm#&position=8&from_view=collections">Image by rawpixel.com</a> on Freepik
+- Diuresis Vol: <a href="https://www.freepik.com/free-vector/illustration-blood-donation_2606907.htm#&position=8&from_view=collections">Image by rawpixel.com</a> on Freepik
+- Saturation: <a href="https://www.freepik.com/free-vector/digital-healthcare-technology-elements-characters-set_6345812.htm#&position=2&from_view=collections">Image by macrovector</a> on Freepik
+- Temperature: <a href="https://www.freepik.com/free-vector/digital-health-icons-flat-set_4407661.htm#&position=1&from_view=collections">Image by macrovector_official</a> on Freepik
+- Blood Pressure: Image by <a href="https://www.freepik.com/free-vector/hand-drawn-world-hypertension-day-illustration_13184252.htm#query=hypertension&position=12&from_view=search&track=sph">Freepik</a>
+
 
 ## Stopping
 

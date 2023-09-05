@@ -33,10 +33,10 @@ interface Items {
 const columns = [
   { field: 'id', headerName: 'ID', width: 0, hide: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
-  { field: 'date', headerName: 'Data', width: 110 },
-  { field: 'hour', headerName: 'Hour', width: 70 },
-  { field: 'value', headerName: 'Value', width: 70 },
-  { field: 'misure', headerName: 'Misure', width: 180 },
+  { field: 'date', headerName: 'Data' },
+  { field: 'hour', headerName: 'Hour' },
+  { field: 'value', headerName: 'Value' },
+  { field: 'misure', headerName: 'Misure' },
   { field: 'type', headerName: 'Type', width: 180 },
   { field: 'type', headerName: 'Type', width: 180 },
   { field: 'type', headerName: 'Type', width: 180 },
@@ -56,13 +56,14 @@ const PatientMeasurements = () => {
 
     // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
+      console.log(res);
       res.forEach(function (k: any) {
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);
         }
         rows_def.push({
           id: k.id,
-          id_measure: k.recordType.measurementType,
+          id_measure: k.id,
           date_complete: k.recordDate,
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),

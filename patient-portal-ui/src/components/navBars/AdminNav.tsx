@@ -37,7 +37,7 @@ export default function AdminNav() {
                         width: 1,
                     }}>
                         <div style={{ "width": "20%" }}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/admin.jpeg" />
+                            <Avatar alt="Mario Rossissa" src="/static/images/avatar/admin.jpeg" />
                         </div>
                         <div style={{ "width": "60%" }}>
                             <Typography variant="h6">

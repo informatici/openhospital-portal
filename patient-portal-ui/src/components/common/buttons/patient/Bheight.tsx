@@ -20,7 +20,7 @@ const Bheight = () => {
       color="primary"
       aria-label="insert"
       size="large">
-      Height Test
+      Height
     </Button> 
   );
 };
