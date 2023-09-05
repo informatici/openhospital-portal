@@ -1,4 +1,3 @@
-DELETE FROM `event_type`;
 INSERT INTO `event_type` (`code`, `id`, `name`) VALUES
 	('A', 3, 'ADMISSION'),
 	('E', 1, 'EXAM'),
@@ -6,7 +5,6 @@ INSERT INTO `event_type` (`code`, `id`, `name`) VALUES
 	('T', 5, 'THERAPY'),
 	('V', 4, 'VACCINATION');
 
-DELETE FROM `record_type`;
 INSERT INTO `record_type` (`code`, `default_option_value`, `default_value1`, `default_value2`, `id`, `min_value`, `max_value`, `measurement_type`, `measurement_value_type`, `uom`) VALUES
 	('AUSC', 'NORMAL', -1, -1, 1, -1, -1, 'AUSCULTATION', 'OPTION', NULL),
 	('BP', NULL, 80, 120, 2, 40, 200, 'BLOOD_PRESSURE', 'NUMERIC', 'mmHg'),
@@ -20,7 +18,7 @@ INSERT INTO `record_type` (`code`, `default_option_value`, `default_value1`, `de
 	('SAT', NULL, 98, -1, 10, 50, 100, 'SATURATION', 'NUMERIC', '%'),
 	('TEMP', NULL, 36, -1, 11, 30, 50, 'TEMPERATURE', 'NUMERIC', '*C'),
 	('W', NULL, 0, -1, 12, 0, 200, 'WEIGHT', 'NUMERIC', 'kg');
-	
+
 INSERT INTO `user` (`id`, `account_verified`, `active`, `created`, `email`, `failed_login_attempts`, `is_using2fa`, `login_disabled`, `password`, `secret`, `token`, `username`) VALUES
 	(2, b'0', b'1', '2023-06-04 15:09:07', 'admin@email.com', 0, b'0', b'0', '$2a$10$2YBUbjzt.ulsSTKvlg2Ey.1c6CoyoyzeynrUyZ0huYGoaanWsk8vS', NULL, NULL, 'admin@email.com'),
 	(3, b'0', b'1', '2023-06-04 15:07:41', 'doctor@email.com', 0, b'0', b'0', '$2a$10$L6tDOlI5PfNluOr54kBzj.jcEHWfid2B4.4dfvl2CW8pYkwAzkFTW', NULL, NULL, 'doctor@email.com'),
@@ -50,9 +48,7 @@ INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
 	('12', '3'),
 	('13', '3'),
 	('14', '3');
-
-
-DELETE FROM `patient`;
+	
 INSERT INTO `patient` (`id`, `address`, `birth_date`, `city`, `created`, `first_name`, `hospital_id`, `next_kin`, `note`, `second_name`, `sex`, `telephone`, `user_id`) VALUES
 	(1, 'Kernigan', '1955-07-30', 'Long Road - 58', '2023-05-31 20:59:32', 'Justin', '701010', NULL, NULL, 'Frederick', 'M', '+343341314', 4),
 	(2, 'Winnipeg', '1986-08-04', 'Westerton Road', '2023-06-04 16:12:01', 'Anthon', '701011', NULL, NULL, 'Geremy', 'M', '+256123121', 5),
@@ -66,7 +62,6 @@ INSERT INTO `patient` (`id`, `address`, `birth_date`, `city`, `created`, `first_
 	(10, 'Worcester st. 11', '1940-06-11', 'Cutley', '2023-06-04 16:12:01', 'Jeana', '701019', NULL, NULL, 'Bennett', 'F', '+7897564012', 13),
 	(11, 'Timpany', '1950-07-07', 'Torrington', '2023-06-04 16:12:01', 'Abramo', '701020', NULL, NULL, 'Oliver', 'M', '+7897564023', 14);
 
-DELETE FROM `patient_record`;
 INSERT INTO `patient_record` (`id`, `created`, `note`, `option_value`, `record_date`, `value1`, `value2`, `patient_id`, `record_type_code`) VALUES
 	(1, '2023-06-05 17:39:42', NULL, NULL, '2023-01-23 15:54:26', 180, -1, 1, 'H'),
 	(3, '2023-06-05 17:41:00', NULL, NULL, '2023-02-10 17:22:10', 90, 110, 1, 'BP'),
@@ -92,12 +87,10 @@ INSERT INTO `patient_record` (`id`, `created`, `note`, `option_value`, `record_d
 	(23, '2023-06-05 17:41:00', NULL, 'WHEEZES', '2023-06-08 16:22:16', -1, -1, 2, 'AUSC'),
 	(24, '2023-06-05 17:41:00', NULL, NULL, '2023-06-10 15:30:13', 76.5, -1, 1, 'W');
 
-DELETE FROM `hospital_event`;	
 INSERT INTO `hospital_event` (`id`, `created`, `date`, `payload`, `event_type_code`, `patient_id`) VALUES
-	(1, '2023-05-31 21:01:42', '2023-05-31 20:15:47', 'Blood exam', 'E', 1),
-	(2, '2023-06-05 20:07:36', '2023-01-10 12:07:01', 'Cardiology exam', 'E', 1),
-	(3, '2023-06-05 20:13:06', '2023-01-10 12:12:25', 'Cardiology visit', 'O', 1),
-	(4, '2023-06-05 20:15:30', '2023-02-23 14:15:02', 'Cardiology visit', 'O', 1),
-	(5, '2023-06-05 20:16:25', '2023-03-03 15:31:56', 'Covid vaccination', 'V', 1);
-	
+	(1, '2023-05-31 21:01:42', '2022-11-02 00:37:32', '{ "LAB_ID" : 18, "LAB_EXA_ID_A" : "03.01", "LAB_DATE" : "2022-11-02 00:37:32", "LAB_RES" : "FEW", "LAB_NOTE" : "67 years old", "LAB_PAT_ID" : 701010, "LAB_PAT_NAME" : "Keneth Bryden", "LAB_CROSS1" : null, "LAB_CROSS2" : null, "LAB_CROSS3" : null, "LAB_CROSS4" : null, "LAB_CROSS5" : null, "LAB_CROSS6" : null, "LAB_CROSS7" : null, "LAB_CROSS8" : null, "LAB_CROSS9" : null, "LAB_CROSS10" : null, "LAB_CROSS11" : null, "LAB_CROSS12" : null, "LAB_CROSS13" : null, "LAB_LOCK" : 1, "LAB_AGE" : 0, "LAB_SEX" : "M", "LAB_MATERIAL" : "undefined", "LAB_PAT_INOUT" : "I", "LAB_CREATED_BY" : "done", "LAB_CREATED_DATE" : null, "LAB_LAST_MODIFIED_BY" : "2022-11-02 00:37:32", "LAB_LAST_MODIFIED_DATE" : "0000-00-00 00:00:00", "LAB_ACTIVE" : 127, "LAB_STATUS" : "1", "LAB_EXA_ID_A_DESC" : "3.1 Blood Slide (Malaria)" }', 'E', 1),
+	(2, '2023-06-05 20:07:36', '2023-11-02 00:42:33', '{ "LAB_ID" : 19, "LAB_EXA_ID_A" : "03.01", "LAB_DATE" : "2023-11-02 00:42:33", "LAB_RES" : "FEW", "LAB_NOTE" : "68 years old", "LAB_PAT_ID" : 701010, "LAB_PAT_NAME" : "Genevie Stermer", "LAB_CROSS1" : null, "LAB_CROSS2" : null, "LAB_CROSS3" : null, "LAB_CROSS4" : null, "LAB_CROSS5" : null, "LAB_CROSS6" : null, "LAB_CROSS7" : null, "LAB_CROSS8" : null, "LAB_CROSS9" : null, "LAB_CROSS10" : null, "LAB_CROSS11" : null, "LAB_CROSS12" : null, "LAB_CROSS13" : null, "LAB_LOCK" : 1, "LAB_AGE" : 0, "LAB_SEX" : "F", "LAB_MATERIAL" : "undefined", "LAB_PAT_INOUT" : "I", "LAB_CREATED_BY" : "done", "LAB_CREATED_DATE" : null, "LAB_LAST_MODIFIED_BY" : "2022-11-02 00:42:33", "LAB_LAST_MODIFIED_DATE" : "0000-00-00 00:00:00", "LAB_ACTIVE" : 127, "LAB_STATUS" : "1", "LAB_EXA_ID_A_DESC" : "3.1 Blood Slide (Malaria)" }', 'E', 1),
+	(3, '2023-06-05 20:13:06', '2022-11-02 19:57:39', '{ "OPD_ID" : 48, "OPD_WRD_ID_A" : "OPD", "OPD_DATE" : "2022-11-02 19:57:39", "OPD_NEW_PAT" : "N", "OPD_PROG_YEAR" : 44, "OPD_SEX" : "M", "OPD_AGE" : 65, "OPD_DIS_ID_A" : "15", "OPD_DIS_ID_A_2" : null, "OPD_DIS_ID_A_3" : null, "OPD_REFERRAL_FROM" : null, "OPD_REFERRAL_TO" : "R", "OPD_NOTE" : "", "OPD_PAT_ID" : 701010, "OPD_USR_ID_A" : "admin", "OPD_NEXT_VISIT_ID" : null, "OPD_LOCK" : 0, "OPD_CREATED_BY" : null, "OPD_CREATED_DATE" : "2022-11-07 19:57:39", "OPD_LAST_MODIFIED_BY" : null, "OPD_LAST_MODIFIED_DATE" : null, "OPD_ACTIVE" : 1, "OPD_PRESCRIPTION" : null, "OPD_DIS_ID_A_TYPE_DESC" : "4.NON-COMMUNICABLE DISEASES", "OPD_DIS_ID_A_DESC" : "Gastro-intestinal DISEASEss (non infective)", "OPD_DIS_ID_A_2_TYPE_DESC" : null, "OPD_DIS_ID_A_2_DESC" : null, "OPD_DIS_ID_A_3_TYPE_DESC" : null, "OPD_DIS_ID_A_3_DESC" : null }', 'O', 1),
+	(4, '2023-06-05 20:13:06', '2022-11-20 23:29:50', '{ "OPD_ID" : 367, "OPD_WRD_ID_A" : "OPD", "OPD_DATE" : "2023-11-20 23:29:50", "OPD_NEW_PAT" : "N", "OPD_PROG_YEAR" : 359, "OPD_SEX" : "M", "OPD_AGE" : 53, "OPD_DIS_ID_A" : "19", "OPD_DIS_ID_A_2" : null, "OPD_DIS_ID_A_3" : null, "OPD_REFERRAL_FROM" : null, "OPD_REFERRAL_TO" : null, "OPD_NOTE" : "", "OPD_PAT_ID" : 701010, "OPD_USR_ID_A" : "admin", "OPD_NEXT_VISIT_ID" : null, "OPD_LOCK" : 0, "OPD_CREATED_BY" : "admin", "OPD_CREATED_DATE" : "2022-11-20 23:29:50", "OPD_LAST_MODIFIED_BY" : "admin", "OPD_LAST_MODIFIED_DATE" : "2022-11-20 23:29:50", "OPD_ACTIVE" : 1, "OPD_PRESCRIPTION" : null, "OPD_DIS_ID_A_TYPE_DESC" : "4.NON-COMMUNICABLE DISEASES", "OPD_DIS_ID_A_DESC" : "Other cardio-vascular DISEASEs", "OPD_DIS_ID_A_2_TYPE_DESC" : null, "OPD_DIS_ID_A_2_DESC" : null, "OPD_DIS_ID_A_3_TYPE_DESC" : null, "OPD_DIS_ID_A_3_DESC" : null }', 'O', 1),
+	(5, '2023-06-05 20:13:06', '2022-05-13 20:41:05', '{ "ADM_ID" : 49, "ADM_IN" : 0, "ADM_TYPE" : "N", "ADM_WRD_ID_A" : "I", "ADM_YPROG" : 837, "ADM_PAT_ID" : 701010, "ADM_DATE_ADM" : "2022-05-09 00:46:17", "ADM_ADMT_ID_A_ADM" : "I", "ADM_FHU" : null, "ADM_IN_DIS_ID_A" : "30", "ADM_OUT_DIS_ID_A" : "30", "ADM_OUT_DIS_ID_A_2" : null, "ADM_OUT_DIS_ID_A_3" : null, "ADM_DATE_DIS" : "2022-05-13 20:41:05", "ADM_DIST_ID_A" : "EQ", "ADM_NOTE" : null, "ADM_TRANS" : 0, "ADM_PRG_DATE_VIS" : null, "ADM_PRG_PTT_ID_A" : null, "ADM_PRG_DATE_DEL" : null, "ADM_PRG_DLT_ID_A" : null, "ADM_PRG_DRT_ID_A" : null, "ADM_PRG_WEIGHT" : null, "ADM_PRG_DATE_CTRL1" : null, "ADM_PRG_DATE_CTRL2" : null, "ADM_PRG_DATE_ABORT" : null, "ADM_USR_ID_A" : "admin", "ADM_LOCK" : 3, "ADM_DELETED" : "N", "ADM_CREATED_BY" : "admin", "ADM_CREATED_DATE" : "2022-05-09 00:46:17", "ADM_LAST_MODIFIED_BY" : "admin", "ADM_LAST_MODIFIED_DATE" : "2022-05-13 20:41:05", "ADM_ACTIVE" : 1, "ADM_WRD_ID_A_DESC" : "MALE WARD", "ADM_ADMT_ID_A_ADM_DESC" : "SELF", "ADM_IN_DIS_ID_A_DESC" : "Diarrhoea-Not bloody", "ADM_OUT_DIS_ID_A_DESC" : "Diarrhoea-Not bloody", "ADM_OUT_DIS_ID_A_2_DESC" : null, "ADM_OUT_DIS_ID_A_3_DESC" : null, "ADM_DIST_ID_A_DESC" : "NORMAL DISCHARGE" }', 'A', 1); 
 	
