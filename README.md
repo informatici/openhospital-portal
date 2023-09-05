@@ -131,7 +131,7 @@ Abramo Oliver       701020            abramo2023         PATIENT
 
 - Patient Portal (ui) will be available at `https://develop.ohpp.local/` 
 
-- Api will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
+- Api will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/` (use the latter to avoid frontend 'Mixed Content' error)
 
 - Loadbalancer dashboard (traefik) will be available at `http://localhost:8080`
 
