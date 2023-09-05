@@ -75,7 +75,7 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState> {
                             width: 1,
                         }}>
                             <div style={{ "width": "20%" }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/doctor.jpeg" />
+                                <Avatar alt="Mario Rossi" src="/static/images/avatar/doctor.jpeg" />
                             </div>
                             <div style={{ "width": "60%" }}>
                                 <Typography variant="h6">

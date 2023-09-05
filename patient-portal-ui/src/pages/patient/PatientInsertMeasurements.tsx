@@ -63,7 +63,6 @@ function PatientInsertMeasurements(props: {
      
         setType("edit/delete");
       }
-
       setLoadComponent(1);
     });
   }, []);

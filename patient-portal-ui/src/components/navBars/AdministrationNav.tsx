@@ -74,7 +74,7 @@ class AdministrationNav extends Component<AdministrationNavProps, Administration
                             width: 1,
                         }}>
                             <div style={{ "width": "20%" }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/administrator.jpeg" />
+                                <Avatar alt="Mario Rossi" src="/static/images/avatar/administrator.jpeg" />
                             </div>
                             <div style={{ "width": "60%" }}>
                                 <Typography variant="h6">

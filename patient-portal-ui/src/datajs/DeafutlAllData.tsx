@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
 const url_0 = 'http://develop-api.ohpp.local:18080/api/';
-const url_1 = 'http://localhost:18080/api/';
 // export const ListDoctorPatientsTest = async () => {
 export const DeafutlAllData = {
 
@@ -185,7 +184,6 @@ export const DeafutlAllData = {
       },
     });
 
-
     const data = await response.json();
     return true;
   },
@@ -194,7 +192,6 @@ export const DeafutlAllData = {
       method: 'DELETE',
 
     });
-
     return response;
   },
 

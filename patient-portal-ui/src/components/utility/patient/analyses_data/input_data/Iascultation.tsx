@@ -58,6 +58,7 @@ export default function Iascultation(props: {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -71,6 +72,7 @@ export default function Iascultation(props: {
   };
   props.option[0] = { label: "", value: "" }
   const optionSel = props.option;
+
   useEffect(() => {
     // --- manage default
     rif.id_measure ? setDataDisabled(true) : setDataDisabled(false);
