@@ -97,13 +97,21 @@ public class HospitalEvent {
 		this.created = Calendar.getInstance().getTime();
 	}
 
+
+	/***
+	 * Updates the saved item with the one passed as parameter
+	 * @param item
+	 * @return updated item if the IDs match, null otherwise
+	 */
 	public HospitalEvent updateWith(HospitalEvent item) {
-		return new HospitalEvent(
-						this.id,
-						item.date,
-						item.patient,
-						item.eventType,
-						item.payload);
+		if(this.id == item.getId()) {
+	        this.date = item.date;
+	        this.patient = item.patient;
+	        this.eventType = item.eventType;
+	        this.payload = item.payload;
+	        return this;
+		}
+		return null;
 	}
 
 }

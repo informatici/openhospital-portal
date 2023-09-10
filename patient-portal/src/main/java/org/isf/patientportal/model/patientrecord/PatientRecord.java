@@ -99,17 +99,24 @@ public class PatientRecord {
 		this.created = Calendar.getInstance().getTime();
 	}
 
+	
+	/***
+	 * Updates the saved item with the one passed as parameter
+	 * @param item
+	 * @return updated item if the IDs match, null otherwise
+	 */
 	public PatientRecord updateWith(PatientRecord item) {
-        return new PatientRecord(
-            this.id,
-            item.recordDate,
-            item.patient,
-            item.recordType,
-            item.value1,
-            item.value2,
-            item.optionValue,
-            item.note
-        );
+		if(this.id == item.getId()) {
+	        this.recordDate = item.recordDate;
+	        this.patient = item.patient;
+	        this.recordType = item.recordType;
+	        this.value1 = item.value1;
+	        this.value2 = item.value2;
+	        this.optionValue = item.optionValue;
+	        this.note = item.note;
+			return this;
+		}
+		return null;
     }
 	
 }
