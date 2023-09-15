@@ -48,38 +48,38 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity(name = "PatientRecord")
 public class PatientRecord {
-	
+
 	@Id
-    @GeneratedValue
-    private Long id;
-	
+	@GeneratedValue
+	private Long id;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	@NotNull
 	private LocalDateTime recordDate;
-	
+
 	@ManyToOne
-    @NotNull
+	@NotNull
 	private Patient patient;
-	
+
 	@OneToOne
 	@NotNull
 	@JoinColumn(referencedColumnName = "code")
 	private RecordType recordType;
-	
+
 	private float value1;
-	
+
 	private float value2;
-	
+
 	@Column(nullable = true)
 	private String optionValue;
-	
+
 	private String note;
-	
+
 	@Column(nullable = false, updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private Date created = new Date();
-	
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+	private Date created = new Date();
+
+
 	public PatientRecord(Long id, 
 					@NotNull LocalDateTime date, 
 					@NotNull Patient patient, 
@@ -99,7 +99,7 @@ public class PatientRecord {
 		this.created = Calendar.getInstance().getTime();
 	}
 
-	
+
 	/***
 	 * Updates the saved item with the one passed as parameter
 	 * @param item
@@ -107,16 +107,16 @@ public class PatientRecord {
 	 */
 	public PatientRecord updateWith(PatientRecord item) {
 		if(this.id == item.getId()) {
-	        this.recordDate = item.recordDate;
-	        this.patient = item.patient;
-	        this.recordType = item.recordType;
-	        this.value1 = item.value1;
-	        this.value2 = item.value2;
-	        this.optionValue = item.optionValue;
-	        this.note = item.note;
+			this.recordDate = item.recordDate;
+			this.patient = item.patient;
+			this.recordType = item.recordType;
+			this.value1 = item.value1;
+			this.value2 = item.value2;
+			this.optionValue = item.optionValue;
+			this.note = item.note;
 			return this;
 		}
 		return null;
-    }
-	
+	}
+
 }

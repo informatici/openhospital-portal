@@ -105,11 +105,11 @@ public class HospitalEvent {
 	 */
 	public HospitalEvent updateWith(HospitalEvent item) {
 		if(this.id == item.getId()) {
-	        this.date = item.date;
-	        this.patient = item.patient;
-	        this.eventType = item.eventType;
-	        this.payload = item.payload;
-	        return this;
+			this.date = item.date;
+			this.patient = item.patient;
+			this.eventType = item.eventType;
+			this.payload = item.payload;
+			return this;
 		}
 		return null;
 	}
