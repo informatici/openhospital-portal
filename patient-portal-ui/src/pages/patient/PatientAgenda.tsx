@@ -25,6 +25,7 @@ interface Items {
 }
 interface dataAgenda {
   dataAgenda?: Items;
+  dateDef?: any;
 }
 let data: dataAgenda = {};
 const PatientAgenda = () => {
@@ -34,6 +35,7 @@ const PatientAgenda = () => {
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((resDataAgenda) => {
+      console.log(resDataAgenda);
       resDataAgenda = resDataAgenda.sort((a: { date: number; }, b: { date: number; }) => (a.date > b.date ? 1 : -1)); // --- sort by date
       // --- get all Date Time from Object
       let arrDateTimeAll: any | null | undefined = [];
@@ -48,9 +50,11 @@ const PatientAgenda = () => {
         acc[year][month] = [...(acc[year][month] || []), day];
         return acc;
       }, {});
+      console.log(date_obj);
       setDataAgenda(resDataAgenda);
       let id_patient = localStorage.getItem("IdPatient");
       DeafutlAllData.getPatientsById(id_patient).then((resDataUser) => {
+        console.log(resDataUser);
         setDataUser(resDataUser);
       });
       setLoadComponent(1);
@@ -69,56 +73,64 @@ const PatientAgenda = () => {
       {loadComponent ? <><PatientNav {...dataUser} /></> : null}
 
       < Box sx={{ mt: 14, width: 1 }}>
+
         <PatientSmartNav page={'PatientAgenda'} />
       </Box>
       {loadComponent ? <>
-        <div style={{ width: '100%' }}>
-          {Object.keys(date_obj).map((ky, iy) => (
+        {<div style={{ width: '100%' }}>
+          {Object.keys(date_obj).map((ky: any, iy: any) => (
             <div key={iy}>
-              <Divider textAlign="left" sx={{
-                fontWeight: 'bold',
-                fontSize: "1.4em"
-              }}>{ky}</Divider>
-              {Object.keys(date_obj[ky]).map((km, im) => (
-                <div km={im}>
-                  <Divider textAlign="left" sx={{
-                  }}><Typography variant="h5" component="h2" display="inline" sx={{ width: 0.6 }}>{monthNames[km - 1]}</Typography></Divider>
-                  {date_obj[ky][km].map((kd, id) => (
+              <Divider
+                textAlign="left"
+                sx={{ fontWeight: 'bold', fontSize: "1.4em" }}>
+                {ky}
+              </Divider>
+              {Object.keys(date_obj[ky]).map((km: any, im: any) => (
+                <div key={im}>
+                  <Divider
+                    textAlign="left"
+                    sx={{}}>
+                    <Typography
+                      variant="h5"
+                      component="h2"
+                      display="inline"
+                      sx={{ width: 0.6 }}>{monthNames[km - 1]}</Typography>
+                  </Divider>
+                  {Object.keys(date_obj[ky][km]).map((kd: any, id: any) => (
                     <Card sx={{ mt: 1, width: 1 }}>
                       <CardContent>
-                        <div kd={id}>
-                          {getDayName(ky + "/" + km + "/" + kd, "en-EN")}<br></br>
-                          <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{kd}</Typography>
-                          {kd != 0 ? (
+                        <div key={id}>
+                          {getDayName(ky + "/" + km + "/" + date_obj[ky][km][kd], "en-EN")}<br></br>
+                          <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{ date_obj[ky][km][kd]}</Typography>
+                          {date_obj[ky][km][kd] != 0 ? (
                             <>
-                              {dataAgenda.map((data, idx) => (
-
-                                getDateLab(data.date) == getDateLab(ky + "/" + km + "/" + kd) ? (
+                              {dataAgenda.map((data : any, idx) => (
+                                getDateLab(data.date) == getDateLab(ky + "/" + km + "/" + date_obj[ky][km][kd]) ? (
 
                                   data.eventType.code == "E" ? (
-                                    <Button key={data.id} component={Link} state={data} to="/PatientExamDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
+                                   <Button key={data.id} component={Link} state={data} to="/PatientExamDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
-                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                      <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>
                                   ) : data.eventType.code == "O" ? (
                                     <Button key={data.id} component={Link} state={data} to="/PatientVisitDetails" sx={{ width: 1, mt: 1, color: "blue" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
-                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                      <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>
                                   ) : data.eventType.code == "A" ? (
                                     <Button key={data.id} component={Link} state={data} to="/PatientHospitalizationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
-                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                      <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>
                                   ) : data.eventType.code == "T" ? (
                                     <Button key={data.id} component={Link} state={data} to="/PatientTherapieDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
-                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                      <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>
                                   ) : data.eventType.code == "V" ? (
                                     <Button key={data.id} component={Link} state={data} to="/PatientVaccinationDetails" sx={{ width: 1, mt: 1, color: "green" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
-                                      <Typography variant="button " display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
+                                      <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>
                                   ) : null
                                 ) : (
@@ -138,7 +150,7 @@ const PatientAgenda = () => {
               ))}
             </div>
           ))}
-        </div>
+        </div>}
       </> : null}
     </Container>
   );

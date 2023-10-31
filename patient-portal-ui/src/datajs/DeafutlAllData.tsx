@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
-const url_0 = 'http://develop-api.ohpp.local:18080/api/';
+// const url_0 = 'http://develop-api.ohpp.local:18080/api/';
+const url_0 = 'http://localhost:18080/api/'; // --- uncomment to develop locally
 // export const ListDoctorPatientsTest = async () => {
 export const DeafutlAllData = {
 
