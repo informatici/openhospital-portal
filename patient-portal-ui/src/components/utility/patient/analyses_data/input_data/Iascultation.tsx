@@ -143,9 +143,9 @@ export default function Iascultation(props: {
         let recordTypeCode = rif.code;
         let value2 = -1;
         if (ins_upd == '') {
-          console.log("insert");
+       
           DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-            console.log(res);
+      
             navigate('/PatientMeasurements',
               {
                 state: {
@@ -156,16 +156,7 @@ export default function Iascultation(props: {
         } else {
           console.log("update");
           DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-            console.log(res_all);
-            // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-            //   console.log(res);
-            //   // navigate('/PatientMeasurements',
-            //   //   {
-            //   //     state: {
-            //   //       res: res
-            //   //     }
-            //   //   });
-            // });
+          
           });
         }
         // --- TODO insert/update and changePage

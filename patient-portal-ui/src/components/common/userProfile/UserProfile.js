@@ -27,7 +27,7 @@ export default function UserProfile() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log(anchor);
+  
     if (
       event &&
       event.type === 'keydown' &&

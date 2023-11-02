@@ -42,8 +42,7 @@ class PatientNav extends Component<any> {
         this.state = {
             setThemeUser: 'theme1',
         };
-        console.log("props in nav");
-        console.log(props);
+       
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }

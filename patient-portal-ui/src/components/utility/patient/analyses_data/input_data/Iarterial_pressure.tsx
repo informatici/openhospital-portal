@@ -35,28 +35,6 @@ interface Iarterial_pressureProps {
 interface $d {
     $d?: string;
 }
-// interface Imin_max {
-//     min: string;
-//     max: string;
-
-// }
-
-// interface Iarterial_pressureProps {
-//     dataSelected?: string;
-//     dataDef?: Imin_max[];
-//     dataDefSta?: any;
-
-// }
-
-// interface Iarterial_pressureState {
-//     io_vis_min?: string;
-//     io_vis_max?: string;
-//     getvalueMin?: string;
-//     getvalueMax?: string;
-//     getvalue?: string;
-//     disAddIcon?: boolean;
-
-// }
 export default function Iarterial_pressure(props: {
     dataDef: Iarterial_pressureProps;
     edit?: boolean
@@ -103,7 +81,7 @@ export default function Iarterial_pressure(props: {
         } else {
             setDateTime(new Date());
         }
-        console.log(rif)
+       
         setDataMin(rif.value1 ? rif.value1 : rif.defaultValue1);
         setDataMax(rif.value2 ? rif.value2 : rif.defaultValue2);
     }, []);
@@ -129,8 +107,7 @@ export default function Iarterial_pressure(props: {
             let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
             DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-                console.log(res);
-                console.log(res);
+            
                 navigate('/PatientMeasurements',
                     {
                         state: {
@@ -144,7 +121,7 @@ export default function Iarterial_pressure(props: {
             setOpen(false)
             window.location.reload();
         } else {
-            // console.log("nothing");
+          
         }
     }, [deleteMeasure]);
 
@@ -155,28 +132,24 @@ export default function Iarterial_pressure(props: {
         setDataErrorMax(false);
         setDataErrorMin(false);
         if (dataMin == null) {
-            console.log("a");
+            
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore non può essere vuoto")
         } else if (dataMax == null) {
-            console.log("b");
+           
             setDataErrorMax(true);
 
             setDataErrorMessageMax("Il valore non può essere vuoto")
         } else if (dataMin <= rif.minValue) {
-            console.log("c");
+           
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
         } else if (dataMax >= rif.maxValue) {
-            console.log("d");
-            console.log(dataMax);
-            console.log(rif.maxValue);
+           
             setDataErrorMax(true);
             setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
         } else if (dataMin > dataMax) {
-            console.log(dataMin);
-            console.log(dataMax);
-            console.log("e");
+           
             setDataErrorMax(true);
             setDataErrorMin(true);
             setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
@@ -194,14 +167,10 @@ export default function Iarterial_pressure(props: {
                 let value2: any = dataMax;
                 let recordDate = toIsoDate(dateTime);
                 let recordTypeCode = rif.code;
-                console.log("patientId:" + patientId);
-
-                console.log("recordDate:" + recordDate);
-                console.log("ins_upd:" + ins_upd);
-                console.log("recordTypeCode:" + recordTypeCode);
+              
 
                 if (ins_upd == '') {
-                    console.log("insert");
+                 
                     DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
                         console.log(res);
                         navigate('/PatientMeasurements',
@@ -212,21 +181,12 @@ export default function Iarterial_pressure(props: {
                             });
                     });
                 } else {
-                    console.log("update");
+                    
                     DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-                        console.log(res_all);
-                        // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-                        //   console.log(res);
-                        //   // navigate('/PatientMeasurements',
-                        //   //   {
-                        //   //     state: {
-                        //   //       res: res
-                        //   //     }
-                        //   //   });
-                        // });
+                     
                     });
                 }
-                // --- TODO insert/update and changePage
+               
             }
         }
     }

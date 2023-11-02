@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
-// const url_0 = 'http://develop-api.ohpp.local:18080/api/';
-const url_0 = 'http://localhost:18080/api/'; // --- uncomment to develop locally
-// export const ListDoctorPatientsTest = async () => {
+const url_0 = 'http://localhost:18080/api/';
+
 export const DeafutlAllData = {
 
 
   // --- ADMIN_API
   getAllUsers: async function () {
-    let response = await fetch('http://develop-api.ohpp.local:18080/api/admin/users');
+    let response = await fetch(url_0 + 'api/admin/users');
     const data = await response.json();
     return data;
   },
@@ -42,7 +41,6 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  // --- TODO servono tutti questi dati per il logout?
   postLogout: async function (user: any, pass: any) {
     let response = await fetch(url_0 + 'auth/logout', {
       method: 'POST',
@@ -81,7 +79,6 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  // --- TODO
   getPatientrecords_patient: async function (id_patient: any) {
     let response = await fetch(url_0 + 'public/patientrecords/patient/' + id_patient);
     const data = await response.json();
@@ -126,9 +123,7 @@ export const DeafutlAllData = {
     return data;
   },
   getEventTypes: async function () {
-    // let response = await fetch(url_0 + 'public/eventtypes');
-    // const data = await response.json();
-    // return data;
+
   },
   getAuscultationoptions: async function () {
     let response = await fetch(url_0 + 'public/recordtypes/auscultationoptions');
@@ -146,7 +141,6 @@ export const DeafutlAllData = {
     return data;
   },
   postInsertMeasurement: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any) {
-    console.log(dateIsoToString(recordDate));
     let response = await fetch(url_0 + 'public/patientrecords', {
       method: 'POST',
       headers: {
@@ -174,8 +168,6 @@ export const DeafutlAllData = {
   },
   postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
     res_all.value1 = value1;
-    console.log(res_all.id);
-    console.log(res_all);
     let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
       method: 'PUT',
       body: JSON.stringify(

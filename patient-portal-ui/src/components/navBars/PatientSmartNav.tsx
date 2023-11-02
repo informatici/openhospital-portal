@@ -17,8 +17,7 @@ export default function PatientSmartNav(props: {
     editBtClk?: any;
     deleteBtClk?: any;
 }) {
-    console.log("PatientSmartNav");
-    console.log(props);
+   
 
     return (
         <Box sx={{ width: 1, mt: 1, minHeight: '70px' }}>

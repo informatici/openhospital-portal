@@ -35,7 +35,7 @@ const PatientAgenda = () => {
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((resDataAgenda) => {
-      console.log(resDataAgenda);
+   
       resDataAgenda = resDataAgenda.sort((a: { date: number; }, b: { date: number; }) => (a.date > b.date ? 1 : -1)); // --- sort by date
       // --- get all Date Time from Object
       let arrDateTimeAll: any | null | undefined = [];
@@ -50,11 +50,9 @@ const PatientAgenda = () => {
         acc[year][month] = [...(acc[year][month] || []), day];
         return acc;
       }, {});
-      console.log(date_obj);
       setDataAgenda(resDataAgenda);
       let id_patient = localStorage.getItem("IdPatient");
       DeafutlAllData.getPatientsById(id_patient).then((resDataUser) => {
-        console.log(resDataUser);
         setDataUser(resDataUser);
       });
       setLoadComponent(1);

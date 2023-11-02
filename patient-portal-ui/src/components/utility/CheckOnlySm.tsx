@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 function CheckOnlySm() {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
-    console.log(matches);
+
     return (
         <>            {
             matches ? <>  aaa  </> : <>  bbb  </>

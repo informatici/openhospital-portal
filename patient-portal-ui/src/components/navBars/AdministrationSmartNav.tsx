@@ -22,18 +22,14 @@ class AdministrationSmartNav extends Component<AdministrationSmartNavProps, Admi
     constructor(props: any | Readonly<{}>) {
 
         super(props);
-        // Set initial state
-        console.log("inizial");
-        console.log(props);
+       
         this.state = { main: true };
     }
 
     render() {
         // const main = this.state.main;
         let button;
-        console.log("state:" + this.state.main);
-
-        // console.log("state:" + this.state.main);
+       
         return (
             <Box sx={{ width: 1 }}>
                 {/* <AppBar position="static" > */}
