@@ -70,7 +70,7 @@ const PatientAgenda = () => {
     >
       {loadComponent ? <><PatientNav {...dataUser} /></> : null}
 
-      < Box sx={{ mt: 14, width: 1 }}>
+      <Box sx={{ mt: 14, width: 1 }}>
 
         <PatientSmartNav page={'PatientAgenda'} />
       </Box>

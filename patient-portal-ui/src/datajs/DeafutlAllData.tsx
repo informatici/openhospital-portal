@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
-const url_0 = 'http://localhost:18080/api/';
-
+const url_0 = 'http://api-develop.ohpp.local:18080/api/';
 export const DeafutlAllData = {
 
 
