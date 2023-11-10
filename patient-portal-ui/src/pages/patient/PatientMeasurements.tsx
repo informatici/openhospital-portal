@@ -31,16 +31,16 @@ interface Items {
   uom?: string;
 }
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
-  { field: 'date', headerName: 'Data' },
-  { field: 'hour', headerName: 'Hour' },
-  { field: 'value', headerName: 'Value' },
-  { field: 'misure', headerName: 'Misure' },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'date', headerName: 'Data', headerClassName: 'super-app-theme--header', },
+  { field: 'hour', headerName: 'Hour', headerClassName: 'super-app-theme--header', },
+  { field: 'value', headerName: 'Value', headerClassName: 'super-app-theme--header', },
+  { field: 'misure', headerName: 'Misure', headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
 ];
 
 const PatientMeasurements = () => {
@@ -128,6 +128,31 @@ const PatientMeasurements = () => {
             </ButtonGroup>
           </Box>
           <DataGrid
+            sx={{
+              border: 0,
+              '&>.MuiDataGrid-main': {
+                '&>.MuiDataGrid-columnHeaders': {
+                  borderBottom: 'none',
+                },
+
+                '& div div div div >.MuiDataGrid-cell': {
+                  borderBottom: 'none',
+                },
+              },
+              "& .MuiDataGrid-virtualScrollerRenderZone": {
+                "& .MuiDataGrid-row": {
+                  width: "96%",
+                  backgroundColor: "rgba(235, 235, 235, .9)",
+                  margin: "0.3em",
+                  borderRadius: 3
+
+                }
+              },
+              '& .super-app-theme--header': {
+                fontSize: '0.8em'
+              },
+            }}
+
             onCellClick={(params, event) => {
               if (!event.ctrlKey) {
                 navigate("/PatientInsertMeasurements", {
@@ -138,7 +163,9 @@ const PatientMeasurements = () => {
             }}
             initialState={{
               columns: {
+
                 columnVisibilityModel: {
+
                   id: false,
                   date_complete: false,
                   id_measure: false,

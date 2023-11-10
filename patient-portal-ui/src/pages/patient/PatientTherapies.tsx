@@ -89,6 +89,31 @@ const PatientTherapies = () => {
           </ButtonGroup>
         </Box>
         <DataGrid
+          sx={{
+            border: 0,
+            '&>.MuiDataGrid-main': {
+              '&>.MuiDataGrid-columnHeaders': {
+                borderBottom: 'none',
+              },
+
+              '& div div div div >.MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+            },
+            "& .MuiDataGrid-virtualScrollerRenderZone": {
+              "& .MuiDataGrid-row": {
+                width: "96%",
+                backgroundColor: "rgba(235, 235, 235, .9)",
+                margin: "0.3em",
+                borderRadius: 3
+
+              }
+            },
+            '& .super-app-theme--header': {
+              fontSize: '0.8em'
+            },
+          }}
+
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {
               navigate("/PatientTherapieDetails", {

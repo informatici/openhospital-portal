@@ -80,7 +80,7 @@ const PatientVaccinations = () => {
             width: 1,
           }}
         >
-         <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+          <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
             <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
             {btFilters.map((bt_el) => (
               <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
@@ -88,6 +88,32 @@ const PatientVaccinations = () => {
           </ButtonGroup>
         </Box>
         <DataGrid
+          sx={{
+
+            border: 0,
+            '&>.MuiDataGrid-main': {
+              '&>.MuiDataGrid-columnHeaders': {
+                borderBottom: 'none',
+              },
+
+              '& div div div div >.MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+            },
+            "& .MuiDataGrid-virtualScrollerRenderZone": {
+              "& .MuiDataGrid-row": {
+                width: "96%",
+                backgroundColor: "rgba(235, 235, 235, .9)",
+                margin: "0.3em",
+                borderRadius: 3
+
+              }
+            },
+            '& .super-app-theme--header': {
+              fontSize: '0.8em'
+            },
+          }}
+
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {
               navigate("/PatientVaccinationDetails", {

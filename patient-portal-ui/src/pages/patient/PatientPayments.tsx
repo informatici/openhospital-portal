@@ -9,7 +9,7 @@ import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
 import Payments from '../../datajs/Payments'
 
 let rows: any[] = [];
-let data_json=Payments;
+let data_json = Payments;
 const columns = [
   { field: 'id', headerName: 'ID', width: 0, hide: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
@@ -28,7 +28,7 @@ Object.keys(data_values).forEach(function (key) {
       btFilters.push(k.type);
     }
   });
-  rows.push([data_values[key].map((e: any, i: number) =>({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: e.type }))])
+  rows.push([data_values[key].map((e: any, i: number) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: e.type }))])
 });
 rows = rows.flat(2);
 Object.keys(rows).forEach(function (key: any, value) {
@@ -78,6 +78,31 @@ const PatientPayments = () => {
           </ButtonGroup>
         </Box>
         <DataGrid
+          sx={{
+            border: 0,
+            '&>.MuiDataGrid-main': {
+              '&>.MuiDataGrid-columnHeaders': {
+                borderBottom: 'none',
+              },
+
+              '& div div div div >.MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+            },
+            "& .MuiDataGrid-virtualScrollerRenderZone": {
+              "& .MuiDataGrid-row": {
+                width: "96%",
+                backgroundColor: "rgba(235, 235, 235, .9)",
+                margin: "0.3em",
+                borderRadius: 3
+
+              }
+            },
+            '& .super-app-theme--header': {
+              fontSize: '0.8em'
+            },
+          }}
+
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {
               navigate("/PatientPaymentDetails", {
