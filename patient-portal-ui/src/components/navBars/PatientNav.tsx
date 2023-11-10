@@ -34,28 +34,41 @@ interface Items {
 interface IPatientProps {
     data_r?: Items;
 }
-class PatientNav extends Component<any> {
+class PatientNav extends Component<any, { main: boolean, setThemeUser: string, height_calculated_1: string }> {
     wrapperRef: any;
     constructor(props: Items) {
         super(props);
-        this.state = { main: true };
+
+
+        // let height_calculated_1_val = "30";
+
         this.state = {
+            main: true,
             setThemeUser: 'theme1',
+            height_calculated_1: "1px",
         };
-       
+
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.closePanel = this.closePanel.bind(this);
+
     }
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
+        let height_calculated_1_val = window.innerHeight -
+            document.getElementById('height_calc_1')!.offsetHeight -
+            document.getElementById('height_calc_2')!.offsetHeight - 40;
+        this.setState({ height_calculated_1: height_calculated_1_val + "px" });
     }
     componentWillUnmount() {
         document.removeEventListener("mousedown", this.handleClickOutside);
     }
-    // --- Custom Manage click Over Acccordion (TODO) ---
+    closePanel(event: { target: any; }) {
+        this.handleClickOutside(event.target);
+    }
     handleClickOutside(event: { target: any; }) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-            let el: any = document.getElementById('panel1a-header');
+            let el: any = document.getElementById('panel-1a-header');
             let elAE = el.getAttribute('aria-expanded');
             if (elAE === "true") {
                 el.click();
@@ -64,18 +77,21 @@ class PatientNav extends Component<any> {
     }
     render() {
         return (
-            <Accordion ref={this.wrapperRef} sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
+            <Accordion
+                ref={this.wrapperRef}
+                style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em" }}
+                sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}
+            >
                 <AccordionSummary
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    aria-controls="panel-1a-content"
+                    id="panel-1a-header"
                 >
-                    <Box
+                    <Box id="height_calc_1"
                         borderRadius={2} sx={{
-                            p: 1,
-                            minHeight: '82px',
                             width: 1,
                             backgroundColor: 'primary.dark',
-	                        }}>
+                        }}
+                    >
                         <Stack direction="row" spacing={2} sx={{
                             width: 1,
                         }}>
@@ -96,9 +112,11 @@ class PatientNav extends Component<any> {
                         </Stack>
                     </Box>
                 </AccordionSummary>
-                <AccordionDetails>
-                    <Box
+                <AccordionDetails style={{ "padding": "0em" }}>
+                    <Box id="height_calc_2"
+                        style={{ "backgroundColor": "#fff", "padding": "2em", "borderBottom": "1px solid gray" }}
                         role="presentation"
+                        sx={{ width: 1, p: 2 }}
                     >
                         <Box sx={{
                             display: 'flex',
@@ -128,6 +146,9 @@ class PatientNav extends Component<any> {
                                 <Logout />
                             </Box>
                         </List>
+                    </Box>
+                    <Box>
+                        <div onClick={this.closePanel} style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em", "height": this.state.height_calculated_1 }}></div>
                     </Box>
                 </AccordionDetails>
             </Accordion >
