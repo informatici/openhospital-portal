@@ -10,13 +10,13 @@ import { DeafutlAllData } from '../../datajs/DeafutlAllData';
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
-  { field: 'date', headerName: 'Data', width: 110 },
-  { field: 'hour', headerName: 'Hour', width: 70 },
-  { field: 'value', headerName: 'Value', width: 70 },
-  { field: 'misure', headerName: 'Misure', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
+  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
+  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
 ];
 
 const PatientTherapies = () => {

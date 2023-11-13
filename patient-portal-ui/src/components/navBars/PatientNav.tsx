@@ -99,10 +99,10 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                 <Avatar sx={{ width: 50, height: 50 }} alt={this.props.firstName} src="/static/images/avatar/1.jpeg" />
                             </div>
                             <div style={{ "width": "65%", margin: "2%" }}>
-                                <Typography variant="h6">
+                                <Typography color="#fff" variant="h6">
                                     {this.props.firstName} {this.props.secondName}
                                 </Typography>
-                                <Typography variant="button" >
+                                <Typography color="#fff" variant="button" >
                                     ID:   {this.props.userId}
                                 </Typography>
                             </div>
@@ -114,7 +114,8 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                 </AccordionSummary>
                 <AccordionDetails style={{ "padding": "0em" }}>
                     <Box id="height_calc_2"
-                        style={{ "backgroundColor": "#fff", "padding": "2em", "borderBottom": "1px solid gray" }}
+                        bgcolor="background.default"
+                        style={{ "padding": "2em", "borderBottom": "1px solid gray" }}
                         role="presentation"
                         sx={{ width: 1, p: 2 }}
                     >
