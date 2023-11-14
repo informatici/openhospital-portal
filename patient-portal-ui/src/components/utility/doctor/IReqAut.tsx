@@ -6,15 +6,7 @@ import ConfirmOTP from "../../common/buttons/doctor/ConfirmOTP";
 class IReqAut extends Component {
     constructor(props: {}) {
         super(props)
-        console.log("in button");
-        console.log(props);
-
-        // if (props.parentToChild.setType) {
-        //     this.state = { idUser: props.parentToChild.setType }
-
-        // } else {
-        //     this.state = { idUser: null }
-        // }
+    
     }
     render() {
         return (

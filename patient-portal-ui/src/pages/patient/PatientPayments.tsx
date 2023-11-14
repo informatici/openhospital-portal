@@ -9,15 +9,15 @@ import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
 import Payments from '../../datajs/Payments'
 
 let rows: any[] = [];
-let data_json=Payments;
+let data_json = Payments;
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
-  { field: 'date', headerName: 'Data', width: 110 },
-  { field: 'hour', headerName: 'Hour', width: 70 },
-  { field: 'value', headerName: 'Value', width: 70 },
-  { field: 'misure', headerName: 'Misure', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
+  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
+  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
 ];
 
 let btFilters: any[] = [];
@@ -28,7 +28,7 @@ Object.keys(data_values).forEach(function (key) {
       btFilters.push(k.type);
     }
   });
-  rows.push([data_values[key].map((e: any, i: number) =>({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: e.type }))])
+  rows.push([data_values[key].map((e: any, i: number) => ({ id: "", id_measure: e.id_measure, date_complete: e.date, date: getDateLab(e.date), hour: getTimeLab(e.date), value: e.value, misure: (key), type: e.type }))])
 });
 rows = rows.flat(2);
 Object.keys(rows).forEach(function (key: any, value) {
@@ -78,6 +78,31 @@ const PatientPayments = () => {
           </ButtonGroup>
         </Box>
         <DataGrid
+          sx={{
+            border: 0,
+            '&>.MuiDataGrid-main': {
+              '&>.MuiDataGrid-columnHeaders': {
+                borderBottom: 'none',
+              },
+
+              '& div div div div >.MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+            },
+            "& .MuiDataGrid-virtualScrollerRenderZone": {
+              "& .MuiDataGrid-row": {
+                width: "96%",
+                backgroundColor: "rgba(235, 235, 235, .9)",
+                margin: "0.3em",
+                borderRadius: 3
+
+              }
+            },
+            '& .super-app-theme--header': {
+              fontSize: '0.8em'
+            },
+          }}
+
           onCellClick={(params, event) => {
             if (!event.ctrlKey) {
               navigate("/PatientPaymentDetails", {

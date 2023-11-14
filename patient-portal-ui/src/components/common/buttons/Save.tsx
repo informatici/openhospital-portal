@@ -38,10 +38,7 @@ const Save = (props: {
     setOpen(false);
   };
   const clickSave = (event: any) => {
-    console.log("clickSave");
-    // setOpen(true);
-    // setTimeout(() => navigate(-1), 1500);
-    console.log(event)
+   
 
   };
   return (

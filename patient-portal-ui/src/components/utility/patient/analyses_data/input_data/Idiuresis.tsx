@@ -51,7 +51,6 @@ export default function Idiuresis(props: {
   const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  console.log(rif);
   let date_rif: Date | string | number = Date.now();
   const [open, setOpen] = React.useState(false);
   const [option, setOption] = React.useState([{}]);
@@ -70,8 +69,6 @@ export default function Idiuresis(props: {
     boxShadow: 24,
     p: 4,
   };
-  console.log("props.option------------------------------");
-  console.log(props.option);
   props.option[0] = { label: "", value: "" }
   const optionSel = props.option;
   useEffect(() => {
@@ -83,7 +80,6 @@ export default function Idiuresis(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -107,8 +103,6 @@ export default function Idiuresis(props: {
       let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
       DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-        console.log(res);
-        console.log(res);
         navigate('/PatientMeasurements',
           {
             state: {
@@ -132,18 +126,9 @@ export default function Idiuresis(props: {
     event.preventDefault();
     let dateValue = date_rif;
     let inputValue = event.target.diuresis.value;
-    console.log("ddd");
-    console.log(inputValue);
     if (inputValue == null) {
       setDataError(true);
       setDataErrorMessage("Il valore non può essere vuoto")
-    } else if (inputValue <= rif.minValue) {
-      setDataError(true);
-      setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
-    }
-    else if (inputValue >= rif.maxValue) {
-      setDataError(true);
-      setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
     } else {
       setDataError(false);
       setDataErrorMessage("");
@@ -154,14 +139,10 @@ export default function Idiuresis(props: {
         let value1 = event.target.diuresis.value;
         let recordDate = toIsoDate(dateTime);
         let recordTypeCode = rif.code;
-        console.log("patientId:" + patientId);
-        console.log("value1:" + value1);
-        console.log("recordDate:" + recordDate);
-        console.log("ins_upd:" + ins_upd);
-        console.log("recordTypeCode:" + recordTypeCode);
+        let value2 = -1;
         if (ins_upd == '') {
           console.log("insert");
-          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
             console.log(res);
             navigate('/PatientMeasurements',
               {
@@ -223,7 +204,7 @@ export default function Idiuresis(props: {
             label={capitalizeOnlyFirstLetter(rif.measurementType)}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
-            defaultValue={rif.defaultValue1 ? rif.defaultValue1 : "" }
+            defaultValue={rif.defaultValue1 ? rif.defaultValue1 : ""}
           >
             {optionSel.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
@@ -243,11 +224,6 @@ export default function Idiuresis(props: {
             </DemoContainer>
           </LocalizationProvider>
         </Box>
-        {/* {rif.date && rif.hour ?
-          <Idate_time dateSelected={rif.date + " " + rif.hour} />
-          :
-          <Idate_time />
-        } */}
       </form>
     </>
   );

@@ -17,10 +17,7 @@ interface DoctorLeftAgendaNavState {
 class DoctorLeftAgendaNav extends Component<DoctorLeftAgendaNavProps, DoctorLeftAgendaNavState> {
     constructor(props: any | Readonly<{}>) {
         super(props);
-        console.log("props");
-        console.log(props);
-        console.log("this.state");
-        console.log(this.state);
+      
     }
     render() {
         return (

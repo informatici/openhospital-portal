@@ -150,9 +150,10 @@ export default function Idiuresis_vol_24h(props: {
         console.log("recordDate:" + recordDate);
         console.log("ins_upd:" + ins_upd);
         console.log("recordTypeCode:" + recordTypeCode);
+        let value2 = -1;
         if (ins_upd == '') {
           console.log("insert");
-          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
             console.log(res);
             navigate('/PatientMeasurements',
               {
