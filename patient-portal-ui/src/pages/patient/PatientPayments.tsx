@@ -70,8 +70,8 @@ const PatientPayments = () => {
             // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
           }}
         >
-          <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-            <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
+          <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
+            <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
             {btFilters.map((button) => (
               <Button key={button} color="primary" onClick={() => setType(button)}>{button}</Button>
             ))}
@@ -125,7 +125,7 @@ const PatientPayments = () => {
           columns={columns}
         />
       </div>
-    </Container>
+    </Container >
   );
 
 };

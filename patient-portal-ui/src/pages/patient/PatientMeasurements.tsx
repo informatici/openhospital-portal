@@ -4,7 +4,8 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Misure from '../../datajs/Misure'
+import Misure from '../../datajs/Misure';
+
 
 import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
 import { DeafutlAllData } from '../../datajs/DeafutlAllData'
@@ -121,8 +122,8 @@ const PatientMeasurements = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-            <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-              <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+              <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
                 <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
               ))}

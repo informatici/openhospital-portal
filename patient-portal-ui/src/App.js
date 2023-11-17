@@ -4,6 +4,7 @@ import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminHome from "./pages/admin/AdminHome";
+import "./styles/general.css";
 
 
 
