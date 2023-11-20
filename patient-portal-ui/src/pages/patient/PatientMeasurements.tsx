@@ -31,17 +31,18 @@ interface Items {
   uom?: string;
 }
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  // { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  // { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'date_complete', headerName: 'vv', hide: true },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  // { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
-  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
-  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 
 const PatientMeasurements = () => {
@@ -57,7 +58,7 @@ const PatientMeasurements = () => {
 
     // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
-      console.log(res);
+
       res.forEach(function (k: any) {
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);
@@ -82,6 +83,7 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
+
       setRowdata(rows_def);
     });
   }, []);
@@ -90,9 +92,11 @@ const PatientMeasurements = () => {
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
+
       setRowdataDef(rows);
     } else {
       rows = rowdata;
+
       setRowdataDef(rows);
     }
     setLoadComponent(1);
@@ -135,7 +139,6 @@ const PatientMeasurements = () => {
                 '&>.MuiDataGrid-columnHeaders': {
                   borderBottom: 'none',
                 },
-
                 '& div div div div >.MuiDataGrid-cell': {
                   borderBottom: 'none',
                 },
@@ -146,36 +149,30 @@ const PatientMeasurements = () => {
                   backgroundColor: "rgba(235, 235, 235, .9)",
                   margin: "0.3em",
                   borderRadius: 3
-
                 }
               },
               '& .super-app-theme--header': {
                 fontSize: '0.8em'
               },
             }}
-
             onCellClick={(params, event) => {
               if (!event.ctrlKey) {
                 navigate("/PatientInsertMeasurements", {
                   state: params.row,
-
                 })
               }
             }}
+
             initialState={{
-              columns: {
 
-                columnVisibilityModel: {
-
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  type: false,
-                  value: false
-                },
-              },
             }}
-
+            columnVisibilityModel={{
+              date_complete: false,
+            }}
+            sortModel={[{
+              field: 'date_complete',
+              sort: 'asc',
+            }]}
             rows={rowdataDef}
             columns={columns}
           />

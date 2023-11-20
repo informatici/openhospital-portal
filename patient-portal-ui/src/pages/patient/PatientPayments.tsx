@@ -11,13 +11,13 @@ import Payments from '../../datajs/Payments'
 let rows: any[] = [];
 let data_json = Payments;
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
-  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
-  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 
 let btFilters: any[] = [];
