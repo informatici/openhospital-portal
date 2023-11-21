@@ -52,44 +52,42 @@ import lombok.Setter;
 public class HospitalEvent {
 
 	@Id
-    @GeneratedValue
-    private Long id;
-	
+	@GeneratedValue
+	private Long id;
+
 	@Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private LocalDateTime date;
-	
+
 	@OneToOne
 	@NotNull
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
-	
+
 	@OneToOne
 	@NotNull
 	@JoinColumn(referencedColumnName = "code")
 	private EventType eventType;
-	
+
+	@Column(columnDefinition = "TEXT")
 	private String payload;
 
-	///documento OneToMany
-	//@Lob
-	//private Blob blob;
-	
-	@Column(nullable = false, updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private Date created = new Date();
-	
+	/// document OneToMany
+	// @Lob
+	// private Blob blob;
 
-	
+	@Column(nullable = false, updatable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+	private Date created = new Date();
+
 	public HospitalEvent() {
 		super();
 	}
-	
-	
-	public HospitalEvent(Long id, 
-					@NotNull LocalDateTime date, 
-					@NotNull Patient patient, 
-					@NotNull EventType eventType, 
+
+	public HospitalEvent(Long id,
+					@NotNull LocalDateTime date,
+					@NotNull Patient patient,
+					@NotNull EventType eventType,
 					String payload) {
 		this.id = id;
 		this.date = date;
@@ -98,16 +96,22 @@ public class HospitalEvent {
 		this.payload = payload;
 		this.created = Calendar.getInstance().getTime();
 	}
-	
-	
+
+
+	/***
+	 * Updates the saved item with the one passed as parameter
+	 * @param item
+	 * @return updated item if the IDs match, null otherwise
+	 */
 	public HospitalEvent updateWith(HospitalEvent item) {
-        return new HospitalEvent(
-            this.id,
-            item.date,
-            item.patient,
-            item.eventType,
-            item.payload
-        );
-    }
-	
+		if(this.id == item.getId()) {
+			this.date = item.date;
+			this.patient = item.patient;
+			this.eventType = item.eventType;
+			this.payload = item.payload;
+			return this;
+		}
+		return null;
+	}
+
 }

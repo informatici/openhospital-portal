@@ -27,7 +27,7 @@
        id bigint not null,
         created datetime not null,
         date datetime not null,
-        payload varchar(255),
+        payload TEXT,
         event_type_code varchar(2) not null,
         patient_id bigint not null,
         primary key (id)
