@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData';
+import { DefaultAllData } from '../../datajs/DefaultAllData';
 
 let btFilters: string[] = [];
 const columns = [
@@ -28,7 +28,7 @@ const PatientExams = () => {
   let id_patient = localStorage.getItem("IdPatient");
   let type_code = "E";
   useEffect(() => {
-    DeafutlAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
       console.log("response getHospitalEventByPatientIdByTypeCode");
       console.log(res);
       setData(res);

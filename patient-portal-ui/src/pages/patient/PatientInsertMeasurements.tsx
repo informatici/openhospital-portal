@@ -20,7 +20,7 @@ import Idiuresis from "../../components/utility/patient/analyses_data/input_data
 import Idate_time from "../../components/utility/common/input_data/Idate_time";
 
 import { filterRecordTypesByValue, filterRecordTypesByValueDef, filterRecordTypesByValueRet } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData';
+import { DefaultAllData } from '../../datajs/DefaultAllData';
 
 interface Items {
   id?: string;
@@ -53,21 +53,21 @@ function PatientInsertMeasurements(props: {
   const [loadComponent_d, setLoadComponent_d] = useState(0);
 
   useEffect(() => {
-    DeafutlAllData.getRecordTypes().then((res) => {
+    DefaultAllData.getRecordTypes().then((res) => {
       if (props.setType.id == null) {
         setData(res);
         setType("");
       } else {
         let arr: Items[] = [props.setType];
         setData(arr);
-     
+
         setType("edit/delete");
       }
       setLoadComponent(1);
     });
   }, []);
   useEffect(() => {
-    DeafutlAllData.getAuscultationoptions().then((res) => {
+    DefaultAllData.getAuscultationoptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {
@@ -79,7 +79,7 @@ function PatientInsertMeasurements(props: {
       setOptionAu(json_res);
       setLoadComponent_a(1);
     });
-    DeafutlAllData.getBoweloptions().then((res) => {
+    DefaultAllData.getBoweloptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {
@@ -92,7 +92,7 @@ function PatientInsertMeasurements(props: {
       setOptionBo(json_res);
       setLoadComponent_b(1);
     });
-    DeafutlAllData.getDiuresisoptions().then((res) => {
+    DefaultAllData.getDiuresisoptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {

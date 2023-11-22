@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import { DeafutlAllData } from '../datajs/DeafutlAllData'
+import { DefaultAllData } from '../datajs/DefaultAllData'
 
 import {
   Box,
@@ -26,7 +26,7 @@ const animate = {
     duration: 0.6,
     ease: easing,
     delay: 0.16,
-  }, 
+  },
 };
 
 const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
@@ -58,17 +58,17 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
     validationSchema: LoginSchema,
     onSubmit: () => {
       console.log("submitting...");
-     
+
       const data = [
         {
           username: values.username,
           password: values.password,
         },
       ];
-    
 
-      DeafutlAllData.postLogin(values.username, values.password).then((res) => {
-        
+
+      DefaultAllData.postLogin(values.username, values.password).then((res) => {
+
         localStorage.setItem("Token", res);
 
         if (res.error == "Unauthorized") {
@@ -88,11 +88,11 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
           }
         }
         localStorage.setItem("IdPatient", res.patientId);
-       
+
       });
-     
+
       setTimeout(() => {
-    
+
         setProfile(amb);
         navigate(from, { replace: true });
       }, 2000);

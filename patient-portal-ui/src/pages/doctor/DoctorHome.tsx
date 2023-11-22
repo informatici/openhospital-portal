@@ -18,7 +18,7 @@ import BnewAuth from "../../components/common/buttons/doctor/BnewAuth";
 import Bagenda from "../../components/common/buttons/doctor/Bagenda";
 
 import ListDoctorPatients from '../../datajs/ListDoctorPatients'
-import { DeafutlAllData } from '../../datajs/DeafutlAllData'
+import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 
 
@@ -29,21 +29,21 @@ function DoctorHome() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    DeafutlAllData.getToken().then((res) => {
+    DefaultAllData.getToken().then((res) => {
       console.log("response getToken");
       console.log(res);
       localStorage.setItem("Token", res)
 
-      DeafutlAllData.getPatients().then((res) => {
+      DefaultAllData.getPatients().then((res) => {
         console.log("response getPatients");
         console.log(res);
 
         setData(res);
-        DeafutlAllData.getHospitalevents().then((res) => {
+        DefaultAllData.getHospitalevents().then((res) => {
           console.log("response getHospitalevents");
           console.log(res);
         });
-        DeafutlAllData.getPatientrecords().then((res) => {
+        DefaultAllData.getPatientrecords().then((res) => {
           console.log("response getPatientrecords");
           console.log(res);
         });

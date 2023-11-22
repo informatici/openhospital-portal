@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
 const url_0 = 'http://api-develop.ohpp.local:18080/api/';
-export const DeafutlAllData = {
+export const DefaultAllData = {
 
 
   // --- ADMIN_API

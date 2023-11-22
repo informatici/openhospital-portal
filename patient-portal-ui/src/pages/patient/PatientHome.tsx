@@ -8,7 +8,7 @@ import DefaultPatient from '../../datajs/DefaultPatient'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { DeafutlAllData } from '../../datajs/DeafutlAllData'
+import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 const PatientHome = () => {
   const theme = useTheme();
@@ -32,7 +32,7 @@ const PatientHome = () => {
   console.log(localStorage.getItem("IdPatient"));
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
-    DeafutlAllData.getPatientsById(id_patient).then((res) => {
+    DefaultAllData.getPatientsById(id_patient).then((res) => {
       setDataUser(res);
       setLoadComponent(1);
     });
@@ -46,7 +46,7 @@ const PatientHome = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        
+
       }}
     >
       {matches ? <><p>Only Smart Phone</p></> : <>

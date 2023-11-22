@@ -10,7 +10,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
@@ -81,7 +81,7 @@ export default function Iarterial_pressure(props: {
         } else {
             setDateTime(new Date());
         }
-       
+
         setDataMin(rif.value1 ? rif.value1 : rif.defaultValue1);
         setDataMax(rif.value2 ? rif.value2 : rif.defaultValue2);
     }, []);
@@ -106,8 +106,8 @@ export default function Iarterial_pressure(props: {
             setOpen(false);
             let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
-            DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-            
+            DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+
                 navigate('/PatientMeasurements',
                     {
                         state: {
@@ -121,7 +121,7 @@ export default function Iarterial_pressure(props: {
             setOpen(false)
             window.location.reload();
         } else {
-          
+
         }
     }, [deleteMeasure]);
 
@@ -132,24 +132,24 @@ export default function Iarterial_pressure(props: {
         setDataErrorMax(false);
         setDataErrorMin(false);
         if (dataMin == null) {
-            
+
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore non può essere vuoto")
         } else if (dataMax == null) {
-           
+
             setDataErrorMax(true);
 
             setDataErrorMessageMax("Il valore non può essere vuoto")
         } else if (dataMin <= rif.minValue) {
-           
+
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
         } else if (dataMax >= rif.maxValue) {
-           
+
             setDataErrorMax(true);
             setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
         } else if (dataMin > dataMax) {
-           
+
             setDataErrorMax(true);
             setDataErrorMin(true);
             setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
@@ -167,11 +167,11 @@ export default function Iarterial_pressure(props: {
                 let value2: any = dataMax;
                 let recordDate = toIsoDate(dateTime);
                 let recordTypeCode = rif.code;
-              
+
 
                 if (ins_upd == '') {
-                 
-                    DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+
+                    DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
                         console.log(res);
                         navigate('/PatientMeasurements',
                             {
@@ -181,12 +181,12 @@ export default function Iarterial_pressure(props: {
                             });
                     });
                 } else {
-                    
-                    DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-                     
+
+                    DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
                     });
                 }
-               
+
             }
         }
     }

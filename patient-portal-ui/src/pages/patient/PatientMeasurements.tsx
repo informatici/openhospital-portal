@@ -7,7 +7,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Misure from '../../datajs/Misure'
 
 import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData'
+import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const values = Misure;
@@ -55,8 +55,8 @@ const PatientMeasurements = () => {
     let id_patient = localStorage.getItem("IdPatient");
 
 
-    // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
-    DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
+    // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
+    DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
 
       res.forEach(function (k: any) {
         if (!btFilters.includes(k.recordType.measurementType)) {

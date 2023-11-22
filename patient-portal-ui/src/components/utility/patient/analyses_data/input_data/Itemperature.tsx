@@ -10,7 +10,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
@@ -98,7 +98,7 @@ export default function Itemperature(props: {
       setOpen(false);
       let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
-      DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
+      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
         console.log(res);
         console.log(res);
         navigate('/PatientMeasurements',
@@ -152,7 +152,7 @@ export default function Itemperature(props: {
         let value2 = -1;
         if (ins_upd == '') {
           console.log("insert");
-          DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+          DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
             console.log(res);
             navigate('/PatientMeasurements',
               {
@@ -163,7 +163,7 @@ export default function Itemperature(props: {
           });
         } else {
           console.log("update");
-          // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          // DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
           //   console.log(res);
           //   navigate('/PatientMeasurements',
           //     {
