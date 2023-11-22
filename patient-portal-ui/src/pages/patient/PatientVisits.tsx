@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
@@ -6,63 +5,79 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
-import { DefaultAllData } from '../../datajs/DefaultAllData';
+import { getTimeLab, getDateLab } from '../../utils/ManageDate';
+import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'misure', headerName: 'Patology', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
 
+const columns = [
+  { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+];
+interface Items {
+  id?: string;
+  id_measure?: string;
+  date_complete?: string;
+  date?: string;
+  hour?: string;
+  value?: string;
+  misure?: string;
+  type?: string;
+}
 const PatientVisit = () => {
-  const [data, setData] = useState([]);
+  let rows: Items[] = [];
+  const [rowdata, setRowdata] = useState(rows);
+  const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
-  let id_patient = localStorage.getItem("IdPatient");
-  let type_code = "O";
+  let rows_def: any[] = [];
+
+
   useEffect(() => {
+    let id_patient = localStorage.getItem("IdPatient");
+    let type_code = "O";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log("response getHospitalEventByPatientIdByTypeCode");
       console.log(res);
-      setData(res);
-      setLoadComponent(1);
+      res.forEach(function (k: any) {
+        console.log(k);
+        if (!btFilters.includes(k.payload)) {
+          btFilters.push(k.payload);
+        }
+        rows_def.push({
+          id: k.id,
+          id_measure: k.id,
+          date_complete: k.date,
+          date: getDateLab(k.date),
+          hour: getTimeLab(k.date),
+          value: k.value1,
+          misure: k.payload,
+          type: k.payload
+        });
+      });
+
+      setRowdata(rows_def);
     });
   }, []);
+  useEffect(() => {
+    if (type != null) {
+      rows = rowdata.filter(function (el) {
+        return el.misure == type
+      });
 
-  let data_values: any = data;
-  let rows_def: any[] = [];
-  let rows: any[] = [];
-  Object.keys(data_values).forEach(function (key, i) {
-    if (!btFilters.includes(data_values[key].payload)) {
-      btFilters.push(data_values[key].payload);
+      setRowdataDef(rows);
+    } else {
+      rows = rowdata;
+
+      setRowdataDef(rows);
     }
-    rows_def.push({
-      id: i,
-      id_measure: data_values[key].value1,
-      date_complete: data_values[key].value1,
-      date: getDateLab(data_values[key].date),
-      hour: getTimeLab(data_values[key].date),
-      value: data_values[key].payload,
-      misure: data_values[key].payload,
-      type: data_values[key].payload
-    })
-  });
-  if (type != null) {
-    rows = rows_def.filter(function (el) {
-      return el.type == type
-    });
-  } else {
-    rows = rows_def;
-  }
+    setLoadComponent(1);
+  }, [rowdata, type]);
 
   let navigate = useNavigate();
   return (
+
     <Container
       maxWidth="lg"
       sx={{
@@ -78,7 +93,7 @@ const PatientVisit = () => {
           <Box
             sx={{
               overflowX: "scroll",
-              width: 0.9,
+              width: 1,
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
@@ -96,7 +111,6 @@ const PatientVisit = () => {
                 '&>.MuiDataGrid-columnHeaders': {
                   borderBottom: 'none',
                 },
-
                 '& div div div div >.MuiDataGrid-cell': {
                   borderBottom: 'none',
                 },
@@ -107,14 +121,12 @@ const PatientVisit = () => {
                   backgroundColor: "rgba(235, 235, 235, .9)",
                   margin: "0.3em",
                   borderRadius: 3
-
                 }
               },
               '& .super-app-theme--header': {
                 fontSize: '0.8em'
               },
             }}
-
             onCellClick={(params, event) => {
               if (!event.ctrlKey) {
                 navigate("/PatientVisitDetails", {
@@ -122,26 +134,24 @@ const PatientVisit = () => {
                 })
               }
             }}
+
             initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  value: false,
-                  type: false,
-                },
-              },
+
             }}
-            rows={rows}
+            columnVisibilityModel={{
+              date_complete: false,
+            }}
+            sortModel={[{
+              field: 'date_complete',
+              sort: 'asc',
+            }]}
+            rows={rowdataDef}
             columns={columns}
           />
         </div>
       </> : null}
     </Container>
   );
-
 };
-
 export default PatientVisit;
 

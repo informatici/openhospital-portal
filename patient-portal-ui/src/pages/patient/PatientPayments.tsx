@@ -1,26 +1,32 @@
-import * as React from 'react';
-import { Button, Typography, Container, Box } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
+import { getTimeLab, getDateLab } from '../../utils/ManageDate';
+import { DefaultAllData } from '../../datajs/DefaultAllData'
+
 import Payments from '../../datajs/Payments'
+// let btFilters: string[] = [];
+let btFilters: any[] = [];
+
+
 
 let rows: any[] = [];
 let data_json = Payments;
 const columns = [
   { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 
-let btFilters: any[] = [];
+
 let data_values: any = data_json[0]["xy1457uuu"];
 Object.keys(data_values).forEach(function (key) {
   data_values[key].forEach(function (k: { type: any; }) {

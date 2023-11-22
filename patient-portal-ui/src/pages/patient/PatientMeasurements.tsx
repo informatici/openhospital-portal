@@ -4,13 +4,18 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Misure from '../../datajs/Misure'
 
-import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
+import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-const values = Misure;
+
+const columns = [
+  { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
+];
 interface Items {
   id?: string;
   id_measure?: string;
@@ -30,19 +35,7 @@ interface Items {
   minValue: number | string;
   uom?: string;
 }
-const columns = [
-  { field: 'date_complete', headerName: 'vv', hide: true },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  // { field: 'type', headerName: 'Type', width: 180, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 
 const PatientMeasurements = () => {
   let rows: Items[] = [];
@@ -57,8 +50,9 @@ const PatientMeasurements = () => {
 
     // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
-
+      console.log(res);
       res.forEach(function (k: any) {
+
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);
         }
@@ -179,7 +173,6 @@ const PatientMeasurements = () => {
       </> : null}
     </Container>
   );
-
 };
 
 export default PatientMeasurements;
