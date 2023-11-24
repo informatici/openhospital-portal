@@ -211,7 +211,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
 ```
 
-...wait a bit for api fully started.
+...wait a bit for api to fully start.
 
 ```
 # (optional) import demo data in the empty DB 
