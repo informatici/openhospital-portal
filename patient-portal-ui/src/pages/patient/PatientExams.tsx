@@ -40,20 +40,22 @@ const PatientExams = () => {
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
       console.log(res);
-      res.forEach(function (k: any) {
+      res.forEach(function (k_a: any) {
+        let k = JSON.parse(k_a.payload);
+        console.log("----");
         console.log(k);
-        if (!btFilters.includes(k.payload)) {
-          btFilters.push(k.payload);
+        if (!btFilters.includes(k.LAB_EXA_ID_A_DESC)) {
+          btFilters.push(k.LAB_EXA_ID_A_DESC);
         }
         rows_def.push({
-          id: k.id,
-          id_measure: k.id,
-          date_complete: k.date,
-          date: getDateLab(k.date),
-          hour: getTimeLab(k.date),
-          value: k.value1,
-          misure: k.payload,
-          type: k.payload
+          id: k.LAB_ID,
+          id_measure: k.LAB_ID,
+          date_complete: k.LAB_DATE,
+          date: getDateLab(k.LAB_DATE),
+          hour: getTimeLab(k.LAB_DATE),
+          value: k.LAB_EXA_ID_A_DESC,
+          misure: k.LAB_EXA_ID_A_DESC,
+          type: k.LAB_EXA_ID_A_DESC
         });
       });
 

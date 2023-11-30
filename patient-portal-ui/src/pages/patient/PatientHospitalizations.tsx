@@ -40,20 +40,22 @@ const PatientHospitalizations = () => {
     let type_code = "A";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
       console.log(res);
-      res.forEach(function (k: any) {
+      res.forEach(function (k_a: any) {
+        let k = JSON.parse(k_a.payload);
+        console.log("----");
         console.log(k);
-        if (!btFilters.includes(k.payload)) {
-          btFilters.push(k.payload);
+        if (!btFilters.includes(k.ADM_IN_DIS_ID_A_DESC)) {
+          btFilters.push(k.ADM_IN_DIS_ID_A_DESC);
         }
         rows_def.push({
-          id: k.id,
-          id_measure: k.id,
-          date_complete: k.date,
-          date: getDateLab(k.date),
-          hour: getTimeLab(k.date),
-          value: k.value1,
-          misure: k.payload,
-          type: k.payload
+          id: k.ADM_ID,
+          id_measure: k.ADM_ID,
+          date_complete: k.ADM_DATE_ADM,
+          date: getDateLab(k.ADM_DATE_ADM),
+          hour: getTimeLab(k.ADM_DATE_ADM),
+          value: k.ADM_IN_DIS_ID_A_DESC,
+          misure: k.ADM_IN_DIS_ID_A_DESC,
+          type: k.ADM_IN_DIS_ID_A_DESC
         });
       });
 

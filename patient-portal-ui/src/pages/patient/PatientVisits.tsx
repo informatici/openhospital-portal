@@ -39,21 +39,24 @@ const PatientVisit = () => {
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "O";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
-      res.forEach(function (k: any) {
+      // console.log(res);
+      res.forEach(function (k_a: any) {
+        let k = JSON.parse(k_a.payload);
+        console.log("----");
         console.log(k);
-        if (!btFilters.includes(k.payload)) {
-          btFilters.push(k.payload);
+
+        if (!btFilters.includes(k.OPD_DIS_ID_A_DESC)) {
+          btFilters.push(k.OPD_DIS_ID_A_DESC);
         }
         rows_def.push({
-          id: k.id,
-          id_measure: k.id,
-          date_complete: k.date,
-          date: getDateLab(k.date),
-          hour: getTimeLab(k.date),
-          value: k.value1,
-          misure: k.payload,
-          type: k.payload
+          id: k.OPD_ID,
+          id_measure: k.OPD_ID,
+          date_complete: k.OPD_DATE,
+          date: getDateLab(k.OPD_DATE),
+          hour: getTimeLab(k.OPD_DATE),
+          value: k.OPD_DIS_ID_A,
+          misure: k.OPD_DIS_ID_A_DESC,
+          type: k.OPD_DIS_ID_A_DESC
         });
       });
 
