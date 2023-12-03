@@ -89,22 +89,22 @@ export default function Iascultation(props: {
       setDataDisabled(false);
     }
   }, [props.edit]);
+  // --- manage delete
   useEffect(() => {
-    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
-      // window.location.reload();
     } else {
       setDataDelete(true);
     }
   }, [props.delete]);
+  // --- manage delete choice
   useEffect(() => {
-    // --- manage delete choice
     if (deleteMeasure == "y") {
       setOpen(false);
-      let patientId = localStorage.getItem("IdPatient");
+      // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
       DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
+        // console.log(res);
         navigate('/PatientMeasurements',
           {
             state: {
@@ -112,13 +112,10 @@ export default function Iascultation(props: {
             }
           });
       });
-
     }
     if (deleteMeasure == "n") {
-      setOpen(false)
-      window.location.reload();
-    } else {
-      // console.log("nothing");
+      setDeleteMeasure("");
+      setOpen(false);
     }
   }, [deleteMeasure]);
 
@@ -143,9 +140,9 @@ export default function Iascultation(props: {
         let recordTypeCode = rif.code;
         let value2 = -1;
         if (ins_upd == '') {
-       
+
           DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-      
+
             navigate('/PatientMeasurements',
               {
                 state: {
@@ -156,7 +153,7 @@ export default function Iascultation(props: {
         } else {
           console.log("update");
           DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-          
+
           });
         }
         // --- TODO insert/update and changePage

@@ -81,7 +81,7 @@ export default function Iarterial_pressure(props: {
         } else {
             setDateTime(new Date());
         }
-       
+
         setDataMin(rif.value1 ? rif.value1 : rif.defaultValue1);
         setDataMax(rif.value2 ? rif.value2 : rif.defaultValue2);
     }, []);
@@ -91,23 +91,22 @@ export default function Iarterial_pressure(props: {
             setDataDisabled(false);
         }
     }, [props.edit]);
+    // --- manage delete
     useEffect(() => {
-        // --- manage delete
         if (dataDelete == true) {
             setOpen(true);
-            // window.location.reload();
         } else {
             setDataDelete(true);
         }
     }, [props.delete]);
+    // --- manage delete choice
     useEffect(() => {
-        // --- manage delete choice
         if (deleteMeasure == "y") {
             setOpen(false);
-            let patientId = localStorage.getItem("IdPatient");
+            // let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
             DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-            
+                // console.log(res);
                 navigate('/PatientMeasurements',
                     {
                         state: {
@@ -115,13 +114,10 @@ export default function Iarterial_pressure(props: {
                         }
                     });
             });
-
         }
         if (deleteMeasure == "n") {
-            setOpen(false)
-            window.location.reload();
-        } else {
-          
+            setDeleteMeasure("");
+            setOpen(false);
         }
     }, [deleteMeasure]);
 
@@ -132,24 +128,24 @@ export default function Iarterial_pressure(props: {
         setDataErrorMax(false);
         setDataErrorMin(false);
         if (dataMin == null) {
-            
+
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore non può essere vuoto")
         } else if (dataMax == null) {
-           
+
             setDataErrorMax(true);
 
             setDataErrorMessageMax("Il valore non può essere vuoto")
         } else if (dataMin <= rif.minValue) {
-           
+
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
         } else if (dataMax >= rif.maxValue) {
-           
+
             setDataErrorMax(true);
             setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
         } else if (dataMin > dataMax) {
-           
+
             setDataErrorMax(true);
             setDataErrorMin(true);
             setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
@@ -167,12 +163,12 @@ export default function Iarterial_pressure(props: {
                 let value2: any = dataMax;
                 let recordDate = toIsoDate(dateTime);
                 let recordTypeCode = rif.code;
-              
+
 
                 if (ins_upd == '') {
-                 
+
                     DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-                        console.log(res);
+                        // console.log(res);
                         navigate('/PatientMeasurements',
                             {
                                 state: {
@@ -181,12 +177,12 @@ export default function Iarterial_pressure(props: {
                             });
                     });
                 } else {
-                    
+
                     DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-                     
+
                     });
                 }
-               
+
             }
         }
     }
