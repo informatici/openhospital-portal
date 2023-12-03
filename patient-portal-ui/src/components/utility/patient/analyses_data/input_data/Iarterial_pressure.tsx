@@ -168,7 +168,7 @@ export default function Iarterial_pressure(props: {
                 if (ins_upd == '') {
 
                     DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-                        console.log(res);
+                        // console.log(res);
                         navigate('/PatientMeasurements',
                             {
                                 state: {
