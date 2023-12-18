@@ -87,22 +87,23 @@ export default function Ibowel(props: {
       setDataDisabled(false);
     }
   }, [props.edit]);
+  // --- manage delete
   useEffect(() => {
-    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
-      // window.location.reload();
     } else {
       setDataDelete(true);
     }
   }, [props.delete]);
+  // --- manage delete choice
   useEffect(() => {
-    // --- manage delete choice
     if (deleteMeasure == "y") {
       setOpen(false);
-      let patientId = localStorage.getItem("IdPatient");
+      // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
+
       DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+
         navigate('/PatientMeasurements',
           {
             state: {
@@ -110,13 +111,10 @@ export default function Ibowel(props: {
             }
           });
       });
-
     }
     if (deleteMeasure == "n") {
-      setOpen(false)
-      window.location.reload();
-    } else {
-      // console.log("nothing");
+      setDeleteMeasure("");
+      setOpen(false);
     }
   }, [deleteMeasure]);
 

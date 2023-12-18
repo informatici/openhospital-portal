@@ -91,22 +91,23 @@ export default function Iarterial_pressure(props: {
             setDataDisabled(false);
         }
     }, [props.edit]);
+    // --- manage delete
     useEffect(() => {
-        // --- manage delete
         if (dataDelete == true) {
             setOpen(true);
-            // window.location.reload();
         } else {
             setDataDelete(true);
         }
     }, [props.delete]);
+    // --- manage delete choice
     useEffect(() => {
-        // --- manage delete choice
         if (deleteMeasure == "y") {
             setOpen(false);
-            let patientId = localStorage.getItem("IdPatient");
+            // let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
+
             DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+
 
                 navigate('/PatientMeasurements',
                     {
@@ -115,14 +116,12 @@ export default function Iarterial_pressure(props: {
                         }
                     });
             });
-
         }
         if (deleteMeasure == "n") {
+
             setOpen(false)
             window.location.reload();
-        } else {
-
-        }
+        } 
     }, [deleteMeasure]);
 
     const handleSubmit = (event: {
@@ -171,8 +170,10 @@ export default function Iarterial_pressure(props: {
 
                 if (ins_upd == '') {
 
+
                     DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
                         console.log(res);
+
                         navigate('/PatientMeasurements',
                             {
                                 state: {
@@ -182,7 +183,9 @@ export default function Iarterial_pressure(props: {
                     });
                 } else {
 
+
                     DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
 
                     });
                 }

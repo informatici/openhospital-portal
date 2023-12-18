@@ -4,7 +4,7 @@ import Fab from '@mui/material/Fab';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Bdelete = ({ deleteBtClk }: { deleteBtClk: any; }) => {
-  let valBtClk = true;
+  let valBtClk = Math.random();
   return (
     <Fab
       color="primary"

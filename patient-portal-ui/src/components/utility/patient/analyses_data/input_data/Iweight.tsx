@@ -50,7 +50,7 @@ export default function Iweight(props: {
   const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  console.log(rif);
+  // console.log(rif);
   let date_rif: Date | string | number = Date.now();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -76,7 +76,6 @@ export default function Iweight(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -84,24 +83,23 @@ export default function Iweight(props: {
       setDataDisabled(false);
     }
   }, [props.edit]);
+  // --- manage delete
   useEffect(() => {
-    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
-      // window.location.reload();
     } else {
       setDataDelete(true);
     }
   }, [props.delete]);
+  // --- manage delete choice
   useEffect(() => {
-    // --- manage delete choice
     if (deleteMeasure == "y") {
       setOpen(false);
-      let patientId = localStorage.getItem("IdPatient");
+      // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
+
       DefaultAllData.deleteMeasurement(id_measure).then((res) => {
-        console.log(res);
-        console.log(res);
+
         navigate('/PatientMeasurements',
           {
             state: {
@@ -109,13 +107,10 @@ export default function Iweight(props: {
             }
           });
       });
-
     }
     if (deleteMeasure == "n") {
-      setOpen(false)
-      window.location.reload();
-    } else {
-      // console.log("nothing");
+      setDeleteMeasure("");
+      setOpen(false);
     }
   }, [deleteMeasure]);
 
