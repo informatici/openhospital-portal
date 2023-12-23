@@ -6,7 +6,7 @@ import Fab from '@mui/material/Fab';
 
 const BnewAuth = () => {
   return (
-    <Fab
+    <Fab sx={{ mt: 1 }}
       color="primary"
       aria-label="add"
       size="small"

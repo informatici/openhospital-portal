@@ -10,23 +10,22 @@ import { Button, Typography, Container, TextField, Box } from "@mui/material";
 class SearchPatient extends Component {
     render() {
         return (
-            <Container >
-                <TextField
-                    id="search"
-                    type="search"
-                    label="Search Patient by Name/Id"
-                    // value={searchTerm}
-                    // onChange={handleChange}
-                    sx={{ width: 1 }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </Container>
+            <TextField
+                id="search"
+                type="search"
+                label="Search Patient by Name"
+                // value={searchTerm}
+                // onChange={handleChange}
+                sx={{ width: 1 }}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <SearchIcon />
+                        </InputAdornment>
+                    ),
+                }}
+            />
+
         );
     }
 }
