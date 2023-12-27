@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import PatientNav from "../../components/navBars/PatientNav";
+import DoctorSmartNav from "../../components/navBars/DoctorSmartNav";
 import { getTimeLab, getDateLab, getDayName } from '../../utils/ManageDate';
 import { DeafutlAllData } from '../../datajs/DeafutlAllData'
 
@@ -31,11 +32,12 @@ let data: dataAgenda = {};
 const PatientAgenda = () => {
   const [dataAgenda, setDataAgenda] = useState([]);
   const [dataUser, setDataUser] = useState([]);
+  const [typeVisualization, setTypeVisualization] = useState("");
   const [loadComponent, setLoadComponent] = useState(0);
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     DeafutlAllData.getHospitalEventsByPatientId(id_patient).then((resDataAgenda) => {
-   
+
       resDataAgenda = resDataAgenda.sort((a: { date: number; }, b: { date: number; }) => (a.date > b.date ? 1 : -1)); // --- sort by date
       // --- get all Date Time from Object
       let arrDateTimeAll: any | null | undefined = [];
@@ -52,10 +54,14 @@ const PatientAgenda = () => {
       }, {});
       setDataAgenda(resDataAgenda);
       let id_patient = localStorage.getItem("IdPatient");
+      let typeVisualization = localStorage.getItem("typeVisualization");
       DeafutlAllData.getPatientsById(id_patient).then((resDataUser) => {
         setDataUser(resDataUser);
       });
       setLoadComponent(1);
+      if (typeVisualization == "doctor") {
+        setTypeVisualization("doctor");
+      }
     });
   }, []);
   return (
@@ -68,12 +74,19 @@ const PatientAgenda = () => {
         flexDirection: "column",
       }}
     >
-      {loadComponent ? <><PatientNav {...dataUser} /></> : null}
+      {/* {loadComponent ? <><PatientNav {...dataUser} /></> : null} */}
+      {loadComponent ? typeVisualization == "doctor" ? <> <DoctorSmartNav /> </> : <> <PatientNav {...dataUser} /></> : null}
 
-      <Box sx={{ mt: 14, width: 1 }}>
-
-        <PatientSmartNav page={'PatientAgenda'} />
-      </Box>
+      {typeVisualization == "patient" ? <>
+        <Box sx={{ mt: 14, width: 1 }}>
+          <PatientSmartNav page={'PatientAgenda'} />
+        </Box>
+      </> : null}
+      {typeVisualization == "doctor" ? <>
+        <Box sx={{ mt: 0, width: 1 }}>
+          <PatientSmartNav page={'PatientAgenda'} />
+        </Box>
+      </> : null}
       {loadComponent ? <>
         {<div style={{ width: '100%' }}>
           {Object.keys(date_obj).map((ky: any, iy: any) => (
@@ -99,14 +112,14 @@ const PatientAgenda = () => {
                       <CardContent>
                         <div key={id}>
                           {getDayName(ky + "/" + km + "/" + date_obj[ky][km][kd], "en-EN")}<br></br>
-                          <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{ date_obj[ky][km][kd]}</Typography>
+                          <Typography variant="h4" component="h2" display="inline" sx={{ width: 0.2 }}>{date_obj[ky][km][kd]}</Typography>
                           {date_obj[ky][km][kd] != 0 ? (
                             <>
-                              {dataAgenda.map((data : any, idx) => (
+                              {dataAgenda.map((data: any, idx) => (
                                 getDateLab(data.date) == getDateLab(ky + "/" + km + "/" + date_obj[ky][km][kd]) ? (
 
                                   data.eventType.code == "E" ? (
-                                   <Button key={data.id} component={Link} state={data} to="/PatientExamDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
+                                    <Button key={data.id} component={Link} state={data} to="/PatientExamDetails" sx={{ width: 1, mt: 1, color: "red" }} variant="outlined" color="primary">
                                       <Typography variant="subtitle1" display="inline" sx={{ width: 0.3 }} >{getTimeLab(data.date)}</Typography>
                                       <Typography variant="button" display="inline" sx={{ width: 0.7 }}>{data.eventType.name} </Typography>
                                     </Button>

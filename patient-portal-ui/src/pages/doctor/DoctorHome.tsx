@@ -154,9 +154,14 @@ function DoctorHome() {
             </Grid>
             <Grid sx={{ width: 1 }} container >
               {filtered.map((button: any) => (
-                <Button sx={{ width: 1, mt: 1 }} variant="outlined" component={Link} to={{
-                  pathname: '/DoctorjReqAuth',
-                }}
+
+                <Button
+                  onClick={() => {
+                    localStorage.setItem("IdPatient", button.id);
+                    localStorage.setItem("typeVisualization", "doctor")
+                  }} sx={{ width: 1, mt: 1 }} variant="outlined" component={Link} to={{
+                    pathname: '/PatientHome',
+                  }}
 
                   state={button.id}
                   fullWidth
