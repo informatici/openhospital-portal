@@ -61,7 +61,7 @@ const PatientAgenda = () => {
       setLoadComponent(1);
       if (typeVisualization == "doctor") {
         setTypeVisualization("doctor");
-      }
+      } else { setTypeVisualization("patient"); }
     });
   }, []);
   return (

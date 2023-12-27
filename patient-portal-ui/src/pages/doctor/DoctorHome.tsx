@@ -157,6 +157,7 @@ function DoctorHome() {
 
                 <Button
                   onClick={() => {
+                    localStorage.clear();
                     localStorage.setItem("IdPatient", button.id);
                     localStorage.setItem("typeVisualization", "doctor")
                   }} sx={{ width: 1, mt: 1 }} variant="outlined" component={Link} to={{
@@ -176,6 +177,7 @@ function DoctorHome() {
       }
 
       {
+        // --- TODO pagination sure?
         <Grid sx={{ width: 1, mt: 1 }} container  >
           <Grid item xs={12}>
             <Stack alignItems="center" >

@@ -36,12 +36,13 @@ const PatientHome = () => {
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     let typeVisualization = localStorage.getItem("typeVisualization");
+
     DeafutlAllData.getPatientsById(id_patient).then((res) => {
       setDataUser(res);
       setLoadComponent(1);
       if (typeVisualization == "doctor") {
         setTypeVisualization("doctor");
-      }
+      } else { setTypeVisualization("patient"); }
     });
   }, []);
   return (
@@ -63,12 +64,12 @@ const PatientHome = () => {
           <Box sx={{ mt: 14, width: 1 }}>
             <PatientSmartNav page={'PatientHome'} />
           </Box>
-        </> : null}
-        {typeVisualization == "doctor" ? <>
+        </> : <>
           <Box sx={{ mt: 0, width: 1 }}>
             <PatientSmartNav page={'PatientHome'} />
           </Box>
-        </> : null}
+        </>}
+
         {
           DefaultPatient[0]["xy1457uuu"].btHomePatient.map((d, i) => (
             <Button key={d.id} component={Link} to={d.to} sx={{ margin: '8px', minHeight: '56px', borderRadius: '15px', width: 1, mt: 1, justifyContent: "flex-start" }} variant="contained" color="primary">

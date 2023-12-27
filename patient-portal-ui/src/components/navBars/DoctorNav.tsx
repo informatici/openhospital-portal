@@ -28,30 +28,39 @@ interface DoctorNavProps {
 
 interface DoctorNavState {
     setThemeUser?: string;
-    main?: boolean
+    main?: boolean;
+    height_calculated_1: string;
 }
 
-class DoctorNav extends Component<DoctorNavProps, DoctorNavState> {
+class DoctorNav extends Component<DoctorNavProps, DoctorNavState, { main: boolean, setThemeUser: string, height_calculated_1: string }> {
     wrapperRef: any;
     constructor(props: any | Readonly<{}>) {
         super(props);
-        this.state = { main: true };
         this.state = {
-            setThemeUser: 'theme1'
+            main: true,
+            setThemeUser: 'theme1',
+            height_calculated_1: "1px",
         };
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.closePanel = this.closePanel.bind(this);
     }
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
+        let height_calculated_1_val = window.innerHeight -
+            document.getElementById('height_calc_1')!.offsetHeight -
+            document.getElementById('height_calc_2')!.offsetHeight - 40;
+        this.setState({ height_calculated_1: height_calculated_1_val + "px" });
     }
     componentWillUnmount() {
         document.removeEventListener("mousedown", this.handleClickOutside);
     }
-    // --- Custom Manage click Over Acccordion (TODO) ---
+    closePanel(event: { target: any; }) {
+        this.handleClickOutside(event.target);
+    }
     handleClickOutside(event: { target: any; }) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-            let el: any = document.getElementById('panel1a-header');
+            let el: any = document.getElementById('panel-1a-header');
             let elAE = el.getAttribute('aria-expanded');
             if (elAE === "true") {
                 el.click();
@@ -60,51 +69,57 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState> {
     }
     render() {
         return (
-            <Accordion ref={this.wrapperRef} sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
+            <Accordion
+                ref={this.wrapperRef}
+                style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em" }}
+                sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}
+            >
                 <AccordionSummary
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Box
+                    <Box id="height_calc_1"
                         borderRadius={2} sx={{
-                            p: 1,
                             width: 1,
                             backgroundColor: 'primary.dark',
-                        }}>
+                        }}
+                    >
                         <Stack direction="row" spacing={2} sx={{
                             width: 1,
                         }}>
-                            <div style={{ "width": "20%" }}>
+                            <div style={{ "width": "20%", margin: "2%" }}>
                                 <Avatar alt="Mario Rossi" src="/static/images/avatar/doctor.jpeg" />
                             </div>
-                            <div style={{ "width": "60%" }}>
-                                <Typography variant="h6">
+                            <div style={{ "width": "65%", margin: "2%" }}>
+                                <Typography color="#fff" variant="h6">
                                     Mario Rossi
                                 </Typography>
-                                <Typography variant="button" >
+                                <Typography color="#fff" variant="button" >
                                     ID: xxxxxxx
                                 </Typography>
                             </div>
-                            <div style={{ "width": "10%", margin: "2%" }} >
+                            <div style={{ "width": "5%", margin: "0px 2px 0px 0px", }} >
                                 <IT title="United States" />
                             </div>
                         </Stack>
                     </Box>
                 </AccordionSummary>
-                <AccordionDetails sx={{ justifyContent: 'center' }} >
-                    <Box>
+                <AccordionDetails style={{ "padding": "0em" }}>
+                    <Box id="height_calc_2"
+                        bgcolor="background.default"
+                        style={{ "padding": "2em", "borderBottom": "1px solid gray" }}
+                        role="presentation"
+                        sx={{ width: 1, p: 2 }}
+                    >
                         <Box sx={{
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }} >
                             <ChangePalette />
                         </Box>
-                        <List sx={{ width: 1, p: 1, alignItems: 'center' }}>
-                            <Stack direction="row" spacing={2}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/doctor.jpeg" />
-                                <Oname />
-
-                            </Stack>
+                        <List sx={{ p: 1 }}>
+                            <Avatar alt="Remy Sharp" src="/static/images/avatar/doctor.jpeg" />
+                            <Oname />
                             <Divider />
                             <Oadress />
                             <Otelephone />
@@ -121,6 +136,9 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState> {
                                 <Logout />
                             </Box>
                         </List>
+                    </Box>
+                    <Box>
+                        <div onClick={this.closePanel} style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em", "height": this.state.height_calculated_1 }}></div>
                     </Box>
                 </AccordionDetails>
             </Accordion >
