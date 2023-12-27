@@ -27,6 +27,8 @@ function DoctorHome() {
   // let data_json_test: any = ListDoctorPatientsTest;
   // console.log(data_json_test);
   const [data, setData] = useState([]);
+  const [patientsName, setPatientsName] = React.useState<any>("");
+  const [patientsSurName, setPatientsSurname] = React.useState<any>("");
 
   useEffect(() => {
     DeafutlAllData.getToken().then((res) => {
@@ -51,12 +53,28 @@ function DoctorHome() {
       });
     });
   }, []);
-
+  const sendDataToParent = (searchWords: any) => {
+    let searchWordsArray = searchWords.split(" ");
+    searchWordsArray[0] ? setPatientsName(searchWordsArray[0]) : setPatientsName("");
+    searchWordsArray[1] ? setPatientsSurname(searchWordsArray[1]) : setPatientsSurname("");
+  };
 
   let data_json: any = data;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
-  console.log(matches);
+  // --- Start search input --- 
+  // --- TODO search by surname or name or id?
+  let filtered;
+  let searchStrName = patientsName;
+  let searchStrSecondname = patientsSurName;
+  const regexpName = new RegExp(searchStrName, 'i');
+  filtered = data_json.filter((x: { firstName: string; }) => regexpName.test(x.firstName));
+  filtered.filter((x: { firstName: string; }) => x.firstName.toLowerCase().includes(searchStrName.toLowerCase()));
+  const regexpSecondname = new RegExp(searchStrSecondname, 'i');
+  filtered = filtered.filter((x: { secondName: string; }) => regexpSecondname.test(x.secondName));
+  filtered.filter((x: { secondName: string; }) => x.secondName.toLowerCase().includes(searchStrSecondname.toLowerCase()));
+  // --- End search input --- 
+
   return (
     <Container
       maxWidth="lg"
@@ -89,7 +107,7 @@ function DoctorHome() {
               </Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={3}>
-                  {data_json.map((button: any) => (
+                  {filtered.map((button: any) => (
                     <Card key={button.id} sx={{ minWidth: 275, m: 1 }}>
                       <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -126,7 +144,7 @@ function DoctorHome() {
             <DoctorNav />
             <Grid sx={{ width: 1, mt: 6 }} container direction="row" >
               <Grid item xs={10} >
-                <SearchPatient />
+                <SearchPatient sendDataToParent={sendDataToParent} />
               </Grid>
               <Grid item xs={2}  >
                 <Stack alignItems="flex-end" justifyContent="center" >
@@ -135,7 +153,7 @@ function DoctorHome() {
               </Grid>
             </Grid>
             <Grid sx={{ width: 1 }} container >
-              {data_json.map((button: any) => (
+              {filtered.map((button: any) => (
                 <Button sx={{ width: 1, mt: 1 }} variant="outlined" component={Link} to={{
                   pathname: '/DoctorjReqAuth',
                 }}
