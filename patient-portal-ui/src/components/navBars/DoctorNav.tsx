@@ -75,8 +75,8 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState, { main: boolea
                 sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}
             >
                 <AccordionSummary
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                    aria-controls="panel-1a-content"
+                    id="panel-1a-header"
                 >
                     <Box id="height_calc_1"
                         borderRadius={2} sx={{
