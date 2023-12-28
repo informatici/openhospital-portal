@@ -77,9 +77,9 @@ const PatientPayments = () => {
           }}
         >
           <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
-            <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
-            {btFilters.map((button) => (
-              <Button key={button} color="primary" onClick={() => setType(button)}>{button}</Button>
+            <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            {btFilters.map((bt_el) => (
+              <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
             ))}
           </ButtonGroup>
         </Box>
