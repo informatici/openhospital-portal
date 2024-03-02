@@ -8,9 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-
 import Flags from 'country-flag-icons/react/3x2'
-
 import Oname from "../utility/user/output_data/Oname";
 import Oage from "../utility/user/output_data/Oage";
 import Osex from "../utility/user/output_data/Osex";
@@ -18,7 +16,6 @@ import Oadress from "../utility/user/output_data/Oadress";
 import Ocity from "../utility/user/output_data/Ocity";
 import Otelephone from "../utility/user/output_data/Otelephone";
 import Otax_number from "../utility/user/output_data/Otax_number";
-
 import Logout from "../common/buttons/Logout";
 import ChangePalette from "../common/buttons/ChangePalette";
 
@@ -38,20 +35,14 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
     wrapperRef: any;
     constructor(props: Items) {
         super(props);
-
-
-        // let height_calculated_1_val = "30";
-
         this.state = {
             main: true,
             setThemeUser: 'theme1',
             height_calculated_1: "1px",
         };
-
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.closePanel = this.closePanel.bind(this);
-
     }
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);

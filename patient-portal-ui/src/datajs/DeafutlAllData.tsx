@@ -167,6 +167,7 @@ export const DeafutlAllData = {
   },
   postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
     res_all.value1 = value1;
+    console.log(res_all);
     let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
       method: 'PUT',
       body: JSON.stringify(
@@ -177,7 +178,9 @@ export const DeafutlAllData = {
     });
 
     const data = await response.json();
-    return true;
+    console.log("--------------------------------");
+    console.log(data);
+    return data;
   },
   deleteMeasurement: async function (id_measure: number,) {
     let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {

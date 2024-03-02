@@ -27,6 +27,7 @@ function DoctorHome() {
   // let data_json_test: any = ListDoctorPatientsTest;
   // console.log(data_json_test);
   const [data, setData] = useState([]);
+  console.log(data);
   const [patientsName, setPatientsName] = React.useState<any>("");
   const [patientsSurName, setPatientsSurname] = React.useState<any>("");
 
@@ -178,13 +179,13 @@ function DoctorHome() {
 
       {
         // --- TODO pagination sure?
-        <Grid sx={{ width: 1, mt: 1 }} container  >
-          <Grid item xs={12}>
-            <Stack alignItems="center" >
-              <Pagination count={8} variant="outlined" shape="rounded" />
-            </Stack>
-          </Grid>
-        </Grid>
+        // <Grid sx={{ width: 1, mt: 1 }} container  >
+        //   <Grid item xs={12}>
+        //     <Stack alignItems="center" >
+        //       <Pagination count={8} variant="outlined" shape="rounded" />
+        //     </Stack>
+        //   </Grid>
+        // </Grid>
       }
     </Container >
   );

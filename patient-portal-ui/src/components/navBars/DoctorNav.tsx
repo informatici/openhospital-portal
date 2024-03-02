@@ -10,9 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-
-import IT from 'country-flag-icons/react/3x2/IT'
-
+import IT from 'country-flag-icons/react/3x2/IT';
 import Oname from "../utility/user/output_data/Oname";
 import Oadress from "../utility/user/output_data/Oadress";
 import Otelephone from "../utility/user/output_data/Otelephone";
@@ -20,22 +18,20 @@ import Logout from "../common/buttons/Logout";
 import ChangePassword from "../common/buttons/ChangePassword";
 import ManageProfile from "../common/buttons/ManageProfile";
 import ChangePalette from "../common/buttons/ChangePalette";
-
-
 interface DoctorNavProps {
     page?: string;
 }
-
 interface DoctorNavState {
     setThemeUser?: string;
     main?: boolean;
     height_calculated_1: string;
 }
-
 class DoctorNav extends Component<DoctorNavProps, DoctorNavState, { main: boolean, setThemeUser: string, height_calculated_1: string }> {
     wrapperRef: any;
     constructor(props: any | Readonly<{}>) {
         super(props);
+        console.log(props);
+        console.log("-");
         this.state = {
             main: true,
             setThemeUser: 'theme1',
