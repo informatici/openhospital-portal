@@ -17,7 +17,7 @@ function PatientVisitDetails(props: {
   };
 }) {
 
-  console.log("--- props --- PatientVisitDetails");
+  console.log("--- props --- PatientVisitDetails b");
   console.log(props);
   return (
     <Container

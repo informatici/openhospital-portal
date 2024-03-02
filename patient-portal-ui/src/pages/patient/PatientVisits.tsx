@@ -34,7 +34,8 @@ const PatientVisit = () => {
       setLoadComponent(1);
     });
   }, []);
-
+  console.log("---");
+console.log(data);
   let data_values: any = data;
   let rows_def: any[] = [];
   let rows: any[] = [];
