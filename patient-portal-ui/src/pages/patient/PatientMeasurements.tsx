@@ -54,12 +54,11 @@ const PatientMeasurements = () => {
   let rows_def: any[] = [];
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
-console.log("rrrrr");
 
     // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
       console.log(res);
-      
+
       res.forEach(function (k: any) {
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);

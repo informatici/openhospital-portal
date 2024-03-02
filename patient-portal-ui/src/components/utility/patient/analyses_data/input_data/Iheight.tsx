@@ -161,7 +161,7 @@ export default function Iheight(props: {
           DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
             console.log(res_all);
             DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-              console.log("in height");
+              console.log("in weight");
               console.log(res);
               navigate('/PatientMeasurements',
                 {
@@ -171,7 +171,6 @@ export default function Iheight(props: {
                 });
             });
           });
-
         }
         // --- TODO insert/update and changePage
       }

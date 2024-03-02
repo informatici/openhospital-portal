@@ -152,15 +152,16 @@ export default function Ibowel(props: {
           console.log("update");
           DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
             console.log(res_all);
-            // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-            //   console.log(res);
-            //   // navigate('/PatientMeasurements',
-            //   //   {
-            //   //     state: {
-            //   //       res: res
-            //   //     }
-            //   //   });
-            // });
+            DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+              console.log("in weight");
+              console.log(res);
+              navigate('/PatientMeasurements',
+                {
+                  state: {
+                    res: res
+                  }
+                });
+            });
           });
         }
         // --- TODO insert/update and changePage
