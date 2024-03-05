@@ -67,7 +67,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
       ];
 
 
-      DefaultAllData.postLogin(values.username, values.password).then((res) => {
+      DeafutlAllData.postLogin(values.username, values.password).then((res) => {
 
         localStorage.setItem("Token", res);
 
@@ -87,7 +87,9 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             setAuth(true);
           }
         }
+        localStorage.clear();
         localStorage.setItem("IdPatient", res.patientId);
+        localStorage.setItem("typeVisualization", "patient");
 
       });
 

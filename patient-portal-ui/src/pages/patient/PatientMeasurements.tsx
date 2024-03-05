@@ -47,10 +47,10 @@ const PatientMeasurements = () => {
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
 
-
     // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
       console.log(res);
+
       res.forEach(function (k: any) {
 
         if (!btFilters.includes(k.recordType.measurementType)) {
@@ -76,7 +76,7 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
-
+      rows_def.sort((a, b) => b.id - a.id); // --- sort by id desc
       setRowdata(rows_def);
     });
   }, []);

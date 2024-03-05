@@ -5,82 +5,63 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { getTimeLab, getDateLab } from '../../utils/ManageDate';
-import { DefaultAllData } from '../../datajs/DefaultAllData'
+import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
+import { DeafutlAllData } from '../../datajs/DeafutlAllData';
 
 let btFilters: string[] = [];
-
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
+  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
+  { field: 'misure', headerName: 'Patology', width: 160, headerClassName: 'super-app-theme--header', },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
 ];
-interface Items {
-  id?: string;
-  id_measure?: string;
-  date_complete?: string;
-  date?: string;
-  hour?: string;
-  value?: string;
-  misure?: string;
-  type?: string;
-}
+
 const PatientVisit = () => {
-  let rows: Items[] = [];
-  const [rowdata, setRowdata] = useState(rows);
-  const [rowdataDef, setRowdataDef] = useState(rows);
+  const [data, setData] = useState([]);
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
-  let rows_def: any[] = [];
-
-
+  let id_patient = localStorage.getItem("IdPatient");
+  let type_code = "O";
   useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "O";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      // console.log(res);
-      res.forEach(function (k_a: any) {
-        let k = JSON.parse(k_a.payload);
-        console.log("----");
-        console.log(k);
-
-        if (!btFilters.includes(k.OPD_DIS_ID_A_DESC)) {
-          btFilters.push(k.OPD_DIS_ID_A_DESC);
-        }
-        rows_def.push({
-          id: k.OPD_ID,
-          id_measure: k.OPD_ID,
-          date_complete: k.OPD_DATE,
-          date: getDateLab(k.OPD_DATE),
-          hour: getTimeLab(k.OPD_DATE),
-          value: k.OPD_DIS_ID_A,
-          misure: k.OPD_DIS_ID_A_DESC,
-          type: k.OPD_DIS_ID_A_DESC
-        });
-      });
-
-      setRowdata(rows_def);
+    DeafutlAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+      console.log("response getHospitalEventByPatientIdByTypeCode");
+      console.log(res);
+      setData(res);
+      setLoadComponent(1);
     });
   }, []);
-  useEffect(() => {
-    if (type != null) {
-      rows = rowdata.filter(function (el) {
-        return el.misure == type
-      });
-
-      setRowdataDef(rows);
-    } else {
-      rows = rowdata;
-
-      setRowdataDef(rows);
+console.log(data);
+  let data_values: any = data;
+  let rows_def: any[] = [];
+  let rows: any[] = [];
+  Object.keys(data_values).forEach(function (key, i) {
+    if (!btFilters.includes(data_values[key].payload)) {
+      btFilters.push(data_values[key].payload);
     }
-    setLoadComponent(1);
-  }, [rowdata, type]);
+    rows_def.push({
+      id: i,
+      id_measure: data_values[key].value1,
+      date_complete: data_values[key].value1,
+      date: getDateLab(data_values[key].date),
+      hour: getTimeLab(data_values[key].date),
+      value: data_values[key].payload,
+      misure: data_values[key].payload,
+      type: data_values[key].payload
+    })
+  });
+  if (type != null) {
+    rows = rows_def.filter(function (el) {
+      return el.type == type
+    });
+  } else {
+    rows = rows_def;
+  }
 
   let navigate = useNavigate();
   return (
-
     <Container
       maxWidth="lg"
       sx={{
@@ -96,15 +77,16 @@ const PatientVisit = () => {
           <Box
             sx={{
               overflowX: "scroll",
-              width: 1,
+              width: 0.9,
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
 
             <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+              <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
+
               {btFilters.map((bt_el) => (
-                <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
+                <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
               ))}
             </ButtonGroup>
           </Box>
@@ -115,6 +97,7 @@ const PatientVisit = () => {
                 '&>.MuiDataGrid-columnHeaders': {
                   borderBottom: 'none',
                 },
+
                 '& div div div div >.MuiDataGrid-cell': {
                   borderBottom: 'none',
                 },
@@ -125,12 +108,14 @@ const PatientVisit = () => {
                   backgroundColor: "rgba(235, 235, 235, .9)",
                   margin: "0.3em",
                   borderRadius: 3
+
                 }
               },
               '& .super-app-theme--header': {
                 fontSize: '0.8em'
               },
             }}
+
             onCellClick={(params, event) => {
               if (!event.ctrlKey) {
                 navigate("/PatientVisitDetails", {
@@ -138,24 +123,25 @@ const PatientVisit = () => {
                 })
               }
             }}
-
             initialState={{
-
+              columns: {
+                columnVisibilityModel: {
+                  id: false,
+                  date_complete: false,
+                  id_measure: false,
+                  value: false,
+                  type: false,
+                },
+              },
             }}
-            columnVisibilityModel={{
-              date_complete: false,
-            }}
-            sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
-            }]}
-            rows={rowdataDef}
+            rows={rows}
             columns={columns}
           />
         </div>
       </> : null}
     </Container>
   );
-};
-export default PatientVisit;
 
+};
+
+export default PatientVisit;

@@ -163,15 +163,16 @@ export default function Irespiration_rate(props: {
           console.log("update");
           DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
             console.log(res_all);
-            // DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-            //   console.log(res);
-            //   // navigate('/PatientMeasurements',
-            //   //   {
-            //   //     state: {
-            //   //       res: res
-            //   //     }
-            //   //   });
-            // });
+            DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+              console.log("in respiration");
+              console.log(res);
+              navigate('/PatientMeasurements',
+                {
+                  state: {
+                    res: res
+                  }
+                });
+            });
           });
         }
         // --- TODO insert/update and changePage
