@@ -10,7 +10,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
@@ -103,8 +103,10 @@ export default function Iascultation(props: {
       setOpen(false);
       // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
-      DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-        // console.log(res);
+
+      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+
+ 
         navigate('/PatientMeasurements',
           {
             state: {
@@ -141,7 +143,9 @@ export default function Iascultation(props: {
         let value2 = -1;
         if (ins_upd == '') {
 
-          DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+
+          DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+
 
             navigate('/PatientMeasurements',
               {
@@ -152,7 +156,9 @@ export default function Iascultation(props: {
           });
         } else {
           console.log("update");
-          DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
+          DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
 
           });
         }

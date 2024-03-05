@@ -10,7 +10,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
@@ -105,8 +105,10 @@ export default function Iarterial_pressure(props: {
             setOpen(false);
             // let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
-            DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-                // console.log(res);
+
+            DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+
+
                 navigate('/PatientMeasurements',
                     {
                         state: {
@@ -116,9 +118,10 @@ export default function Iarterial_pressure(props: {
             });
         }
         if (deleteMeasure == "n") {
-            setDeleteMeasure("");
-            setOpen(false);
-        }
+
+            setOpen(false)
+            window.location.reload();
+        } 
     }, [deleteMeasure]);
 
     const handleSubmit = (event: {
@@ -167,8 +170,10 @@ export default function Iarterial_pressure(props: {
 
                 if (ins_upd == '') {
 
-                    DeafutlAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-                        // console.log(res);
+
+                    DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
+                        console.log(res);
+
                         navigate('/PatientMeasurements',
                             {
                                 state: {
@@ -178,7 +183,9 @@ export default function Iarterial_pressure(props: {
                     });
                 } else {
 
-                    DeafutlAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
+                    DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+
 
                     });
                 }

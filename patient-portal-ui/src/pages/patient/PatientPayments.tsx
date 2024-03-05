@@ -1,26 +1,32 @@
-import * as React from 'react';
-import { Button, Typography, Container, Box } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { Button, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
+import { getTimeLab, getDateLab } from '../../utils/ManageDate';
+import { DefaultAllData } from '../../datajs/DefaultAllData'
+
 import Payments from '../../datajs/Payments'
+// let btFilters: string[] = [];
+let btFilters: any[] = [];
+
+
 
 let rows: any[] = [];
 let data_json = Payments;
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
-  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
-  { field: 'misure', headerName: 'Misure', width: 160, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 
-let btFilters: any[] = [];
+
 let data_values: any = data_json[0]["xy1457uuu"];
 Object.keys(data_values).forEach(function (key) {
   data_values[key].forEach(function (k: { type: any; }) {
@@ -71,9 +77,9 @@ const PatientPayments = () => {
           }}
         >
           <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
-            <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
-            {btFilters.map((button) => (
-              <Button key={button} color="primary" onClick={() => setType(button)}>{button}</Button>
+            <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            {btFilters.map((bt_el) => (
+              <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
             ))}
           </ButtonGroup>
         </Box>

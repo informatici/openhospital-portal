@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { dateIsoToString } from '../utils/ManageDate';
+import { dateIsoToString, stringToDate } from '../utils/ManageDate';
 const url_0 = 'http://api-develop.ohpp.local:18080/api/';
-export const DeafutlAllData = {
+export const DefaultAllData = {
 
 
   // --- ADMIN_API
@@ -81,7 +81,8 @@ export const DeafutlAllData = {
   getPatientrecords_patient: async function (id_patient: any) {
     let response = await fetch(url_0 + 'public/patientrecords/patient/' + id_patient);
     const data = await response.json();
-    return data;
+    let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
+    return sort_data;
   },
   getPatientrecords_measurement: async function () {
     let response = await fetch(url_0 + 'public/patientrecords/measurement/1?measurementType=DIURESIS');
@@ -114,7 +115,8 @@ export const DeafutlAllData = {
   getHospitalEventByPatientIdByTypeCode: async function (id_patient: any, type_code: any) {
     let response = await fetch(url_0 + 'public/hospitalevents/eventType/' + id_patient + '?eventTypeCode=' + type_code);
     const data = await response.json();
-    return data;
+    let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
+    return sort_data;
   },
   getRecordTypes: async function () {
     let response = await fetch(url_0 + 'public/recordtypes');
