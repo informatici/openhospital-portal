@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import PatientNav from "../../components/navBars/PatientNav";
+import DoctorSmartNav from "../../components/navBars/DoctorSmartNav";
 import { getTimeLab, getDateLab, getDayName } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
@@ -31,6 +32,7 @@ let data: dataAgenda = {};
 const PatientAgenda = () => {
   const [dataAgenda, setDataAgenda] = useState([]);
   const [dataUser, setDataUser] = useState([]);
+  const [typeVisualization, setTypeVisualization] = useState("");
   const [loadComponent, setLoadComponent] = useState(0);
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
@@ -52,10 +54,14 @@ const PatientAgenda = () => {
       }, {});
       setDataAgenda(resDataAgenda);
       let id_patient = localStorage.getItem("IdPatient");
+      let typeVisualization = localStorage.getItem("typeVisualization");
       DefaultAllData.getPatientsById(id_patient).then((resDataUser) => {
         setDataUser(resDataUser);
       });
       setLoadComponent(1);
+      if (typeVisualization == "doctor") {
+        setTypeVisualization("doctor");
+      } else { setTypeVisualization("patient"); }
     });
   }, []);
   return (
@@ -68,12 +74,19 @@ const PatientAgenda = () => {
         flexDirection: "column",
       }}
     >
-      {loadComponent ? <><PatientNav {...dataUser} /></> : null}
+      {/* {loadComponent ? <><PatientNav {...dataUser} /></> : null} */}
+      {loadComponent ? typeVisualization == "doctor" ? <> <DoctorSmartNav /> </> : <> <PatientNav {...dataUser} /></> : null}
 
-      <Box sx={{ mt: 14, width: 1 }}>
-
-        <PatientSmartNav page={'PatientAgenda'} />
-      </Box>
+      {typeVisualization == "patient" ? <>
+        <Box sx={{ mt: 14, width: 1 }}>
+          <PatientSmartNav page={'PatientAgenda'} />
+        </Box>
+      </> : null}
+      {typeVisualization == "doctor" ? <>
+        <Box sx={{ mt: 0, width: 1 }}>
+          <PatientSmartNav page={'PatientAgenda'} />
+        </Box>
+      </> : null}
       {loadComponent ? <>
         {<div style={{ width: '100%' }}>
           {Object.keys(date_obj).map((ky: any, iy: any) => (

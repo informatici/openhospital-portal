@@ -164,12 +164,12 @@ export default function Iweight(props: {
             DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
               console.log("in weight");
               console.log(res);
-              // navigate('/PatientMeasurements',
-              //   {
-              //     state: {
-              //       res: res
-              //     }
-              //   });
+              navigate('/PatientMeasurements',
+                {
+                  state: {
+                    res: res
+                  }
+                });
             });
           });
         }

@@ -167,9 +167,28 @@ export const DefaultAllData = {
     return data;
 
   },
+  getHospitalEventType: async function (id_patient: any) {
+    let response = await fetch(url_0 + 'public/hospitalevents/patient/' + id_patient);
+    const data = await response.json();
+    return data;
+
+  },
   postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
+    console.log("postUpdateMeasurement -1--");
     res_all.value1 = value1;
-    let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+    console.log(res_all);
+    // let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(
+    //     res_all),
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //   },
+    // });
+    // const data = await response.json();
+    // console.log("--------------------------------");
+    // console.log(data);
+    fetch(url_0 + 'public/patientrecords/' + res_all.id, {
       method: 'PUT',
       body: JSON.stringify(
         res_all),
@@ -177,10 +196,9 @@ export const DefaultAllData = {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-
-    const data = await response.json();
     return true;
   },
+
   deleteMeasurement: async function (id_measure: number,) {
     let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
       method: 'DELETE',
