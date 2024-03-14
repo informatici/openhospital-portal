@@ -14,6 +14,9 @@ function PatientVisitDetails(props: {
     value: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
     category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
     note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    r_opd_dis_id_a_desc: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    r_opd_dis_id_a_type_desc: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    r_opd_note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
   };
 }) {
 
@@ -53,7 +56,7 @@ function PatientVisitDetails(props: {
             Diagnosis
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {props.setType.diagnosis}
+            {props.setType.r_opd_dis_id_a_desc}
           </Typography>
         </Grid>
         <Grid xs={12}>
@@ -61,7 +64,7 @@ function PatientVisitDetails(props: {
             Category
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
-            {props.setType.value}
+            {props.setType.r_opd_dis_id_a_type_desc}
           </Typography>
         </Grid>
         <Grid xs={12}>
@@ -71,7 +74,7 @@ function PatientVisitDetails(props: {
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
 
             <Typography sx={{ m: 1 }} variant="caption" gutterBottom>
-              {props.setType.note}
+              {props.setType.r_opd_note}
             </Typography>
           </Box>
         </Grid>

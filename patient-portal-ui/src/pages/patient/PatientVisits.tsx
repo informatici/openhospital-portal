@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData';
+import { DefaultAllData } from '../../datajs/DefaultAllData';
 
 let btFilters: string[] = [];
 const columns = [
@@ -26,30 +26,38 @@ const PatientVisit = () => {
   let id_patient = localStorage.getItem("IdPatient");
   let type_code = "O";
   useEffect(() => {
-    DeafutlAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
       console.log("response getHospitalEventByPatientIdByTypeCode");
-      console.log(res);
+      // let desc=JSON.parse(res[0].payload);
+      // console.log(JSON.parse(res[0].payload));
       setData(res);
       setLoadComponent(1);
     });
   }, []);
-console.log(data);
+// console.log(data);
   let data_values: any = data;
   let rows_def: any[] = [];
   let rows: any[] = [];
   Object.keys(data_values).forEach(function (key, i) {
-    if (!btFilters.includes(data_values[key].payload)) {
-      btFilters.push(data_values[key].payload);
+    let payload_obj=JSON.parse(data_values[key].payload);
+    if (!btFilters.includes(payload_obj.OPD_DIS_ID_A_DESC)) {
+      btFilters.push(payload_obj.OPD_DIS_ID_A_DESC);
     }
+    console.log(payload_obj);
+    console.log(key);
     rows_def.push({
       id: i,
       id_measure: data_values[key].value1,
       date_complete: data_values[key].value1,
       date: getDateLab(data_values[key].date),
       hour: getTimeLab(data_values[key].date),
-      value: data_values[key].payload,
-      misure: data_values[key].payload,
-      type: data_values[key].payload
+      value: payload_obj.OPD_DIS_ID_A,
+      misure: payload_obj.OPD_DIS_ID_A_DESC,
+      type: payload_obj.OPD_DIS_ID_A,
+      r_opt_date: payload_obj.OPD_DATE,
+      r_opd_dis_id_a_type_desc: payload_obj.OPD_DIS_ID_A_TYPE_DESC,
+      r_opd_dis_id_a_desc: payload_obj.OPD_DIS_ID_A_DESC,
+      r_opd_note: payload_obj.OPD_NOTE
     })
   });
   if (type != null) {

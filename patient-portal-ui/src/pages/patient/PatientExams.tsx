@@ -55,7 +55,15 @@ const PatientExams = () => {
           hour: getTimeLab(k.LAB_DATE),
           value: k.LAB_EXA_ID_A_DESC,
           misure: k.LAB_EXA_ID_A_DESC,
-          type: k.LAB_EXA_ID_A_DESC
+          type: k.LAB_EXA_ID_A_DESC,
+          r_adm_wrd_id_a_desc: k.ADM_WRD_ID_A_DESC,
+          r_adm_date_adm: k.ADM_DATE_ADM,
+          r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
+          r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
+          r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
+          r_adm_date_dis: k.ADM_DATE_DIS,
+          r_adm_note: k.ADM_NOTE
+          
         });
       });
 
