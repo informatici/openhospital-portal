@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid';
 
 function PatientVisitDetails(props: {
   setType: {
+    id_user: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    name_user: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
     date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
     hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
     diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
@@ -35,6 +37,16 @@ function PatientVisitDetails(props: {
     >
       <PatientSmartNav page={'PatientVisitDetails'} />
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
+        <Grid xs={12}>
+          <Typography style={{ fontWeight: 600 }}>
+            Id User: {props.setType.id_user}
+          </Typography>
+        </Grid>
+        <Grid xs={12}>
+          <Typography variant="body1" gutterBottom>
+            {props.setType.name_user}
+          </Typography>
+        </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
             Date

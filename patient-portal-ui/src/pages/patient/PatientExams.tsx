@@ -43,11 +43,14 @@ const PatientExams = () => {
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
         console.log("----");
+        console.log( k_a.patient.firstName);
         console.log(k);
         if (!btFilters.includes(k.LAB_EXA_ID_A_DESC)) {
           btFilters.push(k.LAB_EXA_ID_A_DESC);
         }
         rows_def.push({
+          id_user: k_a.patient.userId,
+          name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
           id: k.LAB_ID,
           id_measure: k.LAB_ID,
           date_complete: k.LAB_DATE,
@@ -61,9 +64,10 @@ const PatientExams = () => {
           r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
           r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
           r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
-          r_adm_date_dis: k.ADM_DATE_DIS,
+          r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
+          r_adm_date_dis_time: getTimeLab(k.ADM_DATE_DIS),
           r_adm_note: k.ADM_NOTE
-          
+
         });
       });
 

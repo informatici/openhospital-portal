@@ -46,6 +46,8 @@ const PatientVisit = () => {
     console.log(payload_obj);
     console.log(key);
     rows_def.push({
+      id_user:  data_values[key].patient.userId,
+      name_user: data_values[key].patient.firstName + " " +  data_values[key].patient.secondName,
       id: i,
       id_measure: data_values[key].value1,
       date_complete: data_values[key].value1,
