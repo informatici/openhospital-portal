@@ -28,7 +28,7 @@ const PatientVisit = () => {
   let type_code = "O";
   useEffect(() => {
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log("response getHospitalEventByPatientIdByTypeCode");
+      // console.log("response getHospitalEventByPatientIdByTypeCode");
       // let desc=JSON.parse(res[0].payload);
       // console.log(JSON.parse(res[0].payload));
       setData(res);
@@ -61,7 +61,7 @@ const PatientVisit = () => {
       r_opd_note: payload_obj.OPD_NOTE,
       r_id: payload_obj.OPD_ID
     })
-    console.log(rows_def);
+    // console.log(rows_def);
   });
   if (type != null) {
     rows = rows_def.filter(function (el) {
