@@ -32,7 +32,7 @@ const PatientHome = () => {
   const [loadComponent, setLoadComponent] = useState(0);
   const [typeVisualization, setTypeVisualization] = useState("");
 
-  console.log(localStorage.getItem("IdPatient"));
+  // console.log(localStorage.getItem("IdPatient"));
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     let typeVisualization = localStorage.getItem("typeVisualization");

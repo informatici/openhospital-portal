@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Box } from "@mui/material";
+import { Button, Container, Box, Typography } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ const columns = [
   { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
   { field: 'misure', headerName: 'Patology', width: 160, headerClassName: 'super-app-theme--header', },
   { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'r_id', headerName: 'r_id', width: 180, headerClassName: 'super-app-theme--header', },
 ];
 
 const PatientVisit = () => {
@@ -34,20 +35,18 @@ const PatientVisit = () => {
       setLoadComponent(1);
     });
   }, []);
-// console.log(data);
   let data_values: any = data;
   let rows_def: any[] = [];
   let rows: any[] = [];
   Object.keys(data_values).forEach(function (key, i) {
-    let payload_obj=JSON.parse(data_values[key].payload);
+    let payload_obj = JSON.parse(data_values[key].payload);
     if (!btFilters.includes(payload_obj.OPD_DIS_ID_A_DESC)) {
       btFilters.push(payload_obj.OPD_DIS_ID_A_DESC);
     }
-    console.log(payload_obj);
-    console.log(key);
+
     rows_def.push({
-      id_user:  data_values[key].patient.userId,
-      name_user: data_values[key].patient.firstName + " " +  data_values[key].patient.secondName,
+      id_user: data_values[key].patient.userId,
+      name_user: data_values[key].patient.firstName + " " + data_values[key].patient.secondName,
       id: i,
       id_measure: data_values[key].value1,
       date_complete: data_values[key].value1,
@@ -59,8 +58,10 @@ const PatientVisit = () => {
       r_opt_date: payload_obj.OPD_DATE,
       r_opd_dis_id_a_type_desc: payload_obj.OPD_DIS_ID_A_TYPE_DESC,
       r_opd_dis_id_a_desc: payload_obj.OPD_DIS_ID_A_DESC,
-      r_opd_note: payload_obj.OPD_NOTE
+      r_opd_note: payload_obj.OPD_NOTE,
+      r_id: payload_obj.OPD_ID
     })
+    console.log(rows_def);
   });
   if (type != null) {
     rows = rows_def.filter(function (el) {
@@ -96,7 +97,7 @@ const PatientVisit = () => {
               <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
 
               {btFilters.map((bt_el) => (
-                <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
+                <Button key={bt_el} color="primary" title={bt_el} onClick={() => setType(bt_el)}> <Typography noWrap>{bt_el}</Typography> </Button>
               ))}
             </ButtonGroup>
           </Box>
@@ -107,7 +108,6 @@ const PatientVisit = () => {
                 '&>.MuiDataGrid-columnHeaders': {
                   borderBottom: 'none',
                 },
-
                 '& div div div div >.MuiDataGrid-cell': {
                   borderBottom: 'none',
                 },
@@ -118,7 +118,6 @@ const PatientVisit = () => {
                   backgroundColor: "rgba(235, 235, 235, .9)",
                   margin: "0.3em",
                   borderRadius: 3
-
                 }
               },
               '& .super-app-theme--header': {
@@ -141,9 +140,15 @@ const PatientVisit = () => {
                   id_measure: false,
                   value: false,
                   type: false,
+                  r_id: false,
                 },
               },
             }}
+            
+            sortModel={[{
+              field: 'r_id',
+              sort: 'desc',
+            }]}
             rows={rows}
             columns={columns}
           />

@@ -49,8 +49,7 @@ const PatientMeasurements = () => {
 
     // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
-      console.log(res);
-
+    
       res.forEach(function (k: any) {
 
         if (!btFilters.includes(k.recordType.measurementType)) {
@@ -76,18 +75,21 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
-      rows_def.sort((a, b) => b.id - a.id); // --- sort by id desc
+      rows_def.sort((a, b) => b.id - a.id ); // --- sort by id desc
+    
       setRowdata(rows_def);
     });
   }, []);
   useEffect(() => {
     if (type != null) {
+      
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
 
       setRowdataDef(rows);
     } else {
+    
       rows = rowdata;
 
       setRowdataDef(rows);
@@ -164,8 +166,8 @@ const PatientMeasurements = () => {
               date_complete: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'id',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}

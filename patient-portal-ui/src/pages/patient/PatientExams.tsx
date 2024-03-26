@@ -36,15 +36,16 @@ const PatientExams = () => {
 
 
   useEffect(() => {
+    
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
+      // console.log(res);
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
-        console.log("----");
-        console.log( k_a.patient.firstName);
-        console.log(k);
+        // console.log("----");
+        // console.log( k_a.patient.firstName);
+        // console.log(k);
         if (!btFilters.includes(k.LAB_EXA_ID_A_DESC)) {
           btFilters.push(k.LAB_EXA_ID_A_DESC);
         }
@@ -73,7 +74,8 @@ const PatientExams = () => {
 
       setRowdata(rows_def);
     });
-  }, []);
+
+  }, [rows_def]);
   useEffect(() => {
     if (type != null) {
       rows = rowdata.filter(function (el) {
