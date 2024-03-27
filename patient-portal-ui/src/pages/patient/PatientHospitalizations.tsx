@@ -12,6 +12,7 @@ let btFilters: string[] = [];
 
 const columns = [
   { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -39,11 +40,8 @@ const PatientHospitalizations = () => {
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "A";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
-        console.log("----");
-        console.log(k);
         if (!btFilters.includes(k.ADM_IN_DIS_ID_A_DESC)) {
           btFilters.push(k.ADM_IN_DIS_ID_A_DESC);
         }
@@ -55,7 +53,8 @@ const PatientHospitalizations = () => {
           hour: getTimeLab(k.ADM_DATE_ADM),
           value: k.ADM_IN_DIS_ID_A_DESC,
           misure: k.ADM_IN_DIS_ID_A_DESC,
-          type: k.ADM_IN_DIS_ID_A_DESC
+          type: k.ADM_IN_DIS_ID_A_DESC,
+          r_id: k.ADM_ID,
         });
       });
 
@@ -143,10 +142,11 @@ const PatientHospitalizations = () => {
             }}
             columnVisibilityModel={{
               date_complete: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'r_id',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}

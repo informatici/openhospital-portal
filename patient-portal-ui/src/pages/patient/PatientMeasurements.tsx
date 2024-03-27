@@ -12,6 +12,7 @@ let btFilters: string[] = [];
 
 const columns = [
   { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
@@ -49,7 +50,7 @@ const PatientMeasurements = () => {
 
     // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
     DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
-    
+
       res.forEach(function (k: any) {
 
         if (!btFilters.includes(k.recordType.measurementType)) {
@@ -73,23 +74,24 @@ const PatientMeasurements = () => {
           measurementValueType: k.recordType.measurementValueType,
           minValue: k.recordType.minValue,
           uom: k.recordType.uom,
+          r_id: k.id
         });
       });
-      rows_def.sort((a, b) => b.id - a.id ); // --- sort by id desc
-    
+      rows_def.sort((a, b) => b.id - a.id); // --- sort by id desc
+
       setRowdata(rows_def);
     });
   }, []);
   useEffect(() => {
     if (type != null) {
-      
+
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
 
       setRowdataDef(rows);
     } else {
-    
+
       rows = rowdata;
 
       setRowdataDef(rows);
@@ -164,9 +166,10 @@ const PatientMeasurements = () => {
             }}
             columnVisibilityModel={{
               date_complete: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'id',
+              field: 'r_id',
               sort: 'desc',
             }]}
             rows={rowdataDef}

@@ -10,14 +10,13 @@ import { DefaultAllData } from '../../datajs/DefaultAllData';
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', },
-  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', },
-  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', },
-  { field: 'value', headerName: 'Value', width: 100, headerClassName: 'super-app-theme--header', },
-  { field: 'misure', headerName: 'Patology', width: 160, headerClassName: 'super-app-theme--header', },
-  { field: 'type', headerName: 'Type', width: 180, headerClassName: 'super-app-theme--header', },
-  { field: 'r_id', headerName: 'r_id', width: 180, headerClassName: 'super-app-theme--header', },
+  { field: 'id', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
+  { field: 'value', headerName: 'none', hide: true },
+  { field: 'type', headerName: 'none', hide: true },
+  { field: 'date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Patology', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 
 const PatientVisit = () => {
@@ -28,9 +27,6 @@ const PatientVisit = () => {
   let type_code = "O";
   useEffect(() => {
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      // console.log("response getHospitalEventByPatientIdByTypeCode");
-      // let desc=JSON.parse(res[0].payload);
-      // console.log(JSON.parse(res[0].payload));
       setData(res);
       setLoadComponent(1);
     });
@@ -61,7 +57,6 @@ const PatientVisit = () => {
       r_opd_note: payload_obj.OPD_NOTE,
       r_id: payload_obj.OPD_ID
     })
-    // console.log(rows_def);
   });
   if (type != null) {
     rows = rows_def.filter(function (el) {
@@ -133,18 +128,16 @@ const PatientVisit = () => {
               }
             }}
             initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  value: false,
-                  type: false,
-                  r_id: false,
-                },
-              },
             }}
-            
+            columnVisibilityModel={{
+              id: false,
+              date_complete: false,
+              id_measure: false,
+              value: false,
+              type: false,
+              r_id: false,
+            }}
+
             sortModel={[{
               field: 'r_id',
               sort: 'desc',

@@ -12,6 +12,7 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 let btFilters: string[] = [];
 const columns = [
   { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -40,9 +41,7 @@ const PatientVaccinations = () => {
     let type_code = "V";
 
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
       res.forEach(function (k: any) {
-        console.log(k);
         if (!btFilters.includes(k.payload)) {
           btFilters.push(k.payload);
         }
@@ -54,7 +53,8 @@ const PatientVaccinations = () => {
           hour: getTimeLab(k.date),
           value: k.value1,
           misure: k.payload,
-          type: k.payload
+          type: k.payload,
+          r_id: k.id
         });
       });
 
@@ -142,10 +142,11 @@ const PatientVaccinations = () => {
             }}
             columnVisibilityModel={{
               date_complete: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'r_id',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}

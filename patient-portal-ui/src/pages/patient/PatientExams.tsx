@@ -12,6 +12,8 @@ let btFilters: string[] = [];
 
 const columns = [
   { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'id_measure', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -36,16 +38,12 @@ const PatientExams = () => {
 
 
   useEffect(() => {
-    
+
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      // console.log(res);
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
-        // console.log("----");
-        // console.log( k_a.patient.firstName);
-        // console.log(k);
         if (!btFilters.includes(k.LAB_EXA_ID_A_DESC)) {
           btFilters.push(k.LAB_EXA_ID_A_DESC);
         }
@@ -67,15 +65,18 @@ const PatientExams = () => {
           r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
           r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
           r_adm_date_dis_time: getTimeLab(k.ADM_DATE_DIS),
-          r_adm_note: k.ADM_NOTE
+          r_adm_note: k.ADM_NOTE,
+          r_id: k.LAB_ID,
+
 
         });
       });
 
+
       setRowdata(rows_def);
     });
 
-  }, [rows_def]);
+  }, []);
   useEffect(() => {
     if (type != null) {
       rows = rowdata.filter(function (el) {
@@ -153,22 +154,15 @@ const PatientExams = () => {
 
 
             initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  value: false,
-                  misure: false,
-                },
-              },
             }}
             columnVisibilityModel={{
               date_complete: false,
+              id_measure: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'r_id',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}
