@@ -8,27 +8,20 @@ import Grid from '@mui/material/Grid';
 
 function PatientVisitDetails(props: {
   setType: {
-    id_user: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    name_user: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    date: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    hour: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    diagnosis: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    value: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    category: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    r_opd_dis_id_a_desc: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    r_opd_dis_id_a_type_desc: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
-    r_opd_note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+    id_user: number;
+    name_user: string;
+    date: string;
+    hour: string;
+    note: string;
+    r_opd_dis_id_a_desc: string;
+    r_opd_dis_id_a_type_desc: string;
+    r_opd_note: string;
   };
 }) {
-
-  console.log("--- props --- PatientVisitDetails b");
-  console.log(props);
   return (
     <Container
       maxWidth="lg"
       sx={{
-
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
@@ -65,7 +58,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Diagnosis
+            Category
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.r_opd_dis_id_a_desc}
@@ -73,7 +66,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Category
+            Diagnosis
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
             {props.setType.r_opd_dis_id_a_type_desc}
@@ -84,23 +77,14 @@ function PatientVisitDetails(props: {
             Note
           </Typography>
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
-
             <Typography sx={{ m: 1 }} variant="caption" gutterBottom>
               {props.setType.r_opd_note}
             </Typography>
           </Box>
         </Grid>
       </Grid>
-
-
-
-
-
-
     </Container>
-
   );
-
 };
 
 export default PatientVisitDetails;

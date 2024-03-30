@@ -9,23 +9,26 @@ import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
   { field: 'r_id', headerName: 'none', hide: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'date_in', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour_in', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'r_adm_in_dis_id_a_desc', headerName: 'Hospitalization', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
-  id_measure?: string;
-  date_complete?: string;
-  date?: string;
-  hour?: string;
-  value?: string;
-  misure?: string;
-  type?: string;
+  r_id?: string;
+  id_user?: string;
+  name_user?: string;
+  r_adm_wrd_id_a_desc: string;
+  r_adm_admt_id_a_adm_desc: string;
+  date_in: string;
+  hour_in: string;
+  r_adm_in_dis_id_a_desc: string;
+  r_adm_out_dis_id_a_desc: string;
+  date_out: string;
+  hour_out: string;
+  r_adm_note: string;
 }
 const PatientHospitalizations = () => {
   let rows: Items[] = [];
@@ -34,6 +37,7 @@ const PatientHospitalizations = () => {
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
+  let navigate = useNavigate();
 
 
   useEffect(() => {
@@ -47,15 +51,64 @@ const PatientHospitalizations = () => {
         }
         rows_def.push({
           id: k.ADM_ID,
-          id_measure: k.ADM_ID,
-          date_complete: k.ADM_DATE_ADM,
-          date: getDateLab(k.ADM_DATE_ADM),
-          hour: getTimeLab(k.ADM_DATE_ADM),
-          value: k.ADM_IN_DIS_ID_A_DESC,
-          misure: k.ADM_IN_DIS_ID_A_DESC,
-          type: k.ADM_IN_DIS_ID_A_DESC,
           r_id: k.ADM_ID,
+          id_user: k_a.patient.userId,
+          name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
+          r_adm_wrd_id_a_desc: k.ADM_WRD_ID_A_DESC,
+          r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
+          date_in: getDateLab(k.ADM_DATE_ADM),
+          hour_in: getTimeLab(k.ADM_DATE_ADM),
+          r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
+          r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
+          date_out: getDateLab(k.ADM_DATE_DIS),
+          hour_out: getTimeLab(k.ADM_DATE_DIS),
+          r_adm_note: k.ADM_NOTE,
+
         });
+        //   console.log(Object.keys(k));
+        //   [
+        //     "ADM_ID",
+        //     "ADM_IN",
+        //     "ADM_TYPE",
+        //     "ADM_WRD_ID_A",
+        //     "ADM_YPROG",
+        //     "ADM_PAT_ID",
+        //     "ADM_DATE_ADM",
+        //     "ADM_ADMT_ID_A_ADM",
+        //     "ADM_FHU",
+        //     "ADM_IN_DIS_ID_A",
+        //     "ADM_OUT_DIS_ID_A",
+        //     "ADM_OUT_DIS_ID_A_2",
+        //     "ADM_OUT_DIS_ID_A_3",
+        //     "ADM_DATE_DIS",
+        //     "ADM_DIST_ID_A",
+        //     "ADM_NOTE",
+        //     "ADM_TRANS",
+        //     "ADM_PRG_DATE_VIS",
+        //     "ADM_PRG_PTT_ID_A",
+        //     "ADM_PRG_DATE_DEL",
+        //     "ADM_PRG_DLT_ID_A",
+        //     "ADM_PRG_DRT_ID_A",
+        //     "ADM_PRG_WEIGHT",
+        //     "ADM_PRG_DATE_CTRL1",
+        //     "ADM_PRG_DATE_CTRL2",
+        //     "ADM_PRG_DATE_ABORT",
+        //     "ADM_USR_ID_A",
+        //     "ADM_LOCK",
+        //     "ADM_DELETED",
+        //     "ADM_CREATED_BY",
+        //     "ADM_CREATED_DATE",
+        //     "ADM_LAST_MODIFIED_BY",
+        //     "ADM_LAST_MODIFIED_DATE",
+        //     "ADM_ACTIVE",
+        //     "ADM_WRD_ID_A_DESC",
+        //     "ADM_ADMT_ID_A_ADM_DESC",
+        //     "ADM_IN_DIS_ID_A_DESC",
+        //     "ADM_OUT_DIS_ID_A_DESC",
+        //     "ADM_OUT_DIS_ID_A_2_DESC",
+        //     "ADM_OUT_DIS_ID_A_3_DESC",
+        //     "ADM_DIST_ID_A_DESC"
+        // ]
       });
 
       setRowdata(rows_def);
@@ -64,7 +117,7 @@ const PatientHospitalizations = () => {
   useEffect(() => {
     if (type != null) {
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        return el.r_adm_in_dis_id_a_desc == type
       });
 
       setRowdataDef(rows);
@@ -76,7 +129,7 @@ const PatientHospitalizations = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  let navigate = useNavigate();
+
   return (
 
     <Container
@@ -138,10 +191,8 @@ const PatientHospitalizations = () => {
             }}
 
             initialState={{
-
             }}
             columnVisibilityModel={{
-              date_complete: false,
               r_id: false,
             }}
             sortModel={[{

@@ -9,13 +9,11 @@ import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Therapie', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
@@ -34,6 +32,7 @@ const PatientTherapies = () => {
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
+  let navigate = useNavigate();
 
 
   useEffect(() => {
@@ -55,6 +54,7 @@ const PatientTherapies = () => {
           type: k.payload,
           r_id: k.id,
         });
+        // console.log(Object.keys(k));
       });
 
       setRowdata(rows_def);
@@ -75,7 +75,7 @@ const PatientTherapies = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  let navigate = useNavigate();
+ 
   return (
 
     <Container
@@ -138,18 +138,8 @@ const PatientTherapies = () => {
 
 
             initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  value: false,
-                  misure: false,
-                },
-              },
             }}
             columnVisibilityModel={{
-              date_complete: false,
               r_id: false,
             }}
             sortModel={[{

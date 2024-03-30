@@ -9,14 +9,11 @@ import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
-  { field: 'id_measure', headerName: 'none', hide: true },
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Exam', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
@@ -35,10 +32,10 @@ const PatientExams = () => {
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
+  let navigate = useNavigate();
 
 
   useEffect(() => {
-
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
@@ -67,9 +64,42 @@ const PatientExams = () => {
           r_adm_date_dis_time: getTimeLab(k.ADM_DATE_DIS),
           r_adm_note: k.ADM_NOTE,
           r_id: k.LAB_ID,
-
-
         });
+      //   console.log(Object.keys(k));
+      //   [
+      //     "LAB_ID",
+      //     "LAB_EXA_ID_A",
+      //     "LAB_DATE",
+      //     "LAB_RES",
+      //     "LAB_NOTE",
+      //     "LAB_PAT_ID",
+      //     "LAB_PAT_NAME",
+      //     "LAB_CROSS1",
+      //     "LAB_CROSS2",
+      //     "LAB_CROSS3",
+      //     "LAB_CROSS4",
+      //     "LAB_CROSS5",
+      //     "LAB_CROSS6",
+      //     "LAB_CROSS7",
+      //     "LAB_CROSS8",
+      //     "LAB_CROSS9",
+      //     "LAB_CROSS10",
+      //     "LAB_CROSS11",
+      //     "LAB_CROSS12",
+      //     "LAB_CROSS13",
+      //     "LAB_LOCK",
+      //     "LAB_AGE",
+      //     "LAB_SEX",
+      //     "LAB_MATERIAL",
+      //     "LAB_PAT_INOUT",
+      //     "LAB_CREATED_BY",
+      //     "LAB_CREATED_DATE",
+      //     "LAB_LAST_MODIFIED_BY",
+      //     "LAB_LAST_MODIFIED_DATE",
+      //     "LAB_ACTIVE",
+      //     "LAB_STATUS",
+      //     "LAB_EXA_ID_A_DESC"
+      // ]
       });
 
 
@@ -92,7 +122,7 @@ const PatientExams = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  let navigate = useNavigate();
+ 
   return (
 
     <Container
@@ -156,8 +186,6 @@ const PatientExams = () => {
             initialState={{
             }}
             columnVisibilityModel={{
-              date_complete: false,
-              id_measure: false,
               r_id: false,
             }}
             sortModel={[{
