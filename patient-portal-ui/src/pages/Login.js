@@ -51,7 +51,6 @@ const fadeInUp = {
 };
 
 const Login = ({ setAuth, setProfile }) => {
-  console.log("Login");
   const [posts, setPosts] = useState([]);
   return (
     <RootStyle>

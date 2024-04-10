@@ -75,7 +75,7 @@ export default function Iheight(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
+    //console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -97,10 +97,7 @@ export default function Iheight(props: {
       setOpen(false);
       // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
-
-      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
-
-
+      DefaultAllData.deleteMeasurement(id_measure, "height").then((res) => {
         navigate('/PatientMeasurements',
           {
             state: {
@@ -141,16 +138,16 @@ export default function Iheight(props: {
         let value1 = event.target.height.value;
         let recordDate = toIsoDate(dateTime);
         let recordTypeCode = rif.code;
-        console.log("patientId:" + patientId);
-        console.log("value1:" + value1);
-        console.log("recordDate:" + recordDate);
-        console.log("ins_upd:" + ins_upd);
-        console.log("recordTypeCode:" + recordTypeCode);
+        //console.log("patientId:" + patientId);
+        //console.log("value1:" + value1);
+        //console.log("recordDate:" + recordDate);
+        //console.log("ins_upd:" + ins_upd);
+        //console.log("recordTypeCode:" + recordTypeCode);
         let value2 = -1;
         if (ins_upd == '') {
-          console.log("insert");
+          //console.log("insert");
           DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-            console.log(res);
+            //console.log(res);
             navigate('/PatientMeasurements',
               {
                 state: {
@@ -159,12 +156,12 @@ export default function Iheight(props: {
               });
           });
         } else {
-          console.log("update");
+          //console.log("update");
           DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-            console.log(res_all);
+            //console.log(res_all);
             DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-              console.log("in height");
-              console.log(res);
+              //console.log("in height");
+              //console.log(res);
               navigate('/PatientMeasurements',
                 {
                   state: {

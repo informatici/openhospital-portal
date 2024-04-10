@@ -4,12 +4,15 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useLocation } from 'react-router-dom';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import Slide from '@mui/material/Slide';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-const columns = [  
+const columns = [
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -38,12 +41,40 @@ interface Items {
 
 const PatientMeasurements = () => {
   let rows: Items[] = [];
+
+  const location = useLocation();
+  const [loadSnackBar, setLoadSnackBar] = useState(false);
+  const [messageSnackBar, setMessageSnackBar] = useState("Default message");
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
   let navigate = useNavigate();
+  const handleCloseSnackbar = () => {
+    setLoadSnackBar(false);
+  };
+  useEffect(() => {
+    console.log(location);
+    if (location.state != null) {
+
+      const data = location.state.res;
+      let message = "";
+      if (data.type == "Delete") {
+        message += data.type + " of " + data.recordType.measurementType +" was successful.";
+      } else {
+        message += data.type + " value " + data.value1;
+        if (data.value2 != -1) {
+          message += " and value " + data.value2;
+        }
+        message += " of " + data.recordType.measurementType + " archived.";
+      }
+      setLoadSnackBar(true);
+      setMessageSnackBar(message);
+
+    }
+  }, []);
+
 
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
@@ -72,45 +103,40 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
           r_id: k.id
         });
-      //   console.log(Object.keys(k));
-      //   [
-      //     "id",
-      //     "recordDate",
-      //     "patient",
-      //     "recordType",
-      //     "value1",
-      //     "value2",
-      //     "optionValue",
-      //     "note",
-      //     "created"
-      // ]
+        //   console.log(Object.keys(k));
+        //   [
+        //     "id",
+        //     "recordDate",
+        //     "patient",
+        //     "recordType",
+        //     "value1",
+        //     "value2",
+        //     "optionValue",
+        //     "note",
+        //     "created"
+        // ]
       });
-     
-
       setRowdata(rows_def);
     });
   }, []);
+
   useEffect(() => {
     if (type != null) {
-
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
 
       setRowdataDef(rows);
     } else {
-
       rows = rowdata;
-
       setRowdataDef(rows);
     }
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  
+
 
   return (
-
     <Container
       maxWidth="lg"
       sx={{
@@ -120,6 +146,16 @@ const PatientMeasurements = () => {
         flexDirection: "column",
       }}
     >
+      <Snackbar
+        anchorOrigin={{ "vertical": "bottom", "horizontal": "center" }}
+        open={loadSnackBar}
+        autoHideDuration={3000}
+        TransitionComponent={Slide}
+        onClose={handleCloseSnackbar}
+        message={messageSnackBar}
+      // action={action}
+      />
+
 
       <PatientSmartNav page={'PatientMeasurements'} />
       {loadComponent ? <>
@@ -183,6 +219,7 @@ const PatientMeasurements = () => {
           />
         </div>
       </> : null}
+
     </Container>
   );
 };

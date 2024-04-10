@@ -104,7 +104,7 @@ export default function Iascultation(props: {
       // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
 
-      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+      DefaultAllData.deleteMeasurement(id_measure, "ascultation").then((res) => {
 
  
         navigate('/PatientMeasurements',
@@ -154,12 +154,20 @@ export default function Iascultation(props: {
                 }
               });
           });
-        } else {
-          console.log("update");
-
+        }  else {
+          //console.log("update");
           DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-
-
+            //console.log(res_all);
+            DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+              //console.log("in diuresis");
+              //console.log(res);
+              navigate('/PatientMeasurements',
+                {
+                  state: {
+                    res: res
+                  }
+                });
+            });
           });
         }
         // --- TODO insert/update and changePage

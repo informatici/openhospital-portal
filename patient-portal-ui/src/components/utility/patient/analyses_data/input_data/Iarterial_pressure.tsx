@@ -106,7 +106,7 @@ export default function Iarterial_pressure(props: {
             // let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
 
-            DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+            DefaultAllData.deleteMeasurement(id_measure,"Arterial Pressure").then((res) => {
 
 
                 navigate('/PatientMeasurements',
@@ -172,7 +172,7 @@ export default function Iarterial_pressure(props: {
 
 
                     DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-                        console.log(res);
+                        //console.log(res);
 
                         navigate('/PatientMeasurements',
                             {

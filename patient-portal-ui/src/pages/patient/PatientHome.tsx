@@ -124,6 +124,7 @@ const PatientHome = () => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <Typography variant="h5">
+                  {d.label != "Measurements" ? "0/" : ""}
                   {d.label == "Visits" ? numO : ""}
                   {d.label == "Exams" ? numE : ""}
                   {d.label == "Hospitalizations" ? numA : ""}

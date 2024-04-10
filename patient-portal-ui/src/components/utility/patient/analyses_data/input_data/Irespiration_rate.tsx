@@ -50,7 +50,7 @@ export default function Irespiration_rate(props: {
   const [deleteMeasure, setDeleteMeasure] = useState("");
 
   let rif = props.dataDef;
-  console.log(rif);
+  //console.log(rif);
   let date_rif: Date | string | number = Date.now();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -76,7 +76,7 @@ export default function Irespiration_rate(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
+    //console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -99,7 +99,7 @@ export default function Irespiration_rate(props: {
       // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
 
-      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+      DefaultAllData.deleteMeasurement(id_measure,"respiration rate").then((res) => {
      
 
         navigate('/PatientMeasurements',
@@ -142,16 +142,16 @@ export default function Irespiration_rate(props: {
         let value1 = event.target.respiration_rate.value;
         let recordDate = toIsoDate(dateTime);
         let recordTypeCode = rif.code;
-        console.log("patientId:" + patientId);
-        console.log("value1:" + value1);
-        console.log("recordDate:" + recordDate);
-        console.log("ins_upd:" + ins_upd);
-        console.log("recordTypeCode:" + recordTypeCode);
+        //console.log("patientId:" + patientId);
+        //console.log("value1:" + value1);
+        //console.log("recordDate:" + recordDate);
+        //console.log("ins_upd:" + ins_upd);
+        //console.log("recordTypeCode:" + recordTypeCode);
         let value2 = -1;
         if (ins_upd == '') {
-          console.log("insert");
+          //console.log("insert");
           DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
-            console.log(res);
+            //console.log(res);
             navigate('/PatientMeasurements',
               {
                 state: {
@@ -160,12 +160,12 @@ export default function Irespiration_rate(props: {
               });
           });
         } else {
-          console.log("update");
+          //console.log("update");
           DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-            console.log(res_all);
+            //console.log(res_all);
             DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
-              console.log("in respiration");
-              console.log(res);
+              //console.log("in respiration");
+              //console.log(res);
               navigate('/PatientMeasurements',
                 {
                   state: {
