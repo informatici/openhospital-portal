@@ -106,7 +106,7 @@ export default function Iarterial_pressure(props: {
             // let patientId = localStorage.getItem("IdPatient");
             let id_measure: any = rif.id_measure;
 
-            DefaultAllData.deleteMeasurement(id_measure,"Arterial Pressure").then((res) => {
+            DefaultAllData.deleteMeasurement(id_measure, "Arterial Pressure").then((res) => {
 
 
                 navigate('/PatientMeasurements',
@@ -121,7 +121,7 @@ export default function Iarterial_pressure(props: {
 
             setOpen(false)
             window.location.reload();
-        } 
+        }
     }, [deleteMeasure]);
 
     const handleSubmit = (event: {
@@ -131,24 +131,18 @@ export default function Iarterial_pressure(props: {
         setDataErrorMax(false);
         setDataErrorMin(false);
         if (dataMin == null) {
-
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore non può essere vuoto")
         } else if (dataMax == null) {
-
             setDataErrorMax(true);
-
             setDataErrorMessageMax("Il valore non può essere vuoto")
-        } else if (dataMin <= rif.minValue) {
-
+        } else if (Number(dataMin) <= Number(rif.minValue)) {
             setDataErrorMin(true);
             setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
-        } else if (dataMax >= rif.maxValue) {
-
+        } else if (Number(dataMax) >= Number(rif.maxValue)) {
             setDataErrorMax(true);
             setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
-        } else if (dataMin > dataMax) {
-
+        } else if (Number(dataMin) >= Number(dataMax)) {  
             setDataErrorMax(true);
             setDataErrorMin(true);
             setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
