@@ -5,3 +5,9 @@
   padding-top: 0em !important;
   padding-bottom: 0em !important;
 }
+.only_smart{
+  text-align: center;
+  font-weight: bold;
+  margin-top: 2em;
+  font-size: 2em;
+}
