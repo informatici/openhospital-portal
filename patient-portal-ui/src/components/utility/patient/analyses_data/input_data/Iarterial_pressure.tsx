@@ -142,7 +142,7 @@ export default function Iarterial_pressure(props: {
         } else if (Number(dataMax) >= Number(rif.maxValue)) {
             setDataErrorMax(true);
             setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
-        } else if (Number(dataMin) >= Number(dataMax)) {  
+        } else if (Number(dataMin) >= Number(dataMax)) {
             setDataErrorMax(true);
             setDataErrorMin(true);
             setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
@@ -179,7 +179,16 @@ export default function Iarterial_pressure(props: {
 
 
                     DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
-
+                        DefaultAllData.postUpdateMeasurementArterialPressure(patientId, value1, value2, recordDate, recordTypeCode, res_all).then((res) => {
+                            //console.log("in bowel");
+                            //console.log(res);
+                            navigate('/PatientMeasurements',
+                                {
+                                    state: {
+                                        res: res
+                                    }
+                                });
+                        });
 
                     });
                 }

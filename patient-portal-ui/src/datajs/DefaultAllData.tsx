@@ -193,6 +193,26 @@ export const DefaultAllData = {
     data.type = "Update";
     return data;
   },
+  postUpdateMeasurementArterialPressure: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any, res_all: any) {
+    res_all.value1 = value1;
+    res_all.value2 = value2;
+    fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+      method: 'PUT',
+      body: JSON.stringify(
+        res_all),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    const data = {
+      type: "",
+      value1: res_all.value1, value2: res_all.value2, recordType: {
+        measurementType: res_all.recordType.measurementType
+      }
+    };
+    data.type = "Update";
+    return data;
+  },
 
   deleteMeasurement: async function (id_measure: number, measurementType: string) {
     let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
