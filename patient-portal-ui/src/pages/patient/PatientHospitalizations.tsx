@@ -10,7 +10,7 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'date_time', headerName: 'none', hide: false },
+  { field: 'date_time', headerName: 'none', hide: true },
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date_in', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour_in', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
