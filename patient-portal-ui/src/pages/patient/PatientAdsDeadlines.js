@@ -57,7 +57,7 @@ var date_obj = arrDateTime.reduce((acc, elem) => {
   acc[year][month] = [...(acc[year][month] || []), day];
   return acc;
 }, {});
-console.log(date_obj);
+// console.log(date_obj);
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];

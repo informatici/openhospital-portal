@@ -10,6 +10,7 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
+  { field: 'date_time', headerName: 'none', hide: false },
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date_in', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour_in', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -63,6 +64,7 @@ const PatientHospitalizations = () => {
           date_out: getDateLab(k.ADM_DATE_DIS),
           hour_out: getTimeLab(k.ADM_DATE_DIS),
           r_adm_note: k.ADM_NOTE,
+          date_time: k.ADM_DATE_ADM
 
         });
         //   console.log(Object.keys(k));
@@ -196,7 +198,7 @@ const PatientHospitalizations = () => {
               r_id: false,
             }}
             sortModel={[{
-              field: 'r_id',
+              field: 'date_time',
               sort: 'desc',
             }]}
             rows={rowdataDef}

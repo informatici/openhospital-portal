@@ -17,6 +17,7 @@ let btFilters: any[] = [];
 let rows: any[] = [];
 let data_json = Payments;
 const columns = [
+  { field: 'date_time', headerName: 'none', hide: false },
   { field: 'id', headerName: 'ID', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },

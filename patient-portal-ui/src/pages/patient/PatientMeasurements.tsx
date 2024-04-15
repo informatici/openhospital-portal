@@ -13,6 +13,7 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
+  { field: 'date_time', headerName: 'none', hide: false },
   { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
@@ -55,13 +56,13 @@ const PatientMeasurements = () => {
     setLoadSnackBar(false);
   };
   useEffect(() => {
-    console.log(location);
+    // console.log(location);
     if (location.state != null) {
 
       const data = location.state.res;
       let message = "";
       if (data.type == "Delete") {
-        message += data.type + " of " + data.recordType.measurementType +" was successful.";
+        message += data.type + " of " + data.recordType.measurementType + " was successful.";
       } else {
         message += data.type + " value " + data.value1;
         if (data.value2 != -1) {
@@ -101,7 +102,8 @@ const PatientMeasurements = () => {
           measurementValueType: k.recordType.measurementValueType,
           minValue: k.recordType.minValue,
           uom: k.recordType.uom,
-          r_id: k.id
+          r_id: k.id,
+          date_time: k.recordDate
         });
         //   console.log(Object.keys(k));
         //   [
@@ -147,12 +149,14 @@ const PatientMeasurements = () => {
       }}
     >
       <Snackbar
+
         anchorOrigin={{ "vertical": "bottom", "horizontal": "center" }}
         open={loadSnackBar}
-        autoHideDuration={3000}
+        autoHideDuration={88000}
         TransitionComponent={Slide}
         onClose={handleCloseSnackbar}
         message={messageSnackBar}
+
       // action={action}
       />
 
@@ -211,7 +215,7 @@ const PatientMeasurements = () => {
               r_id: false,
             }}
             sortModel={[{
-              field: 'r_id',
+              field: 'date_time',
               sort: 'desc',
             }]}
             rows={rowdataDef}
