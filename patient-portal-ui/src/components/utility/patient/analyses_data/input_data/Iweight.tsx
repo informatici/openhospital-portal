@@ -76,7 +76,6 @@ export default function Iweight(props: {
     } else {
       setDateTime(new Date());
     }
-    console.log(dateTime);
   }, []);
   useEffect(() => {
     // --- manage edit
@@ -86,7 +85,6 @@ export default function Iweight(props: {
   }, [props.edit]);
   // --- manage delete
   useEffect(() => {
-    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
     } else {
@@ -95,7 +93,6 @@ export default function Iweight(props: {
   }, [props.delete]);
   // --- manage delete choice
   useEffect(() => {
-    // --- manage delete choice
     if (deleteMeasure == "y") {
       setOpen(false);
       // let patientId = localStorage.getItem("IdPatient");

@@ -54,6 +54,7 @@ const PatientHome = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+
       }}
     >
       {matches ? <><p>Only Smart Phone</p></> : <>
