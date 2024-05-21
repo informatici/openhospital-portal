@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { dateIsoToString } from '../utils/ManageDate';
+import { dateIsoToString, stringToDate } from '../utils/ManageDate';
 const url_0 = 'http://api-develop.ohpp.local:18080/api/';
-const url_1 = 'http://api-develop.ohpp.local:18080/api/';
-// export const ListDoctorPatientsTest = async () => {
-export const DeafutlAllData = {
+export const DefaultAllData = {
 
 
   // --- ADMIN_API
   getAllUsers: async function () {
-    let response = await fetch('http://api-develop.ohpp.local:18080/api/admin/users');
+    let response = await fetch(url_0 + 'api/admin/users');
     const data = await response.json();
     return data;
   },
@@ -42,7 +40,6 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  // --- TODO servono tutti questi dati per il logout?
   postLogout: async function (user: any, pass: any) {
     let response = await fetch(url_0 + 'auth/logout', {
       method: 'POST',
@@ -68,6 +65,7 @@ export const DeafutlAllData = {
   getPatients: async function () {
     let response = await fetch(url_0 + 'public/patients');
     const data = await response.json();
+
     return data;
   },
   getHospitalevents: async function () {
@@ -80,11 +78,11 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  // --- TODO
   getPatientrecords_patient: async function (id_patient: any) {
     let response = await fetch(url_0 + 'public/patientrecords/patient/' + id_patient);
     const data = await response.json();
-    return data;
+    let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
+    return sort_data;
   },
   getPatientrecords_measurement: async function () {
     let response = await fetch(url_0 + 'public/patientrecords/measurement/1?measurementType=DIURESIS');
@@ -117,7 +115,8 @@ export const DeafutlAllData = {
   getHospitalEventByPatientIdByTypeCode: async function (id_patient: any, type_code: any) {
     let response = await fetch(url_0 + 'public/hospitalevents/eventType/' + id_patient + '?eventTypeCode=' + type_code);
     const data = await response.json();
-    return data;
+    let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
+    return sort_data;
   },
   getRecordTypes: async function () {
     let response = await fetch(url_0 + 'public/recordtypes');
@@ -125,9 +124,7 @@ export const DeafutlAllData = {
     return data;
   },
   getEventTypes: async function () {
-    let response = await fetch(url_0 + 'public/eventtypes');
-    const data = await response.json();
-    return data;
+
   },
   getAuscultationoptions: async function () {
     let response = await fetch(url_0 + 'public/recordtypes/auscultationoptions');
@@ -144,8 +141,7 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
-  postInsertMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any) {
-    console.log(dateIsoToString(recordDate));
+  postInsertMeasurement: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any) {
     let response = await fetch(url_0 + 'public/patientrecords', {
       method: 'POST',
       headers: {
@@ -158,10 +154,9 @@ export const DeafutlAllData = {
         "recordDate": dateIsoToString(recordDate),
         "recordTypeCode": recordTypeCode,
         "value1": value1,
-        "value2": -1
+        "value2": value2
       }),
     });
-
     const data = await response.json();
     return data;
   },
@@ -172,65 +167,43 @@ export const DeafutlAllData = {
     return data;
 
   },
+  getHospitalEventType: async function (id_patient: any) {
+    let response = await fetch(url_0 + 'public/hospitalevents/patient/' + id_patient);
+    const data = await response.json();
+    return data;
+
+  },
   postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
+    console.log("postUpdateMeasurement -1--");
+    res_all.value1 = value1;
     console.log(res_all);
-    res_all.value1 = 44;
-    console.log(res_all);
-    console.log(res_all.recordType.id);
-
-    let response = await fetch('http://develop-api.ohpp.local:18080/api/public/patientrecords/' + res_all.recordType.id, {
+    // let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(
+    //     res_all),
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //   },
+    // });
+    // const data = await response.json();
+    // console.log("--------------------------------");
+    // console.log(data);
+    fetch(url_0 + 'public/patientrecords/' + res_all.id, {
       method: 'PUT',
-
       body: JSON.stringify(
-        {
-        "created": null,
-        "id": 24,
-        "note": null,
-        "optionValue": null,
-        "patient": {
-          "address": "Kernigan",
-          "birthDate": "1955-07-30",
-          "city": "Long Road - 58",
-          "firstName": "Justin",
-          "id": 1,
-          "nextKin": null,
-          "note": null,
-          "secondName": "Frederick",
-          "sex": "M",
-          "telephone": "+343341314",
-          "userId": 4
-        },
-        "recordDate": "2023-06-10 15:30:13",
-        "recordType": {
-          "code": "W",
-          "defaultOptionValue": null,
-          "defaultValue1": 0,
-          "defaultValue2": 0,
-          "id": 12,
-          "maxValue": 200,
-          "measurementType": "WEIGHT",
-          "measurementValueType": "NUMERIC",
-          "minValue": 0,
-          "uom": "kg"
-        },
-        "value1": "98",
-        "value2": -1
-      }),
-
+        res_all),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-
-    const data = await response.json();
-    return data;
+    return true;
   },
+
   deleteMeasurement: async function (id_measure: number,) {
     let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
       method: 'DELETE',
 
     });
-    console.log(response);
     return response;
   },
 

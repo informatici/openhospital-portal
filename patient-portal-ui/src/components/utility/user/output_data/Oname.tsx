@@ -6,7 +6,7 @@ export default function Oname(data: any) {
    return (
       <div>
          <Box>
-            <Typography variant="body1" display="inline">Nasme:</Typography>
+            <Typography color="primary" variant="body1" display="inline">Name:</Typography>
             <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">{data.firstName}</Typography>
          </Box>
          <Box>

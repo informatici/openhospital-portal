@@ -6,13 +6,7 @@ import ConfirmOTP from "../../common/buttons/doctor/ConfirmOTP";
 class CardPatient extends Component {
     constructor(props: {}) {
         super(props)
-        console.log("in button");
-        console.log(props);
-        // if (props.idUser) {
-        //     this.state = { idUser: props.idUser }
-        // } else {
-        //     this.state = { idUser: null }
-        // }
+      
     }
     render() {
         return (

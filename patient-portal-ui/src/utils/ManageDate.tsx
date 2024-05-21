@@ -35,6 +35,10 @@ export function toIsoDate(str: any) {
     }
     return date_rec; // valid date 
 }
+export function stringToDate(str: string) {
+    let newDate = new Date(str);
+    return newDate;
+}
 export function dateIsoToString(str: any) {
     let date_rec = str;
     date_rec = date_rec.replace("T", " ");

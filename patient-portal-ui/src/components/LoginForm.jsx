@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import { DeafutlAllData } from '../datajs/DeafutlAllData'
+import { DefaultAllData } from '../datajs/DefaultAllData'
 
 import {
   Box,
@@ -26,7 +26,7 @@ const animate = {
     duration: 0.6,
     ease: easing,
     delay: 0.16,
-  }, 
+  },
 };
 
 const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
@@ -58,49 +58,19 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
     validationSchema: LoginSchema,
     onSubmit: () => {
       console.log("submitting...");
-      // --- start gestione profilo TODO ---
-      console.log(values.username);
-      // if (values.username == "a@a.com") {
-      //   amb = "Admin";
 
-      // } else if (values.email == "as@a.com") {
-      //   amb = "Administration";
-
-      // } else if (values.email == "d@a.com") {
-      //   amb = "Doctor";
-
-      // } else if (values.email == "p@a.com") {
-      //   amb = "Patient";
-
-      // } else {
-      console.log("Login Utente");
       const data = [
         {
           username: values.username,
           password: values.password,
         },
       ];
-      // --- start test DB ---
-      DeafutlAllData.getEventTypes().then((res) => {
-        console.log(res);
 
-      });
-      // --- end test DB ---
 
       DeafutlAllData.postLogin(values.username, values.password).then((res) => {
-        console.log("response getToken ------------");
-        console.log(res);
+
         localStorage.setItem("Token", res);
 
-        // --- start TODO Eliminare
-        // amb = "Patient";
-        // setProfile("Patient");
-        // localStorage.setItem("IdPatient", 1);
-        // setAuth(true);
-        // --- end TODO Eliminare
-
-        // --- start TODO Decommentare
-        console.log(res.roles);
         if (res.error == "Unauthorized") {
           setProfile("Unauthorized");
           amb = "Unauthorized";
@@ -117,16 +87,14 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             setAuth(true);
           }
         }
+        localStorage.clear();
         localStorage.setItem("IdPatient", res.patientId);
-        // --- end TODO Decommentare
-
+        localStorage.setItem("typeVisualization", "patient");
 
       });
-      // }
+
       setTimeout(() => {
-        console.log("submited!!");
-        console.log(from);
-        // setAuth(true);
+
         setProfile(amb);
         navigate(from, { replace: true });
       }, 2000);

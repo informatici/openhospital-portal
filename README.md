@@ -17,6 +17,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 - [Stopping](#stopping)
   * [5. stop all containers](#5-stop-all-containers)
   * [6. Cleaning](#6-cleaning)
+  * [7. Clean the DB only](#7-clean-the-db-only)
 - [Screenshots](#screenshots)
 - [Developing](#developing)
   * [API](#api)
@@ -129,9 +130,13 @@ Abramo Oliver       701020            abramo2023         PATIENT
 
 ### 5. available services
 
-- Patient Portal (ui) will be available at `https://develop.ohpp.local/` 
 
-- Api will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/` (use the latter to avoid frontend 'Mixed Content' error)
+- API will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/` (use the latter to avoid frontend 'Mixed Content' error)
+
+    - use the first one to connect and allow insecure connections for the UI
+    - use the second one to actually call the API
+
+- Patient Portal (UI) will be available at `https://develop.ohpp.local/` 
 
 - Loadbalancer dashboard (traefik) will be available at `http://localhost:8080`
 
@@ -186,6 +191,34 @@ Clean previous data
 ```
 rm -rf data/$ENVIRONMENT_NAME
 ```
+
+### 7. Clean the DB only
+
+```
+# stop api (loadbalancer, matomo and ui can stay)
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop api
+
+# remove mysql container, volumes and folders
+docker compose rm --stop --volumes --force mysql
+docker volume rm oh-patient-portal_mysql_data
+docker volume rm oh-patient-portal_mysql_logs
+rm -rf data/$ENVIRONMENT_NAME/database/*
+
+# restart mysql
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
+
+# restart api (will create the db structure using the already existing data/sql/migrations/V1__ddljpacreate.sql script)
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
+```
+
+...wait a bit for api to fully start.
+
+```
+# (optional) import demo data in the empty DB 
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
+```
+
+
 
 ## Screenshots
 

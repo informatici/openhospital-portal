@@ -10,7 +10,7 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { InputAdornment } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { DeafutlAllData } from "../../../../../datajs/DeafutlAllData";
+import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
 import dayjs from 'dayjs'
 
@@ -83,24 +83,24 @@ export default function Itemperature(props: {
       setDataDisabled(false);
     }
   }, [props.edit]);
+  // --- manage delete
   useEffect(() => {
-    // --- manage delete
     if (dataDelete == true) {
       setOpen(true);
-      // window.location.reload();
     } else {
       setDataDelete(true);
     }
   }, [props.delete]);
+  // --- manage delete choice
   useEffect(() => {
-    // --- manage delete choice
     if (deleteMeasure == "y") {
       setOpen(false);
-      let patientId = localStorage.getItem("IdPatient");
+      // let patientId = localStorage.getItem("IdPatient");
       let id_measure: any = rif.id_measure;
-      DeafutlAllData.deleteMeasurement(id_measure).then((res) => {
-        console.log(res);
-        console.log(res);
+
+      DefaultAllData.deleteMeasurement(id_measure).then((res) => {
+ 
+ 
         navigate('/PatientMeasurements',
           {
             state: {
@@ -108,13 +108,10 @@ export default function Itemperature(props: {
             }
           });
       });
-
     }
     if (deleteMeasure == "n") {
-      setOpen(false)
-      window.location.reload();
-    } else {
-      // console.log("nothing");
+      setDeleteMeasure("");
+      setOpen(false);
     }
   }, [deleteMeasure]);
 
@@ -149,9 +146,10 @@ export default function Itemperature(props: {
         console.log("recordDate:" + recordDate);
         console.log("ins_upd:" + ins_upd);
         console.log("recordTypeCode:" + recordTypeCode);
+        let value2 = -1;
         if (ins_upd == '') {
           console.log("insert");
-          DeafutlAllData.postInsertMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
+          DefaultAllData.postInsertMeasurement(patientId, value1, value2, recordDate, recordTypeCode).then((res) => {
             console.log(res);
             navigate('/PatientMeasurements',
               {
@@ -162,15 +160,19 @@ export default function Itemperature(props: {
           });
         } else {
           console.log("update");
-          // DeafutlAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode).then((res) => {
-          //   console.log(res);
-          //   navigate('/PatientMeasurements',
-          //     {
-          //       state: {
-          //         res: res
-          //       }
-          //     });
-          // });
+          DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
+            console.log(res_all);
+            DefaultAllData.postUpdateMeasurement(patientId, value1, recordDate, recordTypeCode, res_all).then((res) => {
+              console.log("in temperature");
+              console.log(res);
+              navigate('/PatientMeasurements',
+                {
+                  state: {
+                    res: res
+                  }
+                });
+            });
+          });
         }
         // --- TODO insert/update and changePage
       }

@@ -20,10 +20,7 @@ class DoctorTopAgendaNav extends Component<DoctorTopAgendaNavProps, DoctorTopAge
 
 
         super(props);
-        console.log("props");
-        console.log(props);
-        console.log("this.state");
-        console.log(this.state);
+      
     }
     render() {
         return (

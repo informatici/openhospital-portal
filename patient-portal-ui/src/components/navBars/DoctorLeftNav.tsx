@@ -33,10 +33,7 @@ class DoctorLeftNav extends Component<DoctorLeftNavProps, DoctorLeftNavState> {
 
 
         super(props);
-        console.log("props");
-        console.log(props);
-        console.log("this.state");
-        console.log(this.state);
+      
     }
 
     render() {

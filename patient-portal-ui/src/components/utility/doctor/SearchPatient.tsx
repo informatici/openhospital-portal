@@ -7,27 +7,29 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuItem from '@mui/material/MenuItem';
 import { Button, Typography, Container, TextField, Box } from "@mui/material";
 
-class SearchPatient extends Component {
-    render() {
-        return (
-            <Container >
-                <TextField
-                    id="search"
-                    type="search"
-                    label="Search Patient by Name/Id"
-                    // value={searchTerm}
-                    // onChange={handleChange}
-                    sx={{ width: 1 }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </Container>
-        );
-    }
+export default function Iweight(props: {
+    sendDataToParent?: any
+}) {
+    const handleChange = (event: { target: { value: any; }; }) => {
+        props.sendDataToParent(event.target.value);
+    };
+    return (
+        // --- TODO search by surname or name or id?
+        <TextField
+            id="search"
+            type="search"
+            // label="Search Patient by Name/Id"
+            label="Search Patient by Name"
+            onChange={handleChange}
+            sx={{ width: 1 }}
+            InputProps={{
+                endAdornment: (
+                    <InputAdornment position="end">
+                        <SearchIcon />
+                    </InputAdornment>
+                ),
+            }}
+        />
+
+    )
 }
-export default SearchPatient;

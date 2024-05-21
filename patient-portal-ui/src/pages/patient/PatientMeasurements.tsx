@@ -4,13 +4,18 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Misure from '../../datajs/Misure'
 
-import { getTimeLab, getDateLab, compare, getDayName } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData'
+import { getTimeLab, getDateLab } from '../../utils/ManageDate';
+import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-const values = Misure;
+
+const columns = [
+  { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
+];
 interface Items {
   id?: string;
   id_measure?: string;
@@ -30,18 +35,6 @@ interface Items {
   minValue: number | string;
   uom?: string;
 }
-const columns = [
-  { field: 'id', headerName: 'ID', width: 0, hide: true },
-  { field: 'id_measure', headerName: 'Id_measure', width: 0, hide: true },
-  { field: 'date', headerName: 'Data' },
-  { field: 'hour', headerName: 'Hour' },
-  { field: 'value', headerName: 'Value' },
-  { field: 'misure', headerName: 'Misure' },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
-  { field: 'type', headerName: 'Type', width: 180 },
-];
 
 const PatientMeasurements = () => {
   let rows: Items[] = [];
@@ -53,11 +46,12 @@ const PatientMeasurements = () => {
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
 
-
-    // DeafutlAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
-    DeafutlAllData.getPatientrecords_patient(id_patient).then((res) => {
+    // DefaultAllData.getPatientrecords_All_measurement(id_patient, type_mis).then((res) => {
+    DefaultAllData.getPatientrecords_patient(id_patient).then((res) => {
       console.log(res);
+
       res.forEach(function (k: any) {
+
         if (!btFilters.includes(k.recordType.measurementType)) {
           btFilters.push(k.recordType.measurementType);
         }
@@ -81,6 +75,7 @@ const PatientMeasurements = () => {
           uom: k.recordType.uom,
         });
       });
+      rows_def.sort((a, b) => b.id - a.id); // --- sort by id desc
       setRowdata(rows_def);
     });
   }, []);
@@ -89,15 +84,18 @@ const PatientMeasurements = () => {
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
+
       setRowdataDef(rows);
     } else {
       rows = rowdata;
+
       setRowdataDef(rows);
     }
     setLoadComponent(1);
   }, [rowdata, type]);
 
   let navigate = useNavigate();
+
   return (
 
     <Container
@@ -120,34 +118,54 @@ const PatientMeasurements = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-            <ButtonGroup sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-              <Button key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
-                <Button key={bt_el} color="primary" onClick={() => setType(bt_el)}>{bt_el}</Button>
+                <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
               ))}
             </ButtonGroup>
           </Box>
           <DataGrid
+            sx={{
+              border: 0,
+              '&>.MuiDataGrid-main': {
+                '&>.MuiDataGrid-columnHeaders': {
+                  borderBottom: 'none',
+                },
+                '& div div div div >.MuiDataGrid-cell': {
+                  borderBottom: 'none',
+                },
+              },
+              "& .MuiDataGrid-virtualScrollerRenderZone": {
+                "& .MuiDataGrid-row": {
+                  width: "96%",
+                  backgroundColor: "rgba(235, 235, 235, .9)",
+                  margin: "0.3em",
+                  borderRadius: 3
+                }
+              },
+              '& .super-app-theme--header': {
+                fontSize: '0.8em'
+              },
+            }}
             onCellClick={(params, event) => {
               if (!event.ctrlKey) {
                 navigate("/PatientInsertMeasurements", {
                   state: params.row,
-
                 })
               }
             }}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  type: false,
-                  value: false
-                },
-              },
-            }}
 
+            initialState={{
+
+            }}
+            columnVisibilityModel={{
+              date_complete: false,
+            }}
+            sortModel={[{
+              field: 'date_complete',
+              sort: 'asc',
+            }]}
             rows={rowdataDef}
             columns={columns}
           />
@@ -155,7 +173,6 @@ const PatientMeasurements = () => {
       </> : null}
     </Container>
   );
-
 };
 
 export default PatientMeasurements;

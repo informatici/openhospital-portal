@@ -20,7 +20,7 @@ import Idiuresis from "../../components/utility/patient/analyses_data/input_data
 import Idate_time from "../../components/utility/common/input_data/Idate_time";
 
 import { filterRecordTypesByValue, filterRecordTypesByValueDef, filterRecordTypesByValueRet } from '../../utils/ManageDate';
-import { DeafutlAllData } from '../../datajs/DeafutlAllData';
+import { DefaultAllData } from '../../datajs/DefaultAllData';
 
 interface Items {
   id?: string;
@@ -48,23 +48,26 @@ function PatientInsertMeasurements(props: {
   const [data, setData] = React.useState<Items | null | [] | Items[]>(null);
   const [type, setType] = React.useState<string>("");
   const [loadComponent, setLoadComponent] = useState(0);
+  const [loadComponent_a, setLoadComponent_a] = useState(0);
+  const [loadComponent_b, setLoadComponent_b] = useState(0);
+  const [loadComponent_d, setLoadComponent_d] = useState(0);
 
   useEffect(() => {
-    DeafutlAllData.getRecordTypes().then((res) => {
-
+    DefaultAllData.getRecordTypes().then((res) => {
       if (props.setType.id == null) {
         setData(res);
         setType("");
       } else {
         let arr: Items[] = [props.setType];
         setData(arr);
+
         setType("edit/delete");
       }
       setLoadComponent(1);
     });
   }, []);
   useEffect(() => {
-    DeafutlAllData.getAuscultationoptions().then((res) => {
+    DefaultAllData.getAuscultationoptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {
@@ -73,10 +76,10 @@ function PatientInsertMeasurements(props: {
           "value": i,
         });
       }
-      console.log(json_res);
       setOptionAu(json_res);
+      setLoadComponent_a(1);
     });
-    DeafutlAllData.getBoweloptions().then((res) => {
+    DefaultAllData.getBoweloptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {
@@ -87,8 +90,9 @@ function PatientInsertMeasurements(props: {
         });
       }
       setOptionBo(json_res);
+      setLoadComponent_b(1);
     });
-    DeafutlAllData.getDiuresisoptions().then((res) => {
+    DefaultAllData.getDiuresisoptions().then((res) => {
       let json_res = [{
       }];
       for (let i in res) {
@@ -98,8 +102,9 @@ function PatientInsertMeasurements(props: {
           "value": i,
         });
       }
-      console.log(json_res);
+
       setOptionDi(json_res);
+      setLoadComponent_d(1);
     });
   }, []);
   const [message, setMessage] = React.useState("");
@@ -108,15 +113,13 @@ function PatientInsertMeasurements(props: {
   const [optionAu, setOptionAu] = React.useState({});
   const [optionBo, setOptionBo] = React.useState({});
   const [optionDi, setOptionDi] = React.useState({});
-
   const editBtClk = (editTF: boolean | ((prevState: boolean) => boolean)) => {
-    // console.log(editTF);
     setEditTF(editTF);
   };
   const deleteBtClk = (deleteTF: boolean | ((prevState: boolean) => boolean)) => {
-    // console.log(deleteTF);
     setDeleteTF(deleteTF);
   };
+
   return (
     <Container
       maxWidth="lg"
@@ -129,7 +132,7 @@ function PatientInsertMeasurements(props: {
       }}
     >
 
-      {loadComponent ? <>
+      {loadComponent && loadComponent_a && loadComponent_b && loadComponent_d ? <>
         <PatientSmartNav page={'PatientInsertMeasurements'} type={type} editBtClk={editBtClk} deleteBtClk={deleteBtClk} /><h1>{message}</h1>
         {props.setType.type == 'weight' ? <Iweight dataDef={filterRecordTypesByValueRet(data, "W")} edit={editTF} delete={deleteTF} /> : null}
         {props.setType.type == 'height' ? <Iheight dataDef={filterRecordTypesByValueRet(data, "H")} edit={editTF} delete={deleteTF} /> : null}
@@ -141,11 +144,12 @@ function PatientInsertMeasurements(props: {
         {props.setType.type == 'respiration_rate' ? <Irespiration_rate dataDef={filterRecordTypesByValueRet(data, "RR")} edit={editTF} delete={deleteTF} /> : null}
         {props.setType.type == 'diuresis_vol_24h' ? <Idiuresis_vol_24h dataDef={filterRecordTypesByValueRet(data, "DIUR_V")} edit={editTF} delete={deleteTF} /> : null}
 
+        {props.setType.type == 'bowel' ? <Ibowel dataDef={filterRecordTypesByValueRet(data, "BWL")} edit={editTF} delete={deleteTF} option={optionBo} /> : null}
         {props.setType.type == 'diuresis' ? <Idiuresis dataDef={filterRecordTypesByValueRet(data, "DIUR")} edit={editTF} delete={deleteTF} option={optionDi} /> : null}
-        {/* {props.setType.type == 'ascultation' ? <Iascultation dataDef={values[0].ascultation} dataSelected={props.setType.value} /> : null} */}
-        {/* {props.setType.type == 'bowel' ? <Ibowel dataDef={values[0].bowel} dataSelected={props.setType.value} /> : null} */}
+        {props.setType.type == 'ascultation' || props.setType.type == "auscultation" ? <Iascultation dataDef={filterRecordTypesByValueRet(data, "AUSC")} edit={editTF} delete={deleteTF} option={optionAu} /> : null}
 
-        {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={filterRecordTypesByValueRet(data, "BP")} edit={editTF} delete={deleteTF} /> : null}
+        {props.setType.type == 'pressure' || props.setType.type == 'bp' || props.setType.type == 'blood_pressure' ? <Iarterial_pressure dataDef={filterRecordTypesByValueRet(data, "BP")} edit={editTF} delete={deleteTF} /> : null}
+
         {/* {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{ min: props.setType.value, max: props.setType.value }} /> : null}*/}
         <Save edit={editTF} type={type} />
       </> : null}

@@ -58,7 +58,9 @@ services:
     ports:
       - "13306:3306"
     healthcheck:
-      test: ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized", "--innodb_buffer_pool_loaded"]
+      #test: ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized", "--innodb_buffer_pool_loaded"]
+      test: ["CMD-SHELL", "mysql ${MARIADB_DATABASE} -u${MARIADB_USER} -p${MARIADB_PASSWORD} -e 'SELECT 1;'  || exit 1"]
+      #test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
       interval: 5s
       start_period: 2s
       timeout: 2s

@@ -13,8 +13,6 @@ import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
-/////////////////////////////////////////////////////////////
-console.log("Signup");
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
   opacity: 1,
