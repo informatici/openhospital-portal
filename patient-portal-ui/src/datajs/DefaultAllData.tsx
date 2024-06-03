@@ -158,10 +158,64 @@ export const DefaultAllData = {
       }),
     });
     const data = await response.json();
+    console.log(data);
     data.type = "Insert";
     return data;
   },
+  deleteMeasurement: async function (id_measure: number, measurementType: string) {
+    console.log(id_measure);
+    let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
+      method: 'DELETE',
+    });
+    if (response.status === 204) {
+      // DELETE avvenuta con successo
+      const data = {
+        type: "",
+        value1: id_measure, value2: -1, recordType: {
+          measurementType: measurementType
+        }
+      };
+      data.type = "Delete";
+      return data;
+    } else if (response.status === 404) {
+      // gestisci record non trovato
+    } else {
+      // altri codici di errore
+    }
 
+   
+  },
+  postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
+    res_all.value1 = value1;
+    let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        res_all),
+
+    });
+    const data = await response.json();
+    data.type = "Update";
+    return data;
+  },
+  postUpdateMeasurementArterialPressure: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any, res_all: any) {
+    res_all.value1 = value1;
+    res_all.value2 = value2;
+    let response = await fetch(url_0 + 'public/patientrecords/' + res_all.id, {
+      method: 'PUT',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(
+        res_all),
+
+    });
+    const data = await response.json();
+    data.type = "Update";
+    return data;
+  },
   getMeasurementbyId: async function (ins_upd: any) {
     let response = await fetch(url_0 + 'public/patientrecords/' + ins_upd);
     const data = await response.json();
@@ -174,60 +228,9 @@ export const DefaultAllData = {
     return data;
 
   },
-  postUpdateMeasurement: async function (patientId: any, value1: number, recordDate: any, recordTypeCode: any, res_all: any) {
-    res_all.value1 = value1;
-    fetch(url_0 + 'public/patientrecords/' + res_all.id, {
-      method: 'PUT',
-      body: JSON.stringify(
-        res_all),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    const data = {
-      type: "",
-      value1: res_all.value1, value2: res_all.value2, recordType: {
-        measurementType: res_all.recordType.measurementType
-      }
-    };
-    data.type = "Update";
-    return data;
-  },
-  postUpdateMeasurementArterialPressure: async function (patientId: any, value1: number, value2: number, recordDate: any, recordTypeCode: any, res_all: any) {
-    res_all.value1 = value1;
-    res_all.value2 = value2;
-    fetch(url_0 + 'public/patientrecords/' + res_all.id, {
-      method: 'PUT',
-      body: JSON.stringify(
-        res_all),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    const data = {
-      type: "",
-      value1: res_all.value1, value2: res_all.value2, recordType: {
-        measurementType: res_all.recordType.measurementType
-      }
-    };
-    data.type = "Update";
-    return data;
-  },
 
-  deleteMeasurement: async function (id_measure: number, measurementType: string) {
-    let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
-      method: 'DELETE',
 
-    });
-    const data = {
-      type: "",
-      value1: id_measure, value2: -1, recordType: {
-        measurementType: measurementType
-      }
-    };
-    data.type = "Delete";
-    return data;
-  },
+
 
 
 }
