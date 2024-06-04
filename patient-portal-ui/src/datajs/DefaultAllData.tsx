@@ -158,12 +158,10 @@ export const DefaultAllData = {
       }),
     });
     const data = await response.json();
-    console.log(data);
     data.type = "Insert";
     return data;
   },
   deleteMeasurement: async function (id_measure: number, measurementType: string) {
-    console.log(id_measure);
     let response = await fetch(url_0 + 'public/patientrecords/' + id_measure, {
       method: 'DELETE',
     });
