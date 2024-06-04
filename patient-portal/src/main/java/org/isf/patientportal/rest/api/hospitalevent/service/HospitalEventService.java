@@ -61,6 +61,7 @@ public class HospitalEventService {
                 item.getPatient(),
                 item.getEventType(),
                 item.getPayload(),
+                item.getReadDate(),
                 LocalDateTime.now()
         );
         return hospitalEventRepository.save(modelMapper.map(copy, HospitalEvent.class));
@@ -111,8 +112,18 @@ public class HospitalEventService {
 	}
     
     
+    public Long countReadByPatientId(Long patientId) {
+		return hospitalEventRepository.countReadByPatientId(patientId);
+	}
+   
+    
     public Long countByPatientIdEventTypeCode(Long patientId, String eventTypeCode) {
 		return hospitalEventRepository.countByPatientIdEventTypeCode(patientId, eventTypeCode);
+	}
+    
+    
+    public Long countReadByPatientIdEventTypeCode(Long patientId, String eventTypeCode) {
+		return hospitalEventRepository.countReadByPatientIdEventTypeCode(patientId, eventTypeCode);
 	}
     
 }

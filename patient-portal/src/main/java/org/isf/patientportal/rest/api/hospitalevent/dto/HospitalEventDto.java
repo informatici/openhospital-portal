@@ -51,6 +51,9 @@ public class HospitalEventDto {
 	private String payload;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+	private LocalDateTime readDate;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
 	private LocalDateTime created;
 
 }

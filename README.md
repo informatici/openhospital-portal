@@ -131,7 +131,7 @@ Abramo Oliver       701020            abramo2023         PATIENT
 ### 5. available services
 
 
-- API will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
+- API will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/` (use the latter to avoid frontend 'Mixed Content' error)
 
     - use the first one to connect and allow insecure connections for the UI
     - use the second one to actually call the API

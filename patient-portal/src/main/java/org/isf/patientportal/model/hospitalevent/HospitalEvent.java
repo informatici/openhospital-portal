@@ -22,8 +22,7 @@
 package org.isf.patientportal.model.hospitalevent;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.ZoneId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,9 +75,13 @@ public class HospitalEvent {
 	// @Lob
 	// private Blob blob;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+	private LocalDateTime readDate;
+	
 	@Column(nullable = false, updatable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-	private Date created = new Date();
+	private @NotNull LocalDateTime created = LocalDateTime.now(ZoneId.of("UTC"));
+	
 
 	public HospitalEvent() {
 		super();
@@ -94,7 +97,7 @@ public class HospitalEvent {
 		this.patient = patient;
 		this.eventType = eventType;
 		this.payload = payload;
-		this.created = Calendar.getInstance().getTime();
+		this.created = LocalDateTime.now(ZoneId.of("UTC"));
 	}
 
 
@@ -108,6 +111,7 @@ public class HospitalEvent {
 			this.date = item.date;
 			this.patient = item.patient;
 			this.eventType = item.eventType;
+			this.readDate = item.readDate;
 			this.payload = item.payload;
 			return this;
 		}
