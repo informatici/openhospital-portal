@@ -17,6 +17,14 @@ services:
     volumes:
       - demo_sql_files:/sql
     command: sh -c "mysql -v --host mysql -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /sql/load-data-demo.sql"
+    
+  delete-all-data:
+    extends:
+      file: docker-compose.yaml
+      service: mysql
+    volumes:
+      - demo_sql_files:/sql
+    command: sh -c "mysql -v --host mysql -u ${MARIADB_USER} -p${MARIADB_PASSWORD} ${MARIADB_DATABASE} < /sql/delete-all-data.sql"
           
   ui-dev:
     image: patient-portal-ui-dev-image:latest
@@ -43,6 +51,13 @@ services:
       service: api-base
     restart: "no"
     command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=init"]
+    
+  update-api:
+    extends:
+      file: docker-compose.yaml
+      service: api-base
+    restart: "no"
+    command: ["java", "-jar", "patientportal-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=update"]
  
   flyway-migrate:
     image: flyway/flyway:8.5.13

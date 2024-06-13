@@ -17,7 +17,8 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 - [Stopping](#stopping)
   * [5. stop all containers](#5-stop-all-containers)
   * [6. Cleaning](#6-cleaning)
-  * [7. Clean the DB only](#7-clean-the-db-only)
+  * [7. Clean the DB only (data)](#7-clean-the-db-only-data)
+  * [8. Destroy and recreate the DB](#8-destroy-and-recreate-the-db)
 - [Screenshots](#screenshots)
 - [Developing](#developing)
   * [API](#api)
@@ -192,8 +193,21 @@ Clean previous data
 rm -rf data/$ENVIRONMENT_NAME
 ```
 
-### 7. Clean the DB only
+### 7. Clean the DB only (data)
 
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm delete-all-data
+```
+
+...reload demo data (optional)
+
+```
+# (optional) import demo data in the empty DB 
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
+```
+
+
+### 8. Destroy and recreate the DB
 ```
 # stop api (loadbalancer, matomo and ui can stay)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop api
@@ -211,13 +225,12 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
 ```
 
-...wait a bit for api to fully start.
+...reload demo data (optional)
 
 ```
 # (optional) import demo data in the empty DB 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
-
 
 
 ## Screenshots
