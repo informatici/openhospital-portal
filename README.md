@@ -16,17 +16,16 @@ The Patient Portal will allow patients to safely and intentionally (informed con
     + [Demo data (optional)](#demo-data-optional)
   * [5. available services](#5-available-services)
 - [Stopping](#stopping)
-  * [6. stop all containers](#6-stop-all-containers)
 - [Clean everything](#clean-everything)
+  * [Clean the DB (only data)](#clean-the-db-only-data)
+  * [Destroy and recreate the DB](#destroy-and-recreate-the-db)
   * [Remove all containers and volumes](#remove-all-containers-and-volumes)
   * [Clean all previous data](#clean-all-previous-data)
-  * [Clean the DB only (data)](#clean-the-db-only-data)
-  * [Destroy and recreate the DB only](#destroy-and-recreate-the-db-only)
 - [Screenshots](#screenshots)
 - [Developing](#developing)
-  * [Create DB script from code](#create-db-script-from-code)
-  * [Generate migration scripts after changes to API codebase](#generate-migration-scripts-after-changes-to-api-codebase)
-  * [API](#api)
+  * [Create DB script from code](#create-db-script-from-code-init-api)
+  * [Generate migration scripts after changes to API codebase](#generate-migration-scripts-after-changes-to-api-codebase-update-api)
+  * [API URLs](#api-urls)
   * [Develop the ui (React)](#develop-the-ui-react)
 - [Connector (WIP)](#connector-wip)
   * [1. Setup using a test db](#1-setup-using-a-test-db)
@@ -175,8 +174,6 @@ Patient Portal (ui) graphics:
 
 ## Stopping
 
-### 6. stop all containers
-
 Interrupt with CTRL-C in the terminal from [4. start the app mode with output in the terminal](#4-start-the-app-mode-with-output-in-the-terminal)
 
 ```
@@ -186,21 +183,9 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop
 
 ## Clean everything
 
-### Remove all containers and volumes
+Use the one you need most.
 
-```
-docker compose rm --stop --volumes --force
-docker compose -f docker-compose-matomo.yaml rm --stop --volumes --force
-docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
-```
-
-### Clean all previous data
-
-```
-rm -rf data/$ENVIRONMENT_NAME
-```
-
-## Clean the DB only (data)
+### Clean the DB (only data)
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm delete-all-data
@@ -214,7 +199,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-d
 ```
 
 
-### Destroy and recreate the DB only
+### Destroy and recreate the DB
 
 ```
 # stop api (loadbalancer, matomo and ui can stay)
@@ -240,6 +225,19 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
+### Remove all containers and volumes
+
+```
+docker compose rm --stop --volumes --force
+docker compose -f docker-compose-matomo.yaml rm --stop --volumes --force
+docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
+```
+
+### Clean all previous data
+
+```
+rm -rf data/$ENVIRONMENT_NAME
+```
 
 ## Screenshots
 
@@ -256,7 +254,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-d
 
 ## Developing
 
-### Create DB script from code
+### Create DB script from code (init-api)
 
 Start mysql database/service (in background):
 
@@ -281,7 +279,7 @@ To repeat the process, destroy and recreate the DB and delete the generated scri
 rm data/$ENVIRONMENT_NAME/sql/migrations/*
 ```
 
-### Generate migration scripts after changes to API codebase
+### Generate migration scripts after changes to API codebase (update-api)
 
 Start mysql database/service (in background):
 
@@ -303,7 +301,7 @@ In folder `data/$ENVIRONMENT_NAME/sql/migrations` you will find the `update.sql`
 When started normally, API will use the new script to update the actual DB and track the migration changes with Flyway.
 
 
-### API
+### API URLs
 
 Api available at `https://develop-api.ohpp.local/` and `http://localhost:18080/`
 
