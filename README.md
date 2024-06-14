@@ -6,7 +6,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 
 ## Summary
 - [Components](#components)
-- [Instructions](#instructions)
+- [Prepare the environment (.env)](#prepare-the-environment-env)
 - [Building](#building)
   * [1. build images from sources](#1-build-images-from-sources)
   * [2. copy the DB scripts](#2-copy-the-db-scripts)
@@ -41,7 +41,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 <img src="./doc/images/patientportal.png"  width="70%" height="70%">
 </div>
 
-## Instructions
+## Prepare the environment (.env)
 
 First copy `dotenv` to `.env` and set up your variables and locations.
 
